@@ -2,4 +2,6 @@
 <resources>
     <string name="hello">Hello World, ProjectNEOActivity!</string>
     <string name="app_name">ProjectNEO</string>
+    <string name="color">Color</string>
+    <string name="send">Send</string>
 </resources>
