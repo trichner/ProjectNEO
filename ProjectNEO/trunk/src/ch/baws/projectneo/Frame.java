@@ -1,9 +1,20 @@
 package ch.baws.projectneo;
 
-import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
-import java.nio.LongBuffer;
 
+/*
+ *   Frame Generator
+ * 
+ * This class processes values representing the NEO Matrix
+ * and generates a Frame Package.
+ * Those Frame Packages are then transmitted
+ * 
+ * Format:
+ *  _____________   _____________   _______________________   _______________________   _______________________ 
+ * | Headbyte    | | Commandbyte | | 8x Bytes Red Matrix   | | 8x Bytes Green Matrix | | 8x Bytes Blue Matrix  |
+ * |_____________| |_____________| |_______________________| |_______________________| |_______________________|
+ * 
+ */
 
 public class Frame {
 										// head + cmdb + 3x 8Byte
@@ -43,8 +54,11 @@ public class Frame {
 	
 	//===== Finisher
 	private byte[] finish(){
+		
 		ByteBuffer packet = ByteBuffer.allocate(PACKETLENGTH);
+		//write the head
 		packet.put(head);
+		//write the commandbyte
 		packet.put(cmdb);
 		//---write the three matrices
 		packet.putLong(redb);
