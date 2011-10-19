@@ -16,24 +16,18 @@ import java.util.UUID;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.util.Log;
 
 public class ProjectNEOActivity extends Activity {
 
 	
-	private static final String TAG = "THINBTCLIENT";
+	private static final String TAG = "PN_ACTIVITY";
 	private static final boolean D = true;
 	private BluetoothAdapter mBluetoothAdapter = null;
 	private BluetoothSocket btSocket = null;
 	private OutputStream outStream = null;
-	// Well known SPP UUID (will *probably* map to
-	// RFCOMM channel 1 (default) if not in use);
-	// see comments in onResume().
-	private static final UUID MY_UUID = 
-			UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-	// ==> hardcode your server's MAC address here <==
-	private static String address = "00:07:80:85:8B:6E";
 	  
     /** Called when the activity is first created. */
     @Override
@@ -49,10 +43,7 @@ public class ProjectNEOActivity extends Activity {
 //            return;
 //        }
 //        
-//        if (!mBluetoothAdapter.isEnabled()) {
-//            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//            startActivityForResult(enableBtIntent, 1);
-//        }
+
 
 
     	// new stuff
@@ -62,19 +53,16 @@ public class ProjectNEOActivity extends Activity {
     	mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     	if (mBluetoothAdapter == null) {
     		Toast.makeText(this, 
-    			"Bluetooth is not available.", 
+    			"You need Bluetooth in order to use this program", 
     			Toast.LENGTH_LONG).show();
     		finish();
     		return;
     	}
-
-    	if (!mBluetoothAdapter.isEnabled()) {
-    		Toast.makeText(this, 
-    			"Please enable your BT and re-run this program.", 
-    			Toast.LENGTH_LONG).show();
-    		finish();
-    		return;
-    	}
+    	
+      if (!mBluetoothAdapter.isEnabled()) {
+      Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+      startActivityForResult(enableBtIntent, 1);
+  }
 
     	if (D)
     		Log.e(TAG, "+++ DONE IN ON CREATE, GOT LOCAL BT ADAPTER +++");
@@ -92,68 +80,9 @@ public class ProjectNEOActivity extends Activity {
 
    		if (D) {
    			Log.e(TAG, "+ ON RESUME +");
-   			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
+//   			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
    		}
-   		// When this returns, it will 'know' about the server,
-   		// via it's MAC address.
-   		BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-   		// We need two things before we can successfully connect
-   		// (authentication issues aside): a MAC address, which we
-   		// already have, and an RFCOMM channel.
-   		// Because RFCOMM channels (aka ports) are limited in
-   		// number, Android doesn't allow you to use them directly;
-   		// instead you request a RFCOMM mapping based on a service
-   		// ID. In our case, we will use the well-known SPP Service
-   		// ID. This ID is in UUID (GUID to you Microsofties)
-   		// format. Given the UUID, Android will handle the
-   		// mapping for you. Generally, this will return RFCOMM 1,
-   		// but not always; it depends what other BlueTooth services
-   		// are in use on your Android device.
-   		try {
-   			btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
-   		} catch (IOException e) {
-   			Log.e(TAG, "ON RESUME: Socket creation failed.", e);
-   		}
-
-   		// Discovery may be going on, e.g., if you're running a
-   		// 'scan for devices' search from your handset's Bluetooth
-   		// settings, so we call cancelDiscovery(). It doesn't hurt
-   		// to call it, but it might hurt not to... discovery is a
-   		// heavyweight process; you don't want it in progress when
-   		// a connection attempt is made.
-   		mBluetoothAdapter.cancelDiscovery();
-
-   		// Blocking connect, for a simple client nothing else can
-   		// happen until a successful connection is made, so we
-   		// don't care if it blocks.
-   		try {
-   			btSocket.connect();
-   			Log.e(TAG, "ON RESUME: BT connection established, data transfer link open.");
-   		} catch (IOException e) {
-   			try {
-   				btSocket.close();
-   			} catch (IOException e2) {
-   				Log.e(TAG, 
-   					"ON RESUME: Unable to close socket during connection failure", e2);
-   			}
-   		}
-   		// Create a data stream so we can talk to server.
-   		if (D)
-   			Log.e(TAG, "+ ABOUT TO SAY SOMETHING TO SERVER +");
-
-   		try {
-   			outStream = btSocket.getOutputStream();
-   		} catch (IOException e) {
-    		Log.e(TAG, "ON RESUME: Output stream creation failed.", e);
-    	}
-
-    	String message = "Hello message from client to server.";
-    	byte[] msgBuffer = message.getBytes();
-    	try {
-    		outStream.write(msgBuffer);
-    	} catch (IOException e) {
-    		Log.e(TAG, "ON RESUME: Exception during write.", e);
-    	}
+   		
    	}
 
    	@Override
@@ -207,69 +136,13 @@ public class ProjectNEOActivity extends Activity {
         switch (item.getItemId()) {
         case R.id.send:
        		if (D) {
-       			Log.e(TAG, "+ ON RESUME +");
+       			Log.e(TAG, "+ SEND BUTTON SELECT +");
        			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
        		}
-       		// When this returns, it will 'know' about the server,
-       		// via it's MAC address.
-       		BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-       		// We need two things before we can successfully connect
-       		// (authentication issues aside): a MAC address, which we
-       		// already have, and an RFCOMM channel.
-       		// Because RFCOMM channels (aka ports) are limited in
-       		// number, Android doesn't allow you to use them directly;
-       		// instead you request a RFCOMM mapping based on a service
-       		// ID. In our case, we will use the well-known SPP Service
-       		// ID. This ID is in UUID (GUID to you Microsofties)
-       		// format. Given the UUID, Android will handle the
-       		// mapping for you. Generally, this will return RFCOMM 1,
-       		// but not always; it depends what other BlueTooth services
-       		// are in use on your Android device.
-       		try {
-       			btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
-       		} catch (IOException e) {
-       			Log.e(TAG, "ON RESUME: Socket creation failed.", e);
-       		}
-
-       		// Discovery may be going on, e.g., if you're running a
-       		// 'scan for devices' search from your handset's Bluetooth
-       		// settings, so we call cancelDiscovery(). It doesn't hurt
-       		// to call it, but it might hurt not to... discovery is a
-       		// heavyweight process; you don't want it in progress when
-       		// a connection attempt is made.
-       		mBluetoothAdapter.cancelDiscovery();
-
-       		// Blocking connect, for a simple client nothing else can
-       		// happen until a successful connection is made, so we
-       		// don't care if it blocks.
-       		try {
-       			btSocket.connect();
-       			Log.e(TAG, "ON RESUME: BT connection established, data transfer link open.");
-       		} catch (IOException e) {
-       			try {
-       				btSocket.close();
-       			} catch (IOException e2) {
-       				Log.e(TAG, 
-       					"ON RESUME: Unable to close socket during connection failure", e2);
-       			}
-       		}
-       		// Create a data stream so we can talk to server.
-       		if (D)
-       			Log.e(TAG, "+ ABOUT TO SAY SOMETHING TO SERVER +");
-
-       		try {
-       			outStream = btSocket.getOutputStream();
-       		} catch (IOException e) {
-        		Log.e(TAG, "ON RESUME: Output stream creation failed.", e);
-        	}
-
-        	String message = "Hello message from client to server.";
-        	byte[] msgBuffer = message.getBytes();
-        	try {
-        		outStream.write(msgBuffer);
-        	} catch (IOException e) {
-        		Log.e(TAG, "ON RESUME: Exception during write.", e);
-        	}
+       		
+       		BluetoothUtils.Send(mBluetoothAdapter, btSocket);
+       		
+       		
             return true;
         case R.id.color:
             // Ensure this device is discoverable by others
