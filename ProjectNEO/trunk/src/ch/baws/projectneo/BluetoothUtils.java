@@ -8,11 +8,19 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
+/**
+ * class Bluetooth utils
+ * provides basic bluetooth functions
+ **/
 
 public class BluetoothUtils {
 	private static final String TAG = "BN_BTUTILS";
 	private static final boolean D = true;
 	private static OutputStream outStream = null;
+	
+	private BluetoothAdapter mBluetoothAdapter = null;
+	private BluetoothSocket btSocket = null;
+	
 	
 	// Well known SPP UUID (will *probably* map to
 	// RFCOMM channel 1 (default) if not in use);
@@ -22,8 +30,53 @@ public class BluetoothUtils {
 
 	// ==> hardcode your server's MAC address here <==
 	private static String address = "00:07:80:85:8B:6E";
-			
-	public static void Send(BluetoothAdapter mBluetoothAdapter, BluetoothSocket btSocket) 
+
+	/**
+	 * method Available
+	 * initializes the BT connection
+	 */
+	public boolean Init()
+	{
+        if (D)
+        	Log.e(TAG, "+++ Init +++");
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (mBluetoothAdapter == null) {
+			return false;
+		}
+		else {
+		return true;
+		}
+	}
+	
+	public boolean Active()
+	{
+        if (D)
+        	Log.e(TAG, "+++ Active +++");
+		if (!mBluetoothAdapter.isEnabled()) {
+			 return false;
+		}
+		else return true;
+	}
+	
+	/**
+	 * method Test
+	 * tests if BT connection is working
+	 * @return
+	 */
+	public boolean Test()
+	{
+		//TODO
+		return false;
+	}
+	
+	
+	/**
+	 * method Send
+	 * @param BluetoothAdapter
+	 * @param BluetoothSocket
+	 * @return void
+	 **/
+	public void Send(String message) 
 	{
    		// When this returns, it will 'know' about the server,
    		// via it's MAC address.
@@ -78,12 +131,28 @@ public class BluetoothUtils {
     		Log.e(TAG, "ON RESUME: Output stream creation failed.", e);
     	}
 
-    	String message = "Hello message from client to server.";
+    	message = "Hello message from client to server.";
     	byte[] msgBuffer = message.getBytes();
     	try {
     		outStream.write(msgBuffer);
     	} catch (IOException e) {
     		Log.e(TAG, "ON RESUME: Exception during write.", e);
     	}
+	}
+	
+	
+	/**
+	 * method Close
+	 * shut down BT connection
+	 * @return 
+	 * @return
+	 */
+	public void Close()
+	{
+   		try	{
+   			btSocket.close();
+   		} catch (IOException e2) {
+   			Log.e(TAG, "ON PAUSE: Unable to close socket.", e2);
+		}
 	}
 }

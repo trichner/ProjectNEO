@@ -11,11 +11,8 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.UUID;
 
 
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.util.Log;
 
@@ -24,11 +21,10 @@ public class ProjectNEOActivity extends Activity {
 	
 	private static final String TAG = "PN_ACTIVITY";
 	private static final boolean D = true;
-	private BluetoothAdapter mBluetoothAdapter = null;
-	private BluetoothSocket btSocket = null;
+
 	private OutputStream outStream = null;
 
-	  
+	//private BluetoothUtils Bluetooth = null;  
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,14 +40,13 @@ public class ProjectNEOActivity extends Activity {
 //        }
 //        
 
-
+        BluetoothUtils Bluetooth = new BluetoothUtils();
 
     	// new stuff
         if (D)
         	Log.e(TAG, "+++ ON CREATE +++");
         
-    	mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    	if (mBluetoothAdapter == null) {
+    	if (Bluetooth.Init()==false) { //no BT adapter available
     		Toast.makeText(this, 
     			"You need Bluetooth in order to use this program", 
     			Toast.LENGTH_LONG).show();
@@ -59,10 +54,10 @@ public class ProjectNEOActivity extends Activity {
     		return;
     	}
     	
-      if (!mBluetoothAdapter.isEnabled()) {
+      if (!Bluetooth.Active()) {
       Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
       startActivityForResult(enableBtIntent, 1);
-  }
+      }
 
     	if (D)
     		Log.e(TAG, "+++ DONE IN ON CREATE, GOT LOCAL BT ADAPTER +++");
@@ -99,12 +94,9 @@ public class ProjectNEOActivity extends Activity {
    				Log.e(TAG, "ON PAUSE: Couldn't flush output stream.", e);
    			}
    		}
+   		//Bluetooth.Close();
 
-   		try	{
-   			btSocket.close();
-   		} catch (IOException e2) {
-   			Log.e(TAG, "ON PAUSE: Unable to close socket.", e2);
-   		}
+
    	}
 
    	@Override
@@ -139,8 +131,8 @@ public class ProjectNEOActivity extends Activity {
        			Log.e(TAG, "+ SEND BUTTON SELECT +");
        			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
        		}
-       		
-       		BluetoothUtils.Send(mBluetoothAdapter, btSocket);
+       		String message = "Hello message from client to server.";
+       		//BluetoothUtils.Send(message);
        		
        		
             return true;
