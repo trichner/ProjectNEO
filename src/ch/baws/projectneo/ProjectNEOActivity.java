@@ -24,7 +24,7 @@ public class ProjectNEOActivity extends Activity {
 
 	private OutputStream outStream = null;
 
-	//private BluetoothUtils Bluetooth = null;  
+	private BluetoothUtils Bluetooth = null;  
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class ProjectNEOActivity extends Activity {
 //        }
 //        
 
-        BluetoothUtils Bluetooth = new BluetoothUtils();
+        Bluetooth = new BluetoothUtils();
 
     	// new stuff
         if (D)
@@ -132,7 +132,7 @@ public class ProjectNEOActivity extends Activity {
        			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
        		}
        		String message = "Hello message from client to server.";
-       		//BluetoothUtils.Send(message);
+       		Bluetooth.Send(message);
        		
        		
             return true;
