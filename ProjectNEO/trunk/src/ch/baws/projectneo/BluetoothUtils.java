@@ -16,7 +16,7 @@ import android.util.Log;
 public class BluetoothUtils {
 	private static final String TAG = "BN_BTUTILS";
 	private static final boolean D = true;
-	private static OutputStream outStream = null;
+	private OutputStream outStream = null;
 	
 	private BluetoothAdapter mBluetoothAdapter = null;
 	private BluetoothSocket btSocket = null;
@@ -147,7 +147,8 @@ public class BluetoothUtils {
 	 * @return 
 	 * @return
 	 */
-	public void Close()
+	public void Close() //using this method gives FC
+	//TODO
 	{
    		try	{
    			btSocket.close();
