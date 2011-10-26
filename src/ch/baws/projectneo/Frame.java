@@ -19,7 +19,7 @@ import java.nio.ByteBuffer;
 public class Frame {
 										// head + cmdb + 3x 8Byte
 	private final static int PACKETLENGTH = 1+1+3*Long.SIZE/8;
-	private final static byte head = (byte) 0x42;
+	private final static byte head = (byte) 0x17;
 	private byte cmdb = (byte) 0x00;
 	
 	private long blub = 0;
