@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.io.OutputStream;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 
 public class ProjectNEOActivity extends Activity {
@@ -21,6 +23,7 @@ public class ProjectNEOActivity extends Activity {
 	
 	private static final String TAG = "PN_ACTIVITY";
 	private static final boolean D = true;
+	public int colorArray[][];
 
 	private OutputStream outStream = null;
 
@@ -39,14 +42,14 @@ public class ProjectNEOActivity extends Activity {
 //            return;
 //        }
 //        
-
+        //colorArray[1,1] = 1;
         Bluetooth = new BluetoothUtils();
 
     	// new stuff
         if (D)
         	Log.e(TAG, "+++ ON CREATE +++");
         
-    	if (Bluetooth.Init()==false) { //no BT adapter available
+    	if (Bluetooth.init()==false) { //no BT adapter available
     		Toast.makeText(this, 
     			"You need Bluetooth in order to use this program", 
     			Toast.LENGTH_LONG).show();
@@ -54,13 +57,17 @@ public class ProjectNEOActivity extends Activity {
     		return;
     	}
     	
-      if (!Bluetooth.Active()) {
+      if (!Bluetooth.active()) {
       Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
       startActivityForResult(enableBtIntent, 1);
       }
 
-    	if (D)
+    if (D)
     		Log.e(TAG, "+++ DONE IN ON CREATE, GOT LOCAL BT ADAPTER +++");
+    
+    
+
+    
     }
 
     @Override
@@ -132,7 +139,7 @@ public class ProjectNEOActivity extends Activity {
        			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
        		}
        		String message = "Hello message from client to server.";
-       		Bluetooth.Send(message);
+       		Bluetooth.send(message);
        		
        		
             return true;
@@ -143,6 +150,18 @@ public class ProjectNEOActivity extends Activity {
         }
         return false;
     }
+    
+public void toggleColor(View v){
+//	int i = colorArray[1,1];
+//	
+//	switch(colorArray[1,j]]){
+//	
+//	}
+	v.setBackgroundColor(Color.RED);
+	
+}
+
+    
     
 }
     

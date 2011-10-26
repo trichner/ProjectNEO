@@ -35,7 +35,7 @@ public class BluetoothUtils {
 	 * method Available
 	 * initializes the BT connection
 	 */
-	public boolean Init()
+	public boolean init()
 	{
         if (D)
         	Log.e(TAG, "+++ Init +++");
@@ -48,7 +48,7 @@ public class BluetoothUtils {
 		}
 	}
 	
-	public boolean Active()
+	public boolean active()
 	{
         if (D)
         	Log.e(TAG, "+++ Active +++");
@@ -63,7 +63,7 @@ public class BluetoothUtils {
 	 * tests if BT connection is working
 	 * @return
 	 */
-	public boolean Test()
+	public boolean test()
 	{
 		//TODO
 		return false;
@@ -76,7 +76,7 @@ public class BluetoothUtils {
 	 * @param BluetoothSocket
 	 * @return void
 	 **/
-	public void Send(String message) 
+	public void send(String message) 
 	{
    		// When this returns, it will 'know' about the server,
    		// via it's MAC address.
@@ -131,8 +131,12 @@ public class BluetoothUtils {
     		Log.e(TAG, "ON RESUME: Output stream creation failed.", e);
     	}
 
-    	message = "Hello message from client to server.";
-    	byte[] msgBuffer = message.getBytes();
+		Frame frame = new Frame();
+		byte[] packet = frame.generate(GeneralUtils.randomArray());
+		//Frame.print(packet);
+    	//message = "Hello message from client to server.";
+    	//byte[] msgBuffer = message.getBytes();
+		byte[] msgBuffer = packet;
     	try {
     		outStream.write(msgBuffer);
     	} catch (IOException e) {
@@ -147,7 +151,7 @@ public class BluetoothUtils {
 	 * @return 
 	 * @return
 	 */
-	public void Close() //using this method gives FC
+	public void close() //using this method gives FC
 	//TODO
 	{
    		try	{
@@ -156,4 +160,8 @@ public class BluetoothUtils {
    			Log.e(TAG, "ON PAUSE: Unable to close socket.", e2);
 		}
 	}
+
+	
+
+		
 }
