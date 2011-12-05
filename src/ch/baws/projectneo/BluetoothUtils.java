@@ -76,7 +76,7 @@ public class BluetoothUtils {
 	 * @param BluetoothSocket
 	 * @return void
 	 **/
-	public void send(String message) 
+	public void send(Frame frame) 
 	{
    		// When this returns, it will 'know' about the server,
    		// via it's MAC address.
@@ -131,16 +131,17 @@ public class BluetoothUtils {
     		Log.e(TAG, "ON RESUME: Output stream creation failed.", e);
     	}
 
-		Frame frame = new Frame();
+		//Frame frame = new Frame();
 		byte[] packet = frame.generate(GeneralUtils.randomArray());
 		//Frame.print(packet);
+		Log.e(TAG, "ON SEND: "+Frame.print(packet));
     	//message = "Hello message from client to server.";
     	//byte[] msgBuffer = message.getBytes();
 		byte[] msgBuffer = packet;
     	try {
     		outStream.write(msgBuffer);
     	} catch (IOException e) {
-    		Log.e(TAG, "ON RESUME: Exception during write.", e);
+//    		Log.e(TAG, "ON RESUME: Exception during write.", e);
     	}
 	}
 	

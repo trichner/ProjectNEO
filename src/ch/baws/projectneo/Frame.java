@@ -29,6 +29,10 @@ public class Frame {
 	//===== Generators
 	/**
 	 * Generates a Frame Packet out of a single array
+	 * 0 = white/off
+	 * 1 = red
+	 * 2 = green
+	 * 3 = blue
 	 * @param arr Array which has !0 for active LEDs
 	 * @return Frame-Packet
 	 */
@@ -70,9 +74,11 @@ public class Frame {
 	
 	//===== Utils
 	
-	public static void print(byte[] packet){
+	public static String print(byte[] packet){
+		String str = new String();
 		for(int i=0;i<PACKETLENGTH;i++){
-			System.out.println(i + ' ' + Integer.toBinaryString(packet[i]));
+			str+= ("-"+Integer.toBinaryString(packet[i]));
 		}
+		return str;
 	}
 }
