@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Timer;
 
 
 import android.content.Intent;
@@ -234,14 +235,21 @@ public class ProjectNEOActivity extends Activity {
        			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
        		}
        		//String message = "Hello message from client to server.";
-       	
        		
-       		Bluetooth.send(colorArray);
+       		Timer timer = new Timer();
+       		SendTimer snd = new SendTimer();
+       		snd.setBluetooth(Bluetooth);
+       		snd.setArray(colorArray);
+       		timer.schedule  ( snd, 1000, 100 );
+       		//Bluetooth.send(colorArray);
+       		
+       		Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
        		
        		
             return true;
         case R.id.connect:
         	Bluetooth.connect();
+        	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	return true;
         }
         return false;
@@ -410,6 +418,7 @@ public void toggle(Button btn, int[][] colorArray, int i, int j)
 	
 	
 }
+
     
 }
     

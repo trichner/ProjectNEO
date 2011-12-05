@@ -142,8 +142,8 @@ public class BluetoothUtils {
 
 		Frame frame = new Frame();
 		//byte[] packet = frame.generate(GeneralUtils.randomArray());
-   		//byte[] packet = frame.generate(colorArray);
-		byte[] packet = frame.generateDebug();
+   		byte[] packet = frame.generate(colorArray);
+		//byte[] packet = frame.generateDebug();
 		//Frame.print(packet);
 		//Log.e(TAG, "ON SEND: "+Frame.print(packet));
     	//String message = "Hello message from client to server.";
