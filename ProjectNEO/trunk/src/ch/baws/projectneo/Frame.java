@@ -37,10 +37,17 @@ public class Frame {
 	 * @return Frame-Packet
 	 */
 	public byte[] generate(int[][] arr){
-		
-		blub = Bitfields.toBit(arr);
-		redb=0;
-		greb=0;
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				if(arr[i][j]==1){
+					redb |= Bitfields.xyToBit(i, j);
+				}else if(arr[i][j]==2){
+					greb |= Bitfields.xyToBit(i, j);
+				}else if(arr[i][j]==3){
+					blub |= Bitfields.xyToBit(i, j);
+				}
+			}
+		}
 		return finish();
 	}
 	/**
