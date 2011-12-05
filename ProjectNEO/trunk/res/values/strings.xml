@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, ProjectNEOActivity!</string>
+    <string name="hello">Welcome to ProjectNEO by Thomas Richner, Stefan Mach, Marcel Mohler</string>
     <string name="app_name">ProjectNEO</string>
     <string name="color">Color</string>
     <string name="send">Send</string>

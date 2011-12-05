@@ -76,7 +76,7 @@ public class BluetoothUtils {
 	 * @param BluetoothSocket
 	 * @return void
 	 **/
-	public void send(Frame frame) 
+	public void send(int[][] colorArray) 
 	{
    		// When this returns, it will 'know' about the server,
    		// via it's MAC address.
@@ -131,8 +131,9 @@ public class BluetoothUtils {
     		Log.e(TAG, "ON RESUME: Output stream creation failed.", e);
     	}
 
-		//Frame frame = new Frame();
-		byte[] packet = frame.generate(GeneralUtils.randomArray());
+		Frame frame = new Frame();
+		//byte[] packet = frame.generate(GeneralUtils.randomArray());
+   		byte[] packet = frame.generate(colorArray);
 		//Frame.print(packet);
 		Log.e(TAG, "ON SEND: "+Frame.print(packet));
     	//message = "Hello message from client to server.";

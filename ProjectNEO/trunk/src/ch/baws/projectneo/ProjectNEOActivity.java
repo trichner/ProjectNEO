@@ -11,12 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
@@ -54,8 +52,6 @@ public class ProjectNEOActivity extends Activity {
 //            return;
 //        }
 //        
-        String FILENAME = "hello_file";
-        String string = "hello world!";
 
 //        FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
 //        fos.write(string.getBytes());
@@ -238,9 +234,9 @@ public class ProjectNEOActivity extends Activity {
        			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
        		}
        		//String message = "Hello message from client to server.";
+       	
        		
-       		Frame frame = new Frame();
-       		Bluetooth.send(frame);
+       		Bluetooth.send(colorArray);
        		
        		
             return true;
@@ -287,8 +283,108 @@ public void toggleColor(View v){
 		toggle(button27, colorArray, 2, 7);
 	else if (button28.getId() == ((Button)v).getId())
 		toggle(button28, colorArray, 2, 8);
+
+	if (button31.getId() == ((Button)v).getId())
+		toggle(button31, colorArray, 3, 1);
+	else if (button32.getId() == ((Button)v).getId())
+		toggle(button32, colorArray, 3, 2);
+	else if (button33.getId() == ((Button)v).getId())
+		toggle(button33, colorArray, 3, 3);
+	else if (button34.getId() == ((Button)v).getId())
+		toggle(button34, colorArray, 3, 4);
+	else if (button35.getId() == ((Button)v).getId())
+		toggle(button35, colorArray, 3, 5);
+	else if (button36.getId() == ((Button)v).getId())
+		toggle(button36, colorArray, 3, 6);
+	else if (button37.getId() == ((Button)v).getId())
+		toggle(button37, colorArray, 3, 7);
+	else if (button38.getId() == ((Button)v).getId())
+		toggle(button38, colorArray, 3, 8);
 	
+	if (button41.getId() == ((Button)v).getId())
+		toggle(button41, colorArray, 4, 1);
+	else if (button42.getId() == ((Button)v).getId())
+		toggle(button42, colorArray, 4, 2);
+	else if (button43.getId() == ((Button)v).getId())
+		toggle(button43, colorArray, 4, 3);
+	else if (button44.getId() == ((Button)v).getId())
+		toggle(button44, colorArray, 4, 4);
+	else if (button45.getId() == ((Button)v).getId())
+		toggle(button45, colorArray, 4, 5);
+	else if (button46.getId() == ((Button)v).getId())
+		toggle(button46, colorArray, 4, 6);
+	else if (button47.getId() == ((Button)v).getId())
+		toggle(button47, colorArray, 4, 7);
+	else if (button48.getId() == ((Button)v).getId())
+		toggle(button48, colorArray, 4, 8);
 	
+	if (button51.getId() == ((Button)v).getId())
+		toggle(button51, colorArray, 5, 1);
+	else if (button52.getId() == ((Button)v).getId())
+		toggle(button52, colorArray, 5, 2);
+	else if (button53.getId() == ((Button)v).getId())
+		toggle(button53, colorArray, 5, 3);
+	else if (button54.getId() == ((Button)v).getId())
+		toggle(button54, colorArray, 5, 4);
+	else if (button55.getId() == ((Button)v).getId())
+		toggle(button55, colorArray, 5, 5);
+	else if (button56.getId() == ((Button)v).getId())
+		toggle(button56, colorArray, 5, 6);
+	else if (button57.getId() == ((Button)v).getId())
+		toggle(button57, colorArray, 5, 7);
+	else if (button58.getId() == ((Button)v).getId())
+		toggle(button58, colorArray, 5, 8);
+	
+	if (button61.getId() == ((Button)v).getId())
+		toggle(button61, colorArray, 6, 1);
+	else if (button62.getId() == ((Button)v).getId())
+		toggle(button62, colorArray, 6, 2);
+	else if (button63.getId() == ((Button)v).getId())
+		toggle(button63, colorArray, 6, 3);
+	else if (button64.getId() == ((Button)v).getId())
+		toggle(button64, colorArray, 6, 4);
+	else if (button65.getId() == ((Button)v).getId())
+		toggle(button65, colorArray, 6, 5);
+	else if (button66.getId() == ((Button)v).getId())
+		toggle(button66, colorArray, 6, 6);
+	else if (button67.getId() == ((Button)v).getId())
+		toggle(button67, colorArray, 6, 7);
+	else if (button68.getId() == ((Button)v).getId())
+		toggle(button68, colorArray, 6, 8);
+	
+	if (button71.getId() == ((Button)v).getId())
+		toggle(button71, colorArray, 7, 1);
+	else if (button72.getId() == ((Button)v).getId())
+		toggle(button72, colorArray, 7, 2);
+	else if (button73.getId() == ((Button)v).getId())
+		toggle(button73, colorArray, 7, 3);
+	else if (button74.getId() == ((Button)v).getId())
+		toggle(button74, colorArray, 7, 4);
+	else if (button75.getId() == ((Button)v).getId())
+		toggle(button75, colorArray, 7, 5);
+	else if (button76.getId() == ((Button)v).getId())
+		toggle(button76, colorArray, 7, 6);
+	else if (button77.getId() == ((Button)v).getId())
+		toggle(button77, colorArray, 7, 7);
+	else if (button78.getId() == ((Button)v).getId())
+		toggle(button78, colorArray, 7, 8);
+	
+	if (button81.getId() == ((Button)v).getId())
+		toggle(button81, colorArray, 8, 1);
+	else if (button82.getId() == ((Button)v).getId())
+		toggle(button82, colorArray, 8, 2);
+	else if (button83.getId() == ((Button)v).getId())
+		toggle(button83, colorArray, 8, 3);
+	else if (button84.getId() == ((Button)v).getId())
+		toggle(button84, colorArray, 8, 4);
+	else if (button85.getId() == ((Button)v).getId())
+		toggle(button85, colorArray, 8, 5);
+	else if (button86.getId() == ((Button)v).getId())
+		toggle(button86, colorArray, 8, 6);
+	else if (button87.getId() == ((Button)v).getId())
+		toggle(button87, colorArray, 8, 7);
+	else if (button88.getId() == ((Button)v).getId())
+		toggle(button88, colorArray, 8, 8);
 }
 
 public void toggle(Button btn, int[][] colorArray, int i, int j)
