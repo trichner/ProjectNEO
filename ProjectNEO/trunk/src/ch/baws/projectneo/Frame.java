@@ -81,6 +81,13 @@ public class Frame {
 	
 	//===== Utils
 	
+	public byte[] generateDebug(){
+		redb = ('t' << 56) | ('e' << 48) | ('s' << 40) | ('t' << 32);
+		greb = ('t' << 56) | ('e' << 48) | ('s' << 40) | ('t' << 32);
+		blub = ('t' << 56) | ('e' << 48) | ('s' << 40) | ('t' << 32);
+		return finish();
+	}
+	
 	public static String print(byte[] packet){
 		String str = new String();
 		for(int i=0;i<PACKETLENGTH;i++){
