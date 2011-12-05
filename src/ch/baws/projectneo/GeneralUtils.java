@@ -4,6 +4,14 @@ import java.util.Random;
 
 public class GeneralUtils {
 	
+	static String randomCharString()
+	{
+		Random r = new Random();
+		char c = (char)(r.nextInt(26) + 'a');
+		return String.valueOf(c);
+		
+	}
+	
 	static int[][] randomArray()
 	{
 		Random rand = new Random();

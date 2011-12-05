@@ -240,10 +240,9 @@ public class ProjectNEOActivity extends Activity {
        		
        		
             return true;
-        case R.id.color:
-            // Ensure this device is discoverable by others
-            //ensureDiscoverable();
-            return true;
+        case R.id.connect:
+        	Bluetooth.connect();
+        	return true;
         }
         return false;
     }
