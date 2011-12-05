@@ -1,6 +1,7 @@
 package ch.baws.projectneo;
 
 import java.nio.ByteBuffer;
+import java.util.Random;
 
 /*
  *   Frame Generator
@@ -82,9 +83,19 @@ public class Frame {
 	//===== Utils
 	
 	public byte[] generateDebug(){
-		redb = ('t' << 56) | ('e' << 48) | ('s' << 40) | ('t' << 32);
-		greb = ('t' << 56) | ('e' << 48) | ('s' << 40) | ('t' << 32);
-		blub = ('t' << 56) | ('e' << 48) | ('s' << 40) | ('t' << 32);
+		redb = ('t' << 56) | ('e' << 48) | ('s' << 40) | ('t' << 32) | ('m' << 24) | ('e' << 16) | ('s' << 8) | ('s' << 0);
+		greb = ('a' << 56) | ('g' << 48) | ('e' << 40) | ('1' << 32) | ('2' << 24) | ('3' << 16) | ('4' << 8) | ('5' << 0);
+		
+		
+		blub = 0;
+		Random rand = new Random();
+		int chr;
+		for(int i=0;i<8;i++){
+			chr = (int) 'A' + rand.nextInt(26);
+			blub <<= 8;
+			blub |= chr;
+		}
+
 		return finish();
 	}
 	
