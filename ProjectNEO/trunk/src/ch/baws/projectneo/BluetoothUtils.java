@@ -69,14 +69,13 @@ public class BluetoothUtils {
 		return false;
 	}
 	
-	
 	/**
-	 * method Send
+	 * method connect
 	 * @param BluetoothAdapter
 	 * @param BluetoothSocket
 	 * @return void
 	 **/
-	public void send(int[][] colorArray) 
+	public void connect() 
 	{
    		// When this returns, it will 'know' about the server,
    		// via it's MAC address.
@@ -120,7 +119,17 @@ public class BluetoothUtils {
    				Log.e(TAG, 
    					"ON RESUME: Unable to close socket during connection failure", e2);
    			}
-   		}
+   		}		
+	}
+	/**
+	 * method Send
+	 * @param BluetoothAdapter
+	 * @param BluetoothSocket
+	 * @return void
+	 **/
+	public void send(int[][] colorArray) 
+	{
+
    		// Create a data stream so we can talk to server.
    		if (D)
    			Log.e(TAG, "+ ABOUT TO SAY SOMETHING TO SERVER +");
@@ -133,10 +142,12 @@ public class BluetoothUtils {
 
 		Frame frame = new Frame();
 		//byte[] packet = frame.generate(GeneralUtils.randomArray());
-   		byte[] packet = frame.generate(colorArray);
+   		//byte[] packet = frame.generate(colorArray);
+		byte[] packet = frame.generateDebug();
 		//Frame.print(packet);
-		Log.e(TAG, "ON SEND: "+Frame.print(packet));
-    	//message = "Hello message from client to server.";
+		//Log.e(TAG, "ON SEND: "+Frame.print(packet));
+    	//String message = "Hello message from client to server.";
+		//String message = GeneralUtils.randomCharString();
     	//byte[] msgBuffer = message.getBytes();
 		byte[] msgBuffer = packet;
     	try {
