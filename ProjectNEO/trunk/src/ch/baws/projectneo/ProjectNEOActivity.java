@@ -26,6 +26,7 @@ public class ProjectNEOActivity extends Activity {
 	private static final String TAG = "PN_ACTIVITY";
 	private static final boolean D = true;
 	public int[][] colorArray;
+	public SendTimer snd;
 
 	private OutputStream outStream = null;
 
@@ -237,7 +238,7 @@ public class ProjectNEOActivity extends Activity {
        		//String message = "Hello message from client to server.";
        		
        		Timer timer = new Timer();
-       		SendTimer snd = new SendTimer();
+       		snd = new SendTimer();
        		snd.setBluetooth(Bluetooth);
        		snd.setArray(colorArray);
        		timer.schedule  ( snd, 1000, 100 );
@@ -399,18 +400,22 @@ public void toggle(Button btn, int[][] colorArray, int i, int j)
 	
 	if(colorArray[i][j]==0){
 		colorArray[i][j] = 1;
+		snd.setArray(colorArray);
 		btn.setBackgroundColor(Color.RED);
 	}
 	else if(colorArray[i][j]==1){
 		colorArray[i][j] = 2;
+		snd.setArray(colorArray);
 		btn.setBackgroundColor(Color.GREEN);
 	}
 	else if(colorArray[i][j]==2){
 		colorArray[i][j] = 3;
+		snd.setArray(colorArray);
 		btn.setBackgroundColor(Color.BLUE);
 	}
 	else if(colorArray[i][j]==3){
 		colorArray[i][j] = 0;
+		snd.setArray(colorArray);
 		btn.setBackgroundColor(Color.WHITE);
 	}
 		
