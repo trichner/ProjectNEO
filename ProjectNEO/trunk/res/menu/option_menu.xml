@@ -14,10 +14,12 @@
      limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/send"
-          android:icon="@android:drawable/ic_menu_send"
-          android:title="@string/send" />
+    
     <item android:id="@+id/connect"
           android:icon="@android:drawable/ic_menu_share"
           android:title="@string/connect" />
+    <item android:id="@+id/effects" 
+          android:title="@string/effects" 
+          android:icon="@android:drawable/ic_menu_slideshow" />
+    
 </menu>
