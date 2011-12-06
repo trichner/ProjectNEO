@@ -25,13 +25,14 @@ public class ProjectNEOActivity extends Activity {
 	
 	private static final String TAG = "PN_ACTIVITY";
 	private static final boolean D = true;
-	public int[][] colorArray;
-	public SendTimer snd;
+	public int[][] colorArray; // array to store the current LED colors
+	public SendTimer snd; // Timertask
+	public boolean connected = false;
 
 	private OutputStream outStream = null;
 
-	private BluetoothUtils Bluetooth = null;  
-	Button button11, button12, button13, button14, button15, button16, button17, button18;
+	private BluetoothUtils Bluetooth = null;
+	Button button11, button12, button13, button14, button15, button16, button17, button18; // all buttons
 	Button button21, button22, button23, button24, button25, button26, button27, button28;
 	Button button31, button32, button33, button34, button35, button36, button37, button38;
 	Button button41, button42, button43, button44, button45, button46, button47, button48;
@@ -45,21 +46,8 @@ public class ProjectNEOActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-//        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//        
-//        // If the adapter is null, then Bluetooth is not supported
-//        if (mBluetoothAdapter == null) {
-//            Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
-//            finish();
-//            return;
-//        }
-//        
-
-//        FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-//        fos.write(string.getBytes());
-//        fos.close();
         
-       colorArray = new int[9][9];
+       colorArray = new int[9][9]; // default Array, makes sure it contains zeros
         for (int i=0;i<9;i++){
         	for (int j=0;j<9;j++){
         		colorArray[i][j] = 0;
@@ -67,7 +55,7 @@ public class ProjectNEOActivity extends Activity {
         }	
         
         
-        button11 = (Button) findViewById(R.id.button11);
+        button11 = (Button) findViewById(R.id.button11); // makes sure we can use buttonxx as a variable
         button12 = (Button) findViewById(R.id.button12);
         button13 = (Button) findViewById(R.id.button13);
         button14 = (Button) findViewById(R.id.button14);
@@ -142,7 +130,6 @@ public class ProjectNEOActivity extends Activity {
         
         Bluetooth = new BluetoothUtils();
 
-    	// new stuff
         if (D)
         	Log.e(TAG, "+++ ON CREATE +++");
         
@@ -154,7 +141,7 @@ public class ProjectNEOActivity extends Activity {
     		return;
     	}
     	
-      if (!Bluetooth.active()) {
+      if (!Bluetooth.active()) { // request popup if BT isnt activated
       Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
       startActivityForResult(enableBtIntent, 1);
       }
@@ -230,32 +217,43 @@ public class ProjectNEOActivity extends Activity {
     
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.send:
+        case R.id.connect:
+        	
        		if (D) {
        			Log.e(TAG, "+ SEND BUTTON SELECT +");
        			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
+       			
        		}
-       		//String message = "Hello message from client to server.";
-       		
-       		Timer timer = new Timer();
+        	Bluetooth.connect();
+        	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
+        	connected = true; //TODO
+      		
+       		Timer timer = new Timer(); // daemon to send current colorcode
        		snd = new SendTimer();
        		snd.setBluetooth(Bluetooth);
        		snd.setArray(colorArray);
-       		timer.schedule  ( snd, 1000, 100 );
-       		//Bluetooth.send(colorArray);
+       		timer.schedule  ( snd, 1000, 33 ); // frequency 30 fps
        		
        		Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
        		
        		
             return true;
-        case R.id.connect:
-        	Bluetooth.connect();
-        	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
+
+        
+        case R.id.effects:
+        	Toast.makeText(getApplicationContext(), "Nothing to see here", Toast.LENGTH_SHORT).show();
+//            final Intent intent = new Intent(this,
+//                    EffectActivity.class);
+//        	startActivity(intent);
         	return true;
+        
         }
         return false;
     }
-    
+/**
+ * method toggleColor  
+ * @param v
+ */
 public void toggleColor(View v){
 	
 	if (button11.getId() == ((Button)v).getId())
@@ -395,9 +393,21 @@ public void toggleColor(View v){
 		toggle(button88, colorArray, 8, 8);
 }
 
+/**
+ * 
+ * @param btn
+ * @param colorArray
+ * @param i x position
+ * @param j y position
+ */
 public void toggle(Button btn, int[][] colorArray, int i, int j)
 {
-	
+if (connected==false)	
+{
+	Toast.makeText(getApplicationContext(), "Please connect first", Toast.LENGTH_SHORT).show();
+}
+else
+{
 	if(colorArray[i][j]==0){
 		colorArray[i][j] = 1;
 		snd.setArray(colorArray);
@@ -418,7 +428,7 @@ public void toggle(Button btn, int[][] colorArray, int i, int j)
 		snd.setArray(colorArray);
 		btn.setBackgroundColor(Color.WHITE);
 	}
-		
+}	
 		
 	
 	
