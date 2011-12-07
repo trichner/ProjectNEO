@@ -25,12 +25,12 @@ public class ProjectNEOActivity extends Activity {
 	
 	private static final String TAG = "PN_ACTIVITY";
 
-	public static final String SEND_KEY = "snd";
 	private static final boolean D = true;
-	public int[][] colorArray; // array to store the current LED colors
+	private int[][] colorArray; // array to store the current LED colors
 
-	public SendTimer snd; // Timertask
-	public Timer timer;
+	private SendTimer snd; // Timertask
+	private Timer timer;
+	private boolean timerisAlive = false; 
 	
 	public boolean connected = false;
 
@@ -193,6 +193,8 @@ public class ProjectNEOActivity extends Activity {
    	@Override
    	public void onStop() {
    		super.onStop();
+    	if(timerisAlive==true)
+    	timer.cancel();
    		if (D)
    			Log.e(TAG, "-- ON STOP --");
    	}
@@ -200,6 +202,8 @@ public class ProjectNEOActivity extends Activity {
    	@Override
    	public void onDestroy() {
    		super.onDestroy();
+    	if(timerisAlive==true)
+    	timer.cancel();
    		if (D)
    			Log.e(TAG, "--- ON DESTROY ---");
    	}
@@ -233,6 +237,7 @@ public class ProjectNEOActivity extends Activity {
        		snd.setBluetooth(Bluetooth);
        		snd.setArray(colorArray);
        		timer.schedule  ( snd, 1000, 33 ); // frequency 30 fps
+       		timerisAlive = true;
        		
        		Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
        		
@@ -244,6 +249,7 @@ public class ProjectNEOActivity extends Activity {
         	//Toast.makeText(getApplicationContext(), "Nothing to see here", Toast.LENGTH_SHORT).show();
             final Intent intent = new Intent(this,EffectActivity.class);           
         	startActivity(intent);
+        	if(timerisAlive==true)
         	timer.cancel();
         	return true;
         
