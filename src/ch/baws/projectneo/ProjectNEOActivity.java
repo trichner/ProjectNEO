@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.util.Timer;
 
 import ch.baws.projectneo.R;
+import ch.baws.projectneo.effects.Buttons;
 
 
 import android.content.Intent;
@@ -39,6 +40,8 @@ public class ProjectNEOActivity extends Activity {
 	private OutputStream outStream = null;
 
 	private BluetoothUtils Bluetooth = null;
+	
+	Buttons buttoneffect = new Buttons();
 	
 	Button button00, button01, button02, button03, button04, button05, button06, button07;
 	Button button10, button11, button12, button13, button14, button15, button16, button17; // all buttons
@@ -235,9 +238,14 @@ public class ProjectNEOActivity extends Activity {
         	connected = true; //TODO
       		
        		timer = new Timer(); // daemon to send current colorcode
-       		snd = new SendTimer();
+       		
+
+       		
+       		
+
+       		buttoneffect.setArray(colorArray);
+       		snd = new SendTimer(buttoneffect);
        		snd.setBluetooth(Bluetooth);
-       		snd.setArray(colorArray);
        		timer.schedule  ( snd, 1000, 33 ); // frequency 30 fps
        		timerisAlive = true;
        		
@@ -419,22 +427,22 @@ else
 {
 	if(colorArray[i][j]==0){
 		colorArray[i][j] = 1;
-		snd.setArray(colorArray);
+		buttoneffect.setArray(colorArray);
 		btn.setBackgroundColor(Color.RED);
 	}
 	else if(colorArray[i][j]==1){
 		colorArray[i][j] = 2;
-		snd.setArray(colorArray);
+		buttoneffect.setArray(colorArray);
 		btn.setBackgroundColor(Color.GREEN);
 	}
 	else if(colorArray[i][j]==2){
 		colorArray[i][j] = 3;
-		snd.setArray(colorArray);
+		buttoneffect.setArray(colorArray);
 		btn.setBackgroundColor(Color.BLUE);
 	}
 	else if(colorArray[i][j]==3){
 		colorArray[i][j] = 0;
-		snd.setArray(colorArray);
+		buttoneffect.setArray(colorArray);
 		btn.setBackgroundColor(Color.WHITE);
 	}
 }	
