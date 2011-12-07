@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class GeneralUtils {
 	
-	static String randomCharString()
+	public static String randomCharString()
 	{
 		Random r = new Random();
 		char c = (char)(r.nextInt(26) + 'a');
@@ -16,7 +16,7 @@ public class GeneralUtils {
 	 * creates an array with random entries
 	 * @return
 	 */
-	static int[][] randomArray(int m,int n)
+	public static int[][] randomArray(int m,int n)
 	{
 		Random rand = new Random();
 		int[][] array = new int[m][n];
@@ -33,9 +33,9 @@ public class GeneralUtils {
 	 * creates an array with all entries = zero
 	 * @return
 	 */
-	static int[][] emptyArray(int m, int n)
+	public static int[][] emptyArray(int m, int n)
 	{
-	int[][] array = new int[m][n]; // default Array, makes sure it contains zeros
+		int[][] array = new int[m][n]; // default Array, makes sure it contains zeros
     	for (int i=0;i<m;i++){
     		for (int j=0;j<n;j++){
     			array[i][j] = 0;
