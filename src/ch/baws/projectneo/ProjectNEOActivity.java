@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Timer;
 
+import ch.baws.projectneo.R;
+
 
 import android.content.Intent;
 import android.graphics.Color;

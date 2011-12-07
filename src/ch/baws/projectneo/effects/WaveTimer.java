@@ -1,7 +1,10 @@
-package ch.baws.projectneo;
+package ch.baws.projectneo.effects;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import ch.baws.projectneo.BluetoothUtils;
+import ch.baws.projectneo.SendTimer;
 
 public class WaveTimer extends TimerTask{
 	private BluetoothUtils bluetooth;
