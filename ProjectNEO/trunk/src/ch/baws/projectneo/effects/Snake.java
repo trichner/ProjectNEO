@@ -2,7 +2,10 @@ package ch.baws.projectneo.effects;
 
 import java.util.Random;
 
-public class Snake extends Thread{
+import ch.baws.projectneo.Frame;
+import ch.baws.projectneo.GeneralUtils;
+
+public class Snake extends Effect{
 	private class BodyPart{
 		int x;
 		int y;
@@ -12,15 +15,35 @@ public class Snake extends Thread{
 			this.y = y;
 		}
 	}
+	private class Food{
+		int x;
+		int y;
+		public void generate(){
+			x = rand.nextInt(8);
+			y = rand.nextInt(8);
+			BodyPart temp=head;
+			
+			while(temp.nextBody != null){
+				if(temp.x==x && temp.y == y){
+					generate();
+					temp = head;
+				}else{
+					temp = temp.nextBody;
+				}
+			}
+		}
+	}
 	
 	private static final boolean D = true;
 	private static final String TAG = "SNAKE_THREAD";
 	
-	private boolean EXIT = false;
+	private static final int COLOR_SNAKE = Frame.NEO_RED; //Red
+	private static final int COLOR_FOOD  = Frame.NEO_BLUE; //Blue
 	
 	public enum Dir{RIGHT,LEFT,UP,DOWN};
 	
 	private BodyPart head;
+	private Food food;
 	
 	private Random rand;
 	
@@ -72,14 +95,22 @@ public class Snake extends Thread{
 	}
 	
 	public void run(){
-		
-		
-		//move and test if move is possible
 		BodyPart next = null;
 		while(!EXIT){
 			//Game Over ?
 			if(!isValidMove(dir)){
 				create();
+			}
+			
+			//catched the food?
+			if(head.x==food.x && head.y==food.y){
+				food.generate();
+			}else{
+				BodyPart temp=head;
+				while(temp.nextBody.nextBody!=null){
+					temp = temp.nextBody;
+				}
+				temp.nextBody=null;
 			}
 			
 			switch(dir){
@@ -102,20 +133,56 @@ public class Snake extends Thread{
 		
 			//Speed of Snake :)
 			try {
-				this.sleep(500);
+				sleep(500);
 			} catch (InterruptedException e) {	}
 		}
 	}
-	
-	public void exit(){
-		EXIT = true;
-	}
+
 	
 	public void turnLeft(){
-		
+		switch(dir){
+		case    UP:
+			dir = Dir.LEFT;
+			break;
+		case RIGHT:
+			dir = Dir.UP;
+			break;
+		case  DOWN:
+			dir = Dir.RIGHT;
+				break;
+		case  LEFT:
+			dir = Dir.DOWN;
+			break;
+		}
 	}
+	
 	public void turnRight(){
-			
+		switch(dir){
+		case    UP:
+			dir = Dir.RIGHT;
+			break;
+		case RIGHT:
+			dir = Dir.DOWN;
+			break;
+		case  DOWN:
+			dir = Dir.LEFT;
+				break;
+		case  LEFT:
+			dir = Dir.UP;
+			break;
+		}
+	}
+
+	@Override
+	public int[][] getArray() {
+		int[][] array = GeneralUtils.emptyArray(8,8);
+		BodyPart temp = head;
+		while(temp.nextBody!=null){
+			array[temp.x][temp.y] = COLOR_SNAKE; //RED
+		}
+		array[food.x][food.y] = COLOR_FOOD;
+		
+		return array;
 	}
 
 }

@@ -20,7 +20,14 @@ import java.util.Random;
 public class Frame {
 										// head + cmdb + 3x 8Byte
 	private final static int PACKETLENGTH = 1+1+3*Long.SIZE/8;
+	public static final int NEO_RED = 1;
+	public static final int NEO_GREEN = 2;
+	public static final int NEO_BLUE = 3;
+	public static final int NEO_OFF = 0;
+	
+	
 	private final static byte head = (byte) 0x17;
+	
 	private byte cmdb = (byte) 0x00;
 	
 	private long blub = 0;
@@ -31,9 +38,9 @@ public class Frame {
 	/**
 	 * Generates a Frame Packet out of a single array
 	 * 0 = white/off
-	 * 1 = red
-	 * 2 = green
-	 * 3 = blue
+	 * 1 = NEO_RED
+	 * 2 = NEO_GREEN
+	 * 3 = NEO_BLUE
 	 * @param arr Array which has !0 for active LEDs
 	 * @return Frame-Packet
 	 */
