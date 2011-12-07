@@ -5,7 +5,7 @@ import java.util.Random;
 import ch.baws.projectneo.Frame;
 import ch.baws.projectneo.GeneralUtils;
 
-public class Snake extends Effect{
+public class Snake extends Thread{
 	private class BodyPart{
 		int x;
 		int y;
@@ -42,6 +42,7 @@ public class Snake extends Effect{
 	
 	public enum Dir{RIGHT,LEFT,UP,DOWN};
 	
+	private boolean EXIT = false;
 	private BodyPart head;
 	private Food food;
 	
@@ -173,7 +174,6 @@ public class Snake extends Effect{
 		}
 	}
 
-	@Override
 	public int[][] getArray() {
 		int[][] array = GeneralUtils.emptyArray(8,8);
 		BodyPart temp = head;
@@ -184,6 +184,10 @@ public class Snake extends Effect{
 		array[food.x][food.y] = COLOR_FOOD;
 		
 		return array;
+	}
+	
+	public void exit(){
+		EXIT = true;
 	}
 
 }
