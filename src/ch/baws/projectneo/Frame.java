@@ -38,14 +38,14 @@ public class Frame {
 	 * @return Frame-Packet
 	 */
 	public byte[] generate(int[][] arr){
-		for(int i=1;i<9;i++){
-			for(int j=1;j<9;j++){
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
 				if(arr[i][j]==1){
-					redb |= Bitfields.xyToBit(i-1, j-1);
+					redb |= Bitfields.xyToBit(i, j);
 				}else if(arr[i][j]==2){
-					greb |= Bitfields.xyToBit(i-1, j-1);
+					greb |= Bitfields.xyToBit(i, j);
 				}else if(arr[i][j]==3){
-					blub |= Bitfields.xyToBit(i-1, j-1);
+					blub |= Bitfields.xyToBit(i, j);
 				}
 			}
 		}
