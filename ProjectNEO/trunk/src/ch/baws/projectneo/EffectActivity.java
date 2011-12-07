@@ -2,6 +2,9 @@ package ch.baws.projectneo;
 
 import java.util.Timer;
 
+import ch.baws.projectneo.R;
+import ch.baws.projectneo.effects.*;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +18,12 @@ public class EffectActivity extends Activity {
 	private static final String TAG = "EFFECTS_ACTIVITY";
 	private static final boolean D = true;
 	
+	Timer timer;
+	WaveTimer wave;
 	
 	private BluetoothUtils Bluetooth = null;
 	
-	public WaveTimer wave; // Timertask
-	public Timer timer;
+
 	private boolean timerisAlive = false; 
 	
 	public void onCreate(Bundle bndl)
@@ -94,16 +98,11 @@ public class EffectActivity extends Activity {
         	Bluetooth.connect();
 
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-        	
+        	timer = new Timer(); 
+        	wave = new WaveTimer();       	
        		
        			
-           	timer = new Timer(); 
-           	wave = new WaveTimer();
-           	wave.setBluetooth(Bluetooth);
-           	int[][] colorArray = new int[8][8];
-           	wave.setArray(colorArray);
-           	timer.schedule  ( wave, 1000, 1000 ); // frequency 1 fps
-           	timerisAlive=true;
+        	timerisAlive = Wave.start(Bluetooth, timer, wave);
            	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
        		
             return true;
