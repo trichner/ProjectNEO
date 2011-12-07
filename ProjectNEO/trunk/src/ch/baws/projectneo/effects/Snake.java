@@ -177,8 +177,9 @@ public class Snake extends Effect{
 	public int[][] getArray() {
 		int[][] array = GeneralUtils.emptyArray(8,8);
 		BodyPart temp = head;
-		while(temp.nextBody!=null){
+		while(temp!=null){
 			array[temp.x][temp.y] = COLOR_SNAKE; //RED
+			temp = temp.nextBody;
 		}
 		array[food.x][food.y] = COLOR_FOOD;
 		
