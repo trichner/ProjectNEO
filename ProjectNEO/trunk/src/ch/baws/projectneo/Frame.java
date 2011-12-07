@@ -83,7 +83,7 @@ public class Frame {
 	//===== Utils
 	
 	public byte[] generateDebug(){
-		redb = ((int) 't' << 56) | ((int) 'e' << 48) | ((int) 's' << 40) | ((int) 't' << 32) | ((int) 'm' << 24) | ((int) 'e' << 16) | ((int) 's' << 8) | ((int) 's' << 0);
+		redb = ('t' << 56) | ('e' << 48) | ('s' << 40) | ('t' << 32) | ('m' << 24) | ('e' << 16) | ( 's' << 8) | ( 's' << 0);
 		greb = ((int) 'a' << 56) | ((int) 'g' << 48) | ((int) 'e' << 40) | ((int) '1' << 32) | ((int) '2' << 24) | ((int) '3' << 16) | ((int) '4' << 8) | ((int) '5' << 0);
 		
 		
