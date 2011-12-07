@@ -25,7 +25,7 @@ public class SendTimer extends TimerTask{
 	public void run()
 	{
 		int[][] array = effect.getArray();
-		if(array!=null)
+		if(array!=null && array.length==8 && array[0].length==8)
 			bluetooth.send(array);
 	}
 	
