@@ -2,23 +2,31 @@ package ch.baws.projectneo;
 
 import java.util.TimerTask;
 
+import ch.baws.projectneo.effects.Effect;
+
 public class SendTimer extends TimerTask{
 	private BluetoothUtils bluetooth;
-	private int[][] array;
 	
-
+	private Effect effect;
+	
+	public SendTimer(Effect in_effect){
+		this.effect = in_effect;
+		
+		if(!(this.effect.isAlive())){
+        	this.effect.start();			
+		}
+	}
+	
 	public void setBluetooth(BluetoothUtils bluetooth) {
 		this.bluetooth = bluetooth;
-	}
-
-	public void setArray(int[][] in_array) {
-		array = in_array;
 	}
 
 
 	public void run()
 	{
-		bluetooth.send(array);
+		int[][] array = effect.getArray();
+		if(array!=null)
+			bluetooth.send(array);
 	}
 	
 	

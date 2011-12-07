@@ -1,20 +1,42 @@
 package ch.baws.projectneo.effects;
 
-import java.util.Timer;
+import ch.baws.projectneo.GeneralUtils;
 
-import ch.baws.projectneo.BluetoothUtils;
 
-public class Wave {
+public class Wave extends Effect{
 	
-	
-	public static boolean start(BluetoothUtils Bluetooth, Timer timer, WaveTimer wave)
-	{
 
-		wave.setBluetooth(Bluetooth);
-		int[][] colorArray = new int[8][8];
-		wave.setArray(colorArray);
-		timer.schedule  ( wave, 1000, 1000 ); // frequency 1 fps
-		return true;
+	@Override
+	public int[][] getArray() {
+		return this.array;
+	}
+
+	@Override
+	public void run() {
+		
+		
+		this.array = new int[8][8];
+		this.array = GeneralUtils.emptyArray(8, 8);
+		int line = 0;
+		int color = 0;
+		
+		
+		while(!EXIT){
+			if(line==8)
+				line=0;
+			if(color==4)
+				color=0;
+			for (int i=0;i<8;i++)
+				this.array[line][i] = color;
+			line++;
+			if(line%8==0&&line!=0)
+				color++;
+			
+			try {
+				sleep(500);
+			} catch (InterruptedException e) {}
+		}
+		
 	}
 
 }

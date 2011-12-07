@@ -14,22 +14,99 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int color=0x7f060004;
-        public static final int send=0x7f060003;
-        public static final int toggleButton1=0x7f060001;
-        public static final int toggleButton2=0x7f060002;
-        public static final int toggleButton3=0x7f060000;
+        public static final int button00=0x7f060001;
+        public static final int button01=0x7f060002;
+        public static final int button02=0x7f060003;
+        public static final int button03=0x7f060004;
+        public static final int button04=0x7f060005;
+        public static final int button05=0x7f060006;
+        public static final int button06=0x7f060007;
+        public static final int button07=0x7f060008;
+        public static final int button10=0x7f06000a;
+        public static final int button11=0x7f06000b;
+        public static final int button12=0x7f06000c;
+        public static final int button13=0x7f06000d;
+        public static final int button14=0x7f06000e;
+        public static final int button15=0x7f06000f;
+        public static final int button16=0x7f060010;
+        public static final int button17=0x7f060011;
+        public static final int button20=0x7f060013;
+        public static final int button21=0x7f060014;
+        public static final int button22=0x7f060015;
+        public static final int button23=0x7f060016;
+        public static final int button24=0x7f060017;
+        public static final int button25=0x7f060018;
+        public static final int button26=0x7f060019;
+        public static final int button27=0x7f06001a;
+        public static final int button30=0x7f06001c;
+        public static final int button31=0x7f06001d;
+        public static final int button32=0x7f06001e;
+        public static final int button33=0x7f06001f;
+        public static final int button34=0x7f060020;
+        public static final int button35=0x7f060021;
+        public static final int button36=0x7f060022;
+        public static final int button37=0x7f060023;
+        public static final int button40=0x7f060025;
+        public static final int button41=0x7f060026;
+        public static final int button42=0x7f060027;
+        public static final int button43=0x7f060028;
+        public static final int button44=0x7f060029;
+        public static final int button45=0x7f06002a;
+        public static final int button46=0x7f06002b;
+        public static final int button47=0x7f06002c;
+        public static final int button50=0x7f06002e;
+        public static final int button51=0x7f06002f;
+        public static final int button52=0x7f060030;
+        public static final int button53=0x7f060031;
+        public static final int button54=0x7f060032;
+        public static final int button55=0x7f060033;
+        public static final int button56=0x7f060034;
+        public static final int button57=0x7f060035;
+        public static final int button60=0x7f060037;
+        public static final int button61=0x7f060038;
+        public static final int button62=0x7f060039;
+        public static final int button63=0x7f06003a;
+        public static final int button64=0x7f06003b;
+        public static final int button65=0x7f06003c;
+        public static final int button66=0x7f06003d;
+        public static final int button67=0x7f06003e;
+        public static final int button70=0x7f060040;
+        public static final int button71=0x7f060041;
+        public static final int button72=0x7f060042;
+        public static final int button73=0x7f060043;
+        public static final int button74=0x7f060044;
+        public static final int button75=0x7f060045;
+        public static final int button76=0x7f060046;
+        public static final int button77=0x7f060047;
+        public static final int connect=0x7f06004a;
+        public static final int debug=0x7f060049;
+        public static final int effects=0x7f06004b;
+        public static final int linearLayout0=0x7f060000;
+        public static final int linearLayout1=0x7f060009;
+        public static final int linearLayout2=0x7f060012;
+        public static final int linearLayout3=0x7f06001b;
+        public static final int linearLayout4=0x7f060024;
+        public static final int linearLayout5=0x7f06002d;
+        public static final int linearLayout6=0x7f060036;
+        public static final int linearLayout7=0x7f06003f;
+        public static final int wave=0x7f060048;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
+        public static final int effects=0x7f030000;
+        public static final int main=0x7f030001;
     }
     public static final class menu {
-        public static final int option_menu=0x7f050000;
+        public static final int effects_menu=0x7f050000;
+        public static final int option_menu=0x7f050001;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
-        public static final int color=0x7f040002;
+        public static final int choose=0x7f040005;
+        public static final int connect=0x7f040002;
+        public static final int debug=0x7f040007;
+        public static final int effects=0x7f040004;
         public static final int hello=0x7f040000;
         public static final int send=0x7f040003;
+        public static final int wave=0x7f040006;
     }
 }

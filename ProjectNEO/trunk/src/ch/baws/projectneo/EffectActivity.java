@@ -19,7 +19,7 @@ public class EffectActivity extends Activity {
 	private static final boolean D = true;
 	
 	Timer timer;
-	WaveTimer wave;
+	SendTimer snd;
 	
 	private BluetoothUtils Bluetooth = null;
 	
@@ -62,7 +62,6 @@ public class EffectActivity extends Activity {
     	if(timerisAlive==true)
     	{
     		timer.cancel();
-    		wave.sndcancel();
     	}
    		if (D)
    			Log.e(TAG, "-- ON STOP --");
@@ -74,7 +73,6 @@ public class EffectActivity extends Activity {
     	if(timerisAlive==true)
     	{
     		timer.cancel();
-    		wave.sndcancel();
     	}
    		if (D)
    			Log.e(TAG, "--- ON DESTROY ---");
@@ -96,13 +94,15 @@ public class EffectActivity extends Activity {
 
         	Bluetooth.init();
         	Bluetooth.connect();
+        	
+        	Wave wave = new Wave();
 
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
-        	wave = new WaveTimer();       	
-       		
-       			
-        	timerisAlive = Wave.start(Bluetooth, timer, wave);
+        	snd = new SendTimer(wave);  
+        	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps
+        	      		       			
+        	timerisAlive = true;
            	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
        		
             return true;
