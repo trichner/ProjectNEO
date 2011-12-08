@@ -10,7 +10,7 @@ public class StarSky extends Effect{
 	public StarSky(){
 		array = GeneralUtils.emptyArray(8, 8);
 	}
-	public int[][] getArray() {
+	synchronized public int[][] getArray() {
 		return array;
 	}
 
