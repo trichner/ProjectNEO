@@ -66,6 +66,8 @@ public class Snake extends Thread{
 			temp2.nextBody = temp1;
 			temp2 = temp1;
 		}
+		food = new Food();
+		food.generate();
 	}
 	
 	
@@ -100,7 +102,7 @@ public class Snake extends Thread{
 		while(!EXIT){
 			//Game Over ?
 			if(!isValidMove(dir)){
-				create();
+				create();  
 			}
 			
 			//catched the food?
