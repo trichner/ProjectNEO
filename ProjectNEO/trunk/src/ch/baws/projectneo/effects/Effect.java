@@ -2,7 +2,7 @@ package ch.baws.projectneo.effects;
 
 public abstract class Effect extends Thread{
 	
-	protected int[][] array;
+	protected volatile int[][] array;
 	protected boolean EXIT = false;
 	
 	/**
