@@ -11,9 +11,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class EffectActivity extends Activity {
+	
+	TextView title, textview[];
 	
 	private static final String TAG = "EFFECTS_ACTIVITY";
 	private static final boolean D = true;
@@ -23,6 +26,8 @@ public class EffectActivity extends Activity {
 	
 	private BluetoothUtils Bluetooth = null;
 	
+	private EffectDrawer drawer;
+	
 
 	private boolean timerisAlive = false; 
 	
@@ -30,6 +35,21 @@ public class EffectActivity extends Activity {
 	{
     	super.onCreate(bndl);
     	setContentView(R.layout.effects);
+    	
+    	title = (TextView)findViewById(R.id.title);
+    	
+    	textview = new TextView[8];
+    	
+    	textview[0] = (TextView)findViewById(R.id.textview0);
+    	textview[1] = (TextView)findViewById(R.id.textview1);
+    	textview[2] = (TextView)findViewById(R.id.textview2);
+    	textview[3] = (TextView)findViewById(R.id.textview3);
+    	textview[4] = (TextView)findViewById(R.id.textview4);
+    	textview[5] = (TextView)findViewById(R.id.textview5);
+    	textview[6] = (TextView)findViewById(R.id.textview6);
+    	textview[7] = (TextView)findViewById(R.id.textview7);
+    	
+    	drawer = new EffectDrawer(textview); 
 	}
     @Override
     public void onStart() {
@@ -92,7 +112,10 @@ public class EffectActivity extends Activity {
         	if(timerisAlive==true)
         	{
         		timer.cancel();
-        	}     		
+        	}     
+        	
+        	title.setText("Wave Effect started");
+        	
        		Bluetooth = new BluetoothUtils();
 
         	Bluetooth.init();
@@ -102,7 +125,7 @@ public class EffectActivity extends Activity {
 
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
-        	snd = new SendTimer(wave, Bluetooth);  
+        	snd = new SendTimer(wave, Bluetooth, drawer);  
         	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps
         	      		       			
         	timerisAlive = true;
@@ -117,7 +140,10 @@ public class EffectActivity extends Activity {
         	if(timerisAlive==true)
         	{
         		timer.cancel();
-        	}       		
+        	}       	
+        	
+        	title.setText("StarSky Effect started");
+        	
        		Bluetooth = new BluetoothUtils();
 
         	Bluetooth.init();
@@ -127,7 +153,7 @@ public class EffectActivity extends Activity {
 
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
-        	snd = new SendTimer(sky, Bluetooth);  
+        	snd = new SendTimer(sky, Bluetooth, drawer);  
         	timer.schedule  ( snd, 1000, 33 ); // frequency 30 fps
         	      		       			
         	timerisAlive = true;
@@ -141,6 +167,9 @@ public class EffectActivity extends Activity {
         	{
         		timer.cancel();
         	}       	
+        	
+        	title.setText("Wave Effect started");
+        	
        		Bluetooth = new BluetoothUtils();
         	Bluetooth.init();
         	Bluetooth.connect();
@@ -149,7 +178,7 @@ public class EffectActivity extends Activity {
 
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
-        	snd = new SendTimer(randomsnake, Bluetooth);  
+        	snd = new SendTimer(randomsnake, Bluetooth, drawer);  
         	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps   
         	
         	timerisAlive = true;

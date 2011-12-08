@@ -12,12 +12,13 @@ public class SendTimer extends TimerTask{
 	private static final boolean D = true;	
 	
 	private BluetoothUtils bluetooth;
-	
 	private Effect effect;
+	private EffectDrawer effectdrawer;
 	
-	public SendTimer(Effect in_effect, BluetoothUtils in_bluetooth){
+	public SendTimer(Effect in_effect, BluetoothUtils in_bluetooth, EffectDrawer in_ed){
 		this.effect = in_effect;
 		this.bluetooth = in_bluetooth;
+		this.effectdrawer = in_ed;
 		
 		if(!(this.effect.isAlive())){
         	this.effect.start();			
@@ -36,10 +37,12 @@ public class SendTimer extends TimerTask{
 	{
 
 		int[][] arr = effect.getArray();
+		
 		if (D)	Log.e(TAG, "try to send array, size: " + arr.length + "*" + arr[0].length);
 		if(arr!=null && arr.length==8 && arr[0].length==8){
 			if (D)	Log.e(TAG, "sending the array");
 			try{
+				//effectdrawer.draw(arr); //prints the array
 				this.bluetooth.send(arr);
 			} catch (RuntimeException e) {
 				Log.e(TAG, "ON SEND: Runtime Exception, size: "+ arr.length + "*" + arr[0].length, e);				
