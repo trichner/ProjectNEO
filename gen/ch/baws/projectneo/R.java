@@ -78,9 +78,8 @@ public final class R {
         public static final int button75=0x7f060045;
         public static final int button76=0x7f060046;
         public static final int button77=0x7f060047;
-        public static final int connect=0x7f06004a;
-        public static final int debug=0x7f060049;
-        public static final int effects=0x7f06004b;
+        public static final int connect=0x7f06004b;
+        public static final int effects=0x7f06004c;
         public static final int linearLayout0=0x7f060000;
         public static final int linearLayout1=0x7f060009;
         public static final int linearLayout2=0x7f060012;
@@ -89,6 +88,8 @@ public final class R {
         public static final int linearLayout5=0x7f06002d;
         public static final int linearLayout6=0x7f060036;
         public static final int linearLayout7=0x7f06003f;
+        public static final int rsnake=0x7f06004a;
+        public static final int starsky=0x7f060049;
         public static final int wave=0x7f060048;
     }
     public static final class layout {
@@ -103,10 +104,11 @@ public final class R {
         public static final int app_name=0x7f040001;
         public static final int choose=0x7f040005;
         public static final int connect=0x7f040002;
-        public static final int debug=0x7f040007;
         public static final int effects=0x7f040004;
         public static final int hello=0x7f040000;
+        public static final int rsnake=0x7f040008;
         public static final int send=0x7f040003;
+        public static final int starsky=0x7f040007;
         public static final int wave=0x7f040006;
     }
 }
