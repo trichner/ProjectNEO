@@ -244,8 +244,8 @@ public class ProjectNEOActivity extends Activity {
        		
 
        		buttoneffect.setArray(colorArray);
-       		snd = new SendTimer(buttoneffect);
-       		snd.setBluetooth(Bluetooth);
+       		snd = new SendTimer(buttoneffect, Bluetooth);
+       		//snd.setBluetooth(Bluetooth);
        		timer.schedule  ( snd, 1000, 33 ); // frequency 30 fps
        		timerisAlive = true;
        		
@@ -256,8 +256,7 @@ public class ProjectNEOActivity extends Activity {
 
         
         case R.id.effects:
-        	//Toast.makeText(getApplicationContext(), "Nothing to see here", Toast.LENGTH_SHORT).show();
-            final Intent intent = new Intent(this,EffectActivity.class);           
+        	final Intent intent = new Intent(this,EffectActivity.class);           
         	startActivity(intent);
         	if(timerisAlive==true)
         	timer.cancel();

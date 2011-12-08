@@ -89,7 +89,10 @@ public class EffectActivity extends Activity {
         	
        		if (D) 
        			Log.e(TAG, "+ WAVE BUTTON SELECT +");
-       		
+        	if(timerisAlive==true)
+        	{
+        		timer.cancel();
+        	}     		
        		Bluetooth = new BluetoothUtils();
 
         	Bluetooth.init();
@@ -99,7 +102,7 @@ public class EffectActivity extends Activity {
 
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
-        	snd = new SendTimer(wave);  
+        	snd = new SendTimer(wave, Bluetooth);  
         	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps
         	      		       			
         	timerisAlive = true;
@@ -111,7 +114,10 @@ public class EffectActivity extends Activity {
         case R.id.starsky:
        		if (D) 
        			Log.e(TAG, "+ STARSKY BUTTON SELECT +");
-       		
+        	if(timerisAlive==true)
+        	{
+        		timer.cancel();
+        	}       		
        		Bluetooth = new BluetoothUtils();
 
         	Bluetooth.init();
@@ -121,8 +127,8 @@ public class EffectActivity extends Activity {
 
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
-        	snd = new SendTimer(sky);  
-        	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps
+        	snd = new SendTimer(sky, Bluetooth);  
+        	timer.schedule  ( snd, 1000, 33 ); // frequency 30 fps
         	      		       			
         	timerisAlive = true;
            	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
@@ -131,9 +137,11 @@ public class EffectActivity extends Activity {
         case R.id.rsnake:
        		if (D) 
        			Log.e(TAG, "+ RSNAKE BUTTON SELECT +");
-       		
+        	if(timerisAlive==true)
+        	{
+        		timer.cancel();
+        	}       	
        		Bluetooth = new BluetoothUtils();
-
         	Bluetooth.init();
         	Bluetooth.connect();
         	
@@ -141,9 +149,9 @@ public class EffectActivity extends Activity {
 
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
-        	snd = new SendTimer(randomsnake);  
-        	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps
-        	      		       			
+        	snd = new SendTimer(randomsnake, Bluetooth);  
+        	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps   
+        	
         	timerisAlive = true;
            	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
