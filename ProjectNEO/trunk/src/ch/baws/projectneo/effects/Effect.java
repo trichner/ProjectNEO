@@ -9,6 +9,7 @@ public abstract class Effect extends Thread{
 	 * @return the array
 	 */
 	public abstract int[][] getArray();
+	
 
 	public void exit(){
 		EXIT = true;

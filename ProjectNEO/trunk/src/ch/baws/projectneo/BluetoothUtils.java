@@ -154,7 +154,7 @@ public class BluetoothUtils {
     	try {
     		outStream.write(msgBuffer);
     	} catch (IOException e) {
-//    		Log.e(TAG, "ON RESUME: Exception during write.", e);
+    		//Log.e(TAG, "ON RESUME: Exception during write.", e);
     	}
 	}
 	

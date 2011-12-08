@@ -27,7 +27,9 @@ public class Wave extends Effect{
 			if(color==4)
 				color=0;
 			for (int i=0;i<8;i++)
+			{
 				this.array[line][i] = color;
+			}
 			line++;
 			if(line%8==0&&line!=0)
 				color++;
