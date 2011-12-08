@@ -88,7 +88,7 @@ public class EffectActivity extends Activity {
         case R.id.wave:
         	
        		if (D) 
-       			Log.e(TAG, "+ SEND BUTTON SELECT +");
+       			Log.e(TAG, "+ WAVE BUTTON SELECT +");
        		
        		Bluetooth = new BluetoothUtils();
 
@@ -108,8 +108,44 @@ public class EffectActivity extends Activity {
             return true;
 
         
-        case R.id.debug:
+        case R.id.starsky:
+       		if (D) 
+       			Log.e(TAG, "+ STARSKY BUTTON SELECT +");
+       		
+       		Bluetooth = new BluetoothUtils();
 
+        	Bluetooth.init();
+        	Bluetooth.connect();
+        	
+        	StarSky sky = new StarSky();
+
+        	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
+        	timer = new Timer(); 
+        	snd = new SendTimer(sky);  
+        	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps
+        	      		       			
+        	timerisAlive = true;
+           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
+        	return true;
+        	
+        case R.id.rsnake:
+       		if (D) 
+       			Log.e(TAG, "+ RSNAKE BUTTON SELECT +");
+       		
+       		Bluetooth = new BluetoothUtils();
+
+        	Bluetooth.init();
+        	Bluetooth.connect();
+        	
+        	RandomSnakePlayer randomsnake = new RandomSnakePlayer();
+
+        	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
+        	timer = new Timer(); 
+        	snd = new SendTimer(randomsnake);  
+        	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps
+        	      		       			
+        	timerisAlive = true;
+           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
         
         }

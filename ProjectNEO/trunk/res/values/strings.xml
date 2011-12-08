@@ -7,5 +7,6 @@
     <string name="effects">Effects</string>
     <string name="choose">Choose an effect</string>
     <string name="wave">Wave-Effect</string>
-    <string name="debug">Debug-Effect</string>
+    <string name="starsky">Star-Sky</string>
+    <string name="rsnake">Random Snake</string>
 </resources>
