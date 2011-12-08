@@ -19,6 +19,6 @@
           android:icon="@android:drawable/ic_menu_sort_by_size"
           android:title="@string/wave" />
     
-    <item android:id="@+id/starsky" android:title="@string/starsky" android:icon="@android:drawable/ic_menu_report_image"></item><item android:id="@+id/rsnake" android:title="@string/rsnake" android:icon="@android:drawable/ic_menu_report_image" />
+    <item android:id="@+id/starsky" android:title="@string/starsky" android:icon="@android:drawable/ic_menu_gallery"></item><item android:id="@+id/rsnake" android:title="@string/rsnake" android:icon="@android:drawable/ic_input_get" />
     
 </menu>
