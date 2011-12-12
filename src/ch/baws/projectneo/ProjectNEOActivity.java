@@ -301,25 +301,47 @@ if (connected==false)
 }
 else
 {
-	if(colorArray[i][j]==0){
+	switch(colorArray[i][j]){
+	case 0:
 		colorArray[i][j] = 1;
 		buttoneffect.setArray(colorArray);
 		btn.setBackgroundColor(Color.RED);
-	}
-	else if(colorArray[i][j]==1){
+		break;
+	case 1:
 		colorArray[i][j] = 2;
 		buttoneffect.setArray(colorArray);
 		btn.setBackgroundColor(Color.GREEN);
-	}
-	else if(colorArray[i][j]==2){
+		break;
+	case 2:
 		colorArray[i][j] = 3;
 		buttoneffect.setArray(colorArray);
 		btn.setBackgroundColor(Color.BLUE);
-	}
-	else if(colorArray[i][j]==3){
-		colorArray[i][j] = 0;
+		break;
+	case 3:
+		colorArray[i][j] = 4;
+		buttoneffect.setArray(colorArray);
+		btn.setBackgroundColor(Color.YELLOW);
+		break;
+	case 4:
+		colorArray[i][j] = 5;
+		buttoneffect.setArray(colorArray);
+		btn.setBackgroundColor(Color.CYAN);
+		break;
+	case 5:
+		colorArray[i][j] = 6;
+		buttoneffect.setArray(colorArray);
+		btn.setBackgroundColor(Color.MAGENTA);
+		break;
+	case 6:
+		colorArray[i][j] = 7;
 		buttoneffect.setArray(colorArray);
 		btn.setBackgroundColor(Color.WHITE);
+		break;
+	case 7:
+		colorArray[i][j] = 0;
+		buttoneffect.setArray(colorArray);
+		btn.setBackgroundColor(Color.GRAY);
+		break;
 	}
 }	
 		
