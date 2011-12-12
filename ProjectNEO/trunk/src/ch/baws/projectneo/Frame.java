@@ -25,6 +25,11 @@ public class Frame {
 	public static final int NEO_BLUE = 3;
 	public static final int NEO_OFF = 0;
 	
+	public static final int NEO_YELLOW = 4;
+	public static final int NEO_TURK = 5;
+	public static final int NEO_PINK = 6;
+	
+	public static final int NEO_WHITE = 7;
 	
 	private final static byte head = (byte) 0x17;
 	
@@ -45,14 +50,36 @@ public class Frame {
 	 * @return Frame-Packet
 	 */
 	public byte[] generate(int[][] arr){
+		redb=0; greb=0; blub=0;
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++){
-				if(arr[i][j]==Frame.NEO_RED){
-					redb |= Bitfields.xyToBit(i, j);
-				}else if(arr[i][j]==Frame.NEO_GREEN){
-					greb |= Bitfields.xyToBit(i, j);
-				}else if(arr[i][j]==Frame.NEO_BLUE){
-					blub |= Bitfields.xyToBit(i, j);
+				switch(arr[i][j]){
+					case Frame.NEO_RED:
+						redb |= Bitfields.xyToBit(i, j);
+						break;
+					case Frame.NEO_GREEN:
+						greb |= Bitfields.xyToBit(i, j);
+						break;
+					case Frame.NEO_BLUE:
+						blub |= Bitfields.xyToBit(i, j);
+						break;
+					case Frame.NEO_YELLOW: 
+						redb |= Bitfields.xyToBit(i, j);
+						greb |= Bitfields.xyToBit(i, j);
+						break;
+					case Frame.NEO_TURK:
+						blub |= Bitfields.xyToBit(i, j);
+						greb |= Bitfields.xyToBit(i, j);
+						break;
+					case Frame.NEO_PINK:
+						redb |= Bitfields.xyToBit(i, j);
+						blub |= Bitfields.xyToBit(i, j);
+						break;
+					case Frame.NEO_WHITE:
+						redb |= Bitfields.xyToBit(i, j);
+						greb |= Bitfields.xyToBit(i, j);
+						blub |= Bitfields.xyToBit(i, j);
+						break;
 				}
 			}
 		}
