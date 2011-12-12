@@ -21,12 +21,26 @@ public class RandomSnakePlayer extends Effect{
 			whereToGo = rand.nextInt(3);
 			switch(whereToGo){
 			case 0:
-				break;
+				if(snake.isValidMove(snake.getDir())) break;
 			case 1:
 				snake.turnLeft();
-				break;
+				if(snake.isValidMove(snake.getDir())){
+					break;
+				}else{
+					snake.turnRight();
+					if(snake.isValidMove(snake.getDir()))
+						break;
+				}
 			case 2:
 				snake.turnRight();
+				if(snake.isValidMove(snake.getDir())){
+					break;
+				}else{
+					snake.turnLeft();
+					if(snake.isValidMove(snake.getDir()))
+						break;
+				}
+				snake.turnLeft();
 				break;
 			}
 			
