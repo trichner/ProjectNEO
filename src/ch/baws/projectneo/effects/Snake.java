@@ -14,6 +14,9 @@ public class Snake extends Thread{
 			this.x = x;
 			this.y = y;
 		}
+		public boolean equals(BodyPart body){
+			return ((this.x==body.x) && (this.y ==body.y));
+		}
 	}
 	private class Food{
 		int x;
@@ -72,29 +75,41 @@ public class Snake extends Thread{
 	
 	
 	public boolean isValidMove(Dir direction){
+		BodyPart next = null;
+		//running out of bounds?
 		switch(dir){
 		case    UP:
 			if(head.y==7)
 				return false;
-			else
-				return true;
+			next = new BodyPart(head.x,head.y+1);
+			break;
 		case RIGHT:
 			if(head.x==7)
 				return false;
-			else
-				return true;
+			next = new BodyPart(head.x+1,head.y);
+			break;
 		case  DOWN:
 			if(head.y==0)
 				return false;
-			else
-				return true;
+			next = new BodyPart(head.x,head.y-1);
+			break;
 		case  LEFT:
 			if(head.x==0)
 				return false;
-			else
-				return true;
+			next = new BodyPart(head.x-1,head.y);
+			break;
 		}
-		return false;
+
+		//Test if eating itself
+		BodyPart temp=head;
+		while(temp!=null){
+			if(next.equals(temp)){
+				return false;
+			}
+			temp = temp.nextBody;
+		}	
+
+		return true;
 	}
 	
 	public void run(){
@@ -130,7 +145,7 @@ public class Snake extends Thread{
 				next = new BodyPart(head.x-1,head.y);
 				break;
 			}
-	
+			
 			next.nextBody = head;
 			head = next;		
 		
@@ -190,6 +205,18 @@ public class Snake extends Thread{
 	
 	public void exit(){
 		EXIT = true;
+	}
+
+	public boolean obstacleAhead(){
+		return false;
+	}
+
+	public Food getFood() {
+		return food;
+	}
+
+	public Dir getDir() {
+		return dir;
 	}
 
 }
