@@ -44,7 +44,7 @@ public class SendTimer extends TimerTask{
 			if(bluetooth!=null){
 				if (D)	Log.e(TAG, "sending the array");
 				try{
-					
+					effectdrawer.draw(arr); //prints the array
 					this.bluetooth.send(arr);
 				} catch (RuntimeException e) {
 					Log.e(TAG, "ON SEND: Runtime Exception, size: "+ arr.length + "*" + arr[0].length, e);				
@@ -53,7 +53,7 @@ public class SendTimer extends TimerTask{
 				if (D)	Log.e(TAG, "not sending, in emulator mode");
 			}
 			
-			//effectdrawer.draw(arr); //prints the array
+			
 			
 		}
 		else{
