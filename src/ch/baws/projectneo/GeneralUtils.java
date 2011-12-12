@@ -2,7 +2,12 @@ package ch.baws.projectneo;
 
 import java.util.Random;
 
+import android.util.Log;
+
 public class GeneralUtils {
+	
+	private static final String TAG = "GENERALUTILS";
+	private static final boolean D = true;
 	
 	public static String randomCharString()
 	{
@@ -42,5 +47,17 @@ public class GeneralUtils {
     		}
     	}
 		return array;
+	}
+	
+	public static void drawArray(int[][] array, int m, int n)
+	{
+		String s = "";
+		for (int i=0;i<m;i++){
+    		for (int j=0;j<n;j++){
+    			s += (new Integer(array[i][j])).toString();
+    	   		
+    		}    		
+    	}
+		if (D) 	Log.e(TAG, s);	
 	}
 }
