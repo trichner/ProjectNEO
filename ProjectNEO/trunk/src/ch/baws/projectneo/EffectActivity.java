@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 public class EffectActivity extends Activity {
 	
-	TextView title, textview[];
+	TextView title;
+
+	private TextView textview[];
 	
 	private static final String TAG = "EFFECTS_ACTIVITY";
 	private static final boolean D = true;
@@ -39,7 +41,7 @@ public class EffectActivity extends Activity {
     	title = (TextView)findViewById(R.id.title);
     	
     	textview = new TextView[8];
-    	
+ 
     	textview[0] = (TextView)findViewById(R.id.textview0);
     	textview[1] = (TextView)findViewById(R.id.textview1);
     	textview[2] = (TextView)findViewById(R.id.textview2);
@@ -49,7 +51,9 @@ public class EffectActivity extends Activity {
     	textview[6] = (TextView)findViewById(R.id.textview6);
     	textview[7] = (TextView)findViewById(R.id.textview7);
     	
-    	drawer = new EffectDrawer(textview); 
+
+    	
+    	drawer = new EffectDrawer(this); 
 	}
     @Override
     public void onStart() {
@@ -121,11 +125,12 @@ public class EffectActivity extends Activity {
         	Bluetooth.init();
         	Bluetooth.connect();
         	
-        	Wave wave = new Wave();
+        	Wave wave = new Wave();       	
+        	wave.setEffectDrawer(drawer);
 
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
-        	snd = new SendTimer(wave, Bluetooth, drawer);  
+        	snd = new SendTimer(wave, Bluetooth);  
         	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps
         	      		       			
         	timerisAlive = true;
@@ -150,10 +155,11 @@ public class EffectActivity extends Activity {
         	Bluetooth.connect();
         	
         	StarSky sky = new StarSky();
-
+        	sky.setEffectDrawer(drawer);
+        	
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
-        	snd = new SendTimer(sky, Bluetooth, drawer);  
+        	snd = new SendTimer(sky, Bluetooth);  
         	timer.schedule  ( snd, 1000, 33 ); // frequency 30 fps
         	      		       			
         	timerisAlive = true;
@@ -175,10 +181,11 @@ public class EffectActivity extends Activity {
         	Bluetooth.connect();
         	
         	RandomSnakePlayer randomsnake = new RandomSnakePlayer();
-
+        	randomsnake.setEffectDrawer(drawer);
+        	
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
-        	snd = new SendTimer(randomsnake, Bluetooth, drawer);  
+        	snd = new SendTimer(randomsnake, Bluetooth);  
         	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps   
         	
         	timerisAlive = true;
@@ -188,4 +195,12 @@ public class EffectActivity extends Activity {
         }
         return false;
     }
+    
+    
+    public void changeText(String str, int i){
+    	textview[i].setText(str);
+    }
+
+
+
 }

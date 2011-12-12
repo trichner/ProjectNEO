@@ -13,7 +13,11 @@ public abstract class Effect extends Thread{
 	 */	
 	public abstract int[][] getArray();
 	
-
+	public void setEffectDrawer(EffectDrawer in_ed){
+		 this.ed = in_ed;
+	}
+	
+	
 	public void exit(){
 		EXIT = true;
 	}
