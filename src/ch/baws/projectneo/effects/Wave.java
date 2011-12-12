@@ -1,5 +1,6 @@
 package ch.baws.projectneo.effects;
 
+import ch.baws.projectneo.EffectDrawer;
 import ch.baws.projectneo.GeneralUtils;
 
 
@@ -21,6 +22,7 @@ public class Wave extends Effect{
 		int color = 0;
 		
 		
+		
 		while(!EXIT){
 			if(line==8)
 				line=0;
@@ -33,7 +35,7 @@ public class Wave extends Effect{
 			line++;
 			if(line%8==0&&line!=0)
 				color++;
-			
+			//ed.draw(array); //prints the array
 			try {
 				sleep(500);
 			} catch (InterruptedException e) {}

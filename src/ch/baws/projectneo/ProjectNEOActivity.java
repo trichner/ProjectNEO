@@ -249,7 +249,7 @@ public class ProjectNEOActivity extends Activity {
        		
 
        		buttoneffect.setArray(colorArray);
-       		snd = new SendTimer(buttoneffect, Bluetooth, null);
+       		snd = new SendTimer(buttoneffect, Bluetooth);
        		//snd.setBluetooth(Bluetooth);
        		timer.schedule  ( snd, 1000, 33 ); // frequency 30 fps
        		timerisAlive = true;
