@@ -47,11 +47,11 @@ public class Frame {
 	public byte[] generate(int[][] arr){
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++){
-				if(arr[i][j]==1){
+				if(arr[i][j]==Frame.NEO_RED){
 					redb |= Bitfields.xyToBit(i, j);
-				}else if(arr[i][j]==2){
+				}else if(arr[i][j]==Frame.NEO_GREEN){
 					greb |= Bitfields.xyToBit(i, j);
-				}else if(arr[i][j]==3){
+				}else if(arr[i][j]==Frame.NEO_BLUE){
 					blub |= Bitfields.xyToBit(i, j);
 				}
 			}
