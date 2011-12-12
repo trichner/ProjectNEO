@@ -29,6 +29,7 @@ public class ProjectNEOActivity extends Activity {
 	private static final String TAG = "PN_ACTIVITY";
 
 	private static final boolean D = true;
+
 	private int[][] colorArray; // array to store the current LED colors
 
 	private SendTimer snd; // Timertask
@@ -127,6 +128,15 @@ public class ProjectNEOActivity extends Activity {
         button[7][6] = (Button) findViewById(R.id.button76);
         button[7][7] = (Button) findViewById(R.id.button77);
         
+        if(!D){
+        	for(int m=0;m<8;m++){
+        		for(int n=0;n<8;n++){
+        			button[m][n].setText("");
+    			}
+        	}
+        }
+    
+
         
         Bluetooth = new BluetoothUtils();
 
@@ -137,7 +147,7 @@ public class ProjectNEOActivity extends Activity {
     		Toast.makeText(this, 
     			"You need Bluetooth in order to use this program", 
     			Toast.LENGTH_LONG).show();
-    		finish();
+    		//finish();
     		return;
     	}
     	

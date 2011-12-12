@@ -16,6 +16,7 @@ import android.util.Log;
 public class BluetoothUtils {
 	private static final String TAG = "BN_BTUTILS";
 	private static final boolean D = true;
+	private static final boolean E = true;
 	private OutputStream outStream = null;
 	
 	private BluetoothAdapter mBluetoothAdapter = null;
@@ -79,7 +80,9 @@ public class BluetoothUtils {
 	{
    		// When this returns, it will 'know' about the server,
    		// via it's MAC address.
-   		BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+		BluetoothDevice device;
+		if(!E){
+			device = mBluetoothAdapter.getRemoteDevice(address);
    		// We need two things before we can successfully connect
    		// (authentication issues aside): a MAC address, which we
    		// already have, and an RFCOMM channel.
@@ -92,11 +95,11 @@ public class BluetoothUtils {
    		// mapping for you. Generally, this will return RFCOMM 1,
    		// but not always; it depends what other BlueTooth services
    		// are in use on your Android device.
-   		try {
-   			btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
-   		} catch (IOException e) {
-   			Log.e(TAG, "ON RESUME: Socket creation failed.", e);
-   		}
+			try {
+				btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
+			} catch (IOException e) {
+				Log.e(TAG, "ON RESUME: Socket creation failed.", e);
+			}
 
    		// Discovery may be going on, e.g., if you're running a
    		// 'scan for devices' search from your handset's Bluetooth
@@ -104,17 +107,18 @@ public class BluetoothUtils {
    		// to call it, but it might hurt not to... discovery is a
    		// heavyweight process; you don't want it in progress when
    		// a connection attempt is made.
-   		mBluetoothAdapter.cancelDiscovery();
-
+   		
+			mBluetoothAdapter.cancelDiscovery();
+		}
    		// Blocking connect, for a simple client nothing else can
    		// happen until a successful connection is made, so we
    		// don't care if it blocks.
    		try {
-   			btSocket.connect();
+   			if(!E) btSocket.connect();
    			Log.e(TAG, "ON RESUME: BT connection established, data transfer link open.");
    		} catch (IOException e) {
    			try {
-   				btSocket.close();
+   				if(!E) btSocket.close();
    			} catch (IOException e2) {
    				Log.e(TAG, 
    					"ON RESUME: Unable to close socket during connection failure", e2);
