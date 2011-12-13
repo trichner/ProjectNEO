@@ -216,6 +216,38 @@ public class EffectActivity extends Activity {
        			Log.e(TAG, "+ CFSUB3 BUTTON SELECT +");   	
        		cfield.setColor(3);
            	return true;
+           	
+           	
+        case R.id.gameoflife:
+       		if (D) 
+       			Log.e(TAG, "+ MATRIX BUTTON SELECT +");   	
+        	
+        	title.setText("Matrix Effect started");
+        	        	
+        	GameOfLife gol = new GameOfLife();
+        	//randomsnake.setEffectActivity(this);
+        	snd.setEffect(gol);
+        	return true;
+        case R.id.eppi:
+       		if (D) 
+       			Log.e(TAG, "+ EPPI BUTTON SELECT +");   	
+        	
+        	title.setText("EPPI Effect started");
+        	        	
+        	//Matrix matrix = new Matrix();
+        	//randomsnake.setEffectActivity(this);
+        	//snd.setEffect(matrix);
+        	return true;
+        case R.id.placeholder:
+       		if (D) 
+       			Log.e(TAG, "+ PLACEHOLDER BUTTON SELECT +");   	
+        	
+        	title.setText("Placeholder Effect started");
+        	        	
+        	//Matrix matrix = new Matrix();
+        	//randomsnake.setEffectActivity(this);
+        	//snd.setEffect(matrix);
+        	return true;
         }
         return false;
     }
