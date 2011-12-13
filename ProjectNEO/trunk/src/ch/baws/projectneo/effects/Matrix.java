@@ -37,7 +37,7 @@ public class Matrix extends Effect{
 		array = GeneralUtils.emptyArray(8, 8);
 		for(int i=0;i<8;i++){
 			for(int j=0;(strips[i].position)>j;j++){
-				if((strips[i].position-strips[i].length)<j){
+				if(((strips[i].position-strips[i].length)<j)&&(j<8)){
 					array[j][i] = COLOR;
 				}
 			}
