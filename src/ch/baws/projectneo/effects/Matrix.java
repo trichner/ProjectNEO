@@ -28,7 +28,7 @@ public class Matrix extends Effect{
 		super();
 		Random rand = new Random();
 		for(int i=0;i<8;i++){
-			strips[i] = new Strip(0,rand.nextDouble()*0.5,rand.nextInt(5));
+			strips[i] = new Strip(0,rand.nextDouble()+0.5,rand.nextInt(5)+2);
 		}
 	}
 	
@@ -53,7 +53,7 @@ public class Matrix extends Effect{
 			for(int i=0;i<8;i++){
 				strips[i].step();
 				if(strips[i].position>8){
-					strips[i] = new Strip(0,rand.nextDouble()*0.5,rand.nextInt(5));
+					strips[i] = new Strip(0,rand.nextDouble()+0.5,rand.nextInt(5)+2);
 				}
 			}
 			
