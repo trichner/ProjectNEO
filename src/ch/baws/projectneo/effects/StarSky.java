@@ -23,7 +23,6 @@ public class StarSky extends Effect{
 					array[i][j] = rand.nextInt(4);
 				}
 			}	
-			//ed.draw(array); //prints the array
 			try {
 				sleep(500);
 			} catch (InterruptedException e) {}

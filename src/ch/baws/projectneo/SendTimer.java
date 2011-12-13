@@ -9,7 +9,7 @@ import ch.baws.projectneo.effects.Effect;
 public class SendTimer extends TimerTask{
 	
 	private static final String TAG = "SEND_TIMER";
-	private static final boolean D = true;	
+	private static final boolean D = false;	
 	
 	private BluetoothUtils bluetooth;
 	private Effect effect;
