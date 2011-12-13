@@ -205,6 +205,8 @@ public class ProjectNEOActivity extends Activity {
    		super.onStop();
     	if(timerisAlive==true)
     	timer.cancel();
+    	if(connected)
+    		Bluetooth.close();
    		if (D)
    			Log.e(TAG, "-- ON STOP --");
    	}
@@ -214,6 +216,8 @@ public class ProjectNEOActivity extends Activity {
    		super.onDestroy();
     	if(timerisAlive==true)
     	timer.cancel();
+    	if(connected)
+    		Bluetooth.close();
    		if (D)
    			Log.e(TAG, "--- ON DESTROY ---");
    	}
@@ -265,6 +269,8 @@ public class ProjectNEOActivity extends Activity {
         	startActivity(intent);
         	if(timerisAlive==true)
         	timer.cancel();
+        	if(connected) Bluetooth.close();
+        	connected =false;
         	return true;
         
         }
