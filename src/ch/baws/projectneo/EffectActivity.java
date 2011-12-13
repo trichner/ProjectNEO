@@ -11,14 +11,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class EffectActivity extends Activity {
 	
 	TextView title;
-
-	private TextView textview[];
+	ProgressBar progressBar;
 	
 	private static final String TAG = "EFFECTS_ACTIVITY";
 	private static final boolean D = false;
@@ -36,19 +36,10 @@ public class EffectActivity extends Activity {
 	{
     	super.onCreate(bndl);
     	setContentView(R.layout.effects);
+    	progressBar = findViewItemById(R.id.progressBar);
+    	//progressBar.setVisibility(View.INVISIBLE);
     	
     	title = (TextView)findViewById(R.id.title);
-    	
-    	textview = new TextView[8];
- 
-    	textview[0] = (TextView)findViewById(R.id.textview0);
-    	textview[1] = (TextView)findViewById(R.id.textview1);
-    	textview[2] = (TextView)findViewById(R.id.textview2);
-    	textview[3] = (TextView)findViewById(R.id.textview3);
-    	textview[4] = (TextView)findViewById(R.id.textview4);
-    	textview[5] = (TextView)findViewById(R.id.textview5);
-    	textview[6] = (TextView)findViewById(R.id.textview6);
-    	textview[7] = (TextView)findViewById(R.id.textview7);
     	
    		Bluetooth = new BluetoothUtils();
 
@@ -70,7 +61,11 @@ public class EffectActivity extends Activity {
        	
 
 	}
-    @Override
+    private ProgressBar findViewItemById(int progressbar2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
     public void onStart() {
     	super.onStart();
     	if (D)
@@ -125,6 +120,9 @@ public class EffectActivity extends Activity {
     }
    	
     public boolean onOptionsItemSelected(MenuItem item) {
+    	
+    	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
+        
         switch (item.getItemId()) {
         case R.id.wave:
         	
@@ -137,9 +135,8 @@ public class EffectActivity extends Activity {
         	//wave.setEffectActivity(this);
         	snd.setEffect(wave);
 
-        	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
-       		
-            return true;
+
+        	return true;
 
         
         case R.id.starsky:
@@ -151,8 +148,6 @@ public class EffectActivity extends Activity {
         	StarSky sky = new StarSky();
         	//sky.setEffectActivity(this);
         	snd.setEffect(sky);
-        	
-           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
         	
         case R.id.rsnake:
@@ -164,8 +159,6 @@ public class EffectActivity extends Activity {
         	RandomSnakePlayer randomsnake = new RandomSnakePlayer();
         	//randomsnake.setEffectActivity(this);
         	snd.setEffect(randomsnake);
-        	
-           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
         	
         
@@ -178,8 +171,6 @@ public class EffectActivity extends Activity {
         	Text text = new Text();
         	//randomsnake.setEffectActivity(this);
         	snd.setEffect(text);
-        	
-           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
         	
         	
@@ -192,8 +183,6 @@ public class EffectActivity extends Activity {
         	Matrix matrix = new Matrix();
         	//randomsnake.setEffectActivity(this);
         	snd.setEffect(matrix);
-        	
-           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
         
         case R.id.cfield:
@@ -205,8 +194,6 @@ public class EffectActivity extends Activity {
         	cfield = new Colorfield();
         	//randomsnake.setEffectActivity(this);
         	snd.setEffect(cfield);
-        	
-           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
         	
         case R.id.cfsub0:
@@ -233,36 +220,36 @@ public class EffectActivity extends Activity {
         return false;
     }
     
-	public void draw(int[][] array){
-		String str = new String();
-		str = "";
-		int pos=0;
-		int i=0;
-		if (D) Log.e(TAG, "Start drawing");
-		GeneralUtils.drawArray(array,8,8);
-		for(i=0;pos<8;pos++)
-		{
-			for(i=0;i<8;i++){ // first textview
-				switch (array[pos][i]) {
-					case 0:	
-						str+=("O ");
-					case 1:		        	
-						str+=("R ");
-
-					case 2:		        	
-						str+=("G ");
-	
-					case 3:		        	
-						str+=("B ");
-				}
-
-	        	
-	        }
-			textview[pos].setText(str);
-		}
-		
-		
-	}
+//	public void draw(int[][] array){
+//		String str = new String();
+//		str = "";
+//		int pos=0;
+//		int i=0;
+//		if (D) Log.e(TAG, "Start drawing");
+//		GeneralUtils.drawArray(array,8,8);
+//		for(i=0;pos<8;pos++)
+//		{
+//			for(i=0;i<8;i++){ // first textview
+//				switch (array[pos][i]) {
+//					case 0:	
+//						str+=("O ");
+//					case 1:		        	
+//						str+=("R ");
+//
+//					case 2:		        	
+//						str+=("G ");
+//	
+//					case 3:		        	
+//						str+=("B ");
+//				}
+//
+//	        	
+//	        }
+//			textview[pos].setText(str);
+//		}
+//		
+//		
+//	}
     
 
 
