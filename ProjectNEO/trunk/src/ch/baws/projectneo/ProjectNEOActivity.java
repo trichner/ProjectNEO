@@ -28,7 +28,7 @@ public class ProjectNEOActivity extends Activity {
 	
 	private static final String TAG = "PN_ACTIVITY";
 
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	private int[][] colorArray; // array to store the current LED colors
 
@@ -251,7 +251,7 @@ public class ProjectNEOActivity extends Activity {
        		buttoneffect.setArray(colorArray);
        		snd = new SendTimer(buttoneffect, Bluetooth);
        		//snd.setBluetooth(Bluetooth);
-       		timer.schedule  ( snd, 1000, 33 ); // frequency 30 fps
+       		timer.schedule  ( snd, 1000, 100 ); // frequency 30 fps
        		timerisAlive = true;
        		
        		Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();

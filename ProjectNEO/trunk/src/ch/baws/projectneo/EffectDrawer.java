@@ -2,11 +2,11 @@ package ch.baws.projectneo;
 
 
 import android.util.Log;
-public class EffectDrawer {
+public class EffectDrawer extends Thread{
 	
 	
 	private static final String TAG = "EFFECTDRAWER";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	private EffectActivity ea;
 	
 	
@@ -41,7 +41,6 @@ public class EffectDrawer {
 
 	        	
 	        }
-			ea.changeText(str, pos);	
 		}
 		
 		

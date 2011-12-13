@@ -21,14 +21,12 @@ public class EffectActivity extends Activity {
 	private TextView textview[];
 	
 	private static final String TAG = "EFFECTS_ACTIVITY";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	
 	Timer timer;
 	SendTimer snd;
 	
 	private BluetoothUtils Bluetooth = null;
-	
-	private EffectDrawer drawer;
 	
 
 	private boolean timerisAlive = false; 
@@ -52,8 +50,6 @@ public class EffectActivity extends Activity {
     	textview[7] = (TextView)findViewById(R.id.textview7);
     	
 
-    	
-    	drawer = new EffectDrawer(this); 
 	}
     @Override
     public void onStart() {
@@ -126,7 +122,7 @@ public class EffectActivity extends Activity {
         	Bluetooth.connect();
         	
         	Wave wave = new Wave();       	
-        	wave.setEffectDrawer(drawer);
+        	wave.setEffectActivity(this);
 
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
@@ -155,7 +151,7 @@ public class EffectActivity extends Activity {
         	Bluetooth.connect();
         	
         	StarSky sky = new StarSky();
-        	sky.setEffectDrawer(drawer);
+        	sky.setEffectActivity(this);
         	
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
@@ -181,7 +177,7 @@ public class EffectActivity extends Activity {
         	Bluetooth.connect();
         	
         	RandomSnakePlayer randomsnake = new RandomSnakePlayer();
-        	randomsnake.setEffectDrawer(drawer);
+        	randomsnake.setEffectActivity(this);
         	
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	timer = new Timer(); 
@@ -196,10 +192,37 @@ public class EffectActivity extends Activity {
         return false;
     }
     
+	public void draw(int[][] array){
+		String str = new String();
+		str = "";
+		int pos=0;
+		int i=0;
+		if (D) Log.e(TAG, "Start drawing");
+		GeneralUtils.drawArray(array,8,8);
+		for(i=0;pos<8;pos++)
+		{
+			for(i=0;i<8;i++){ // first textview
+				switch (array[pos][i]) {
+					case 0:	
+						str+=("O ");
+					case 1:		        	
+						str+=("R ");
+
+					case 2:		        	
+						str+=("G ");
+	
+					case 3:		        	
+						str+=("B ");
+				}
+
+	        	
+	        }
+			textview[pos].setText(str);
+		}
+		
+		
+	}
     
-    public void changeText(String str, int i){
-    	textview[i].setText(str);
-    }
 
 
 

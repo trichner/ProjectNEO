@@ -7,7 +7,7 @@ import android.util.Log;
 public class GeneralUtils {
 	
 	private static final String TAG = "GENERALUTILS";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	
 	public static String randomCharString()
 	{
