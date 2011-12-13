@@ -15,7 +15,7 @@ public class Wave extends Effect{
 		
 		
 		int line = 0;
-		int color = 0;
+		int color = 1;
 		
 		
 		
