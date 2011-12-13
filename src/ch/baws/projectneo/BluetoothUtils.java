@@ -16,7 +16,7 @@ import android.util.Log;
 public class BluetoothUtils {
 	private static final String TAG = "BN_BTUTILS";
 	private static final boolean D = true;
-	private static final boolean E = true;
+	private static final boolean E = false;
 	private OutputStream outStream = null;
 	
 	private BluetoothAdapter mBluetoothAdapter = null;
