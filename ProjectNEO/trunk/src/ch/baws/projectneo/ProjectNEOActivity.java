@@ -255,7 +255,7 @@ public class ProjectNEOActivity extends Activity {
        		}  
        		timer = new Timer(); // daemon to send current colorcode
        		
-        	Buttons buttoneffect = new Buttons();
+        	buttoneffect = new Buttons();
        		buttoneffect.setArray(colorArray);
        		
        		timer = new Timer(); 
@@ -280,6 +280,13 @@ public class ProjectNEOActivity extends Activity {
         	timer.cancel();
         	if(connected) Bluetooth.close();
         	connected =false;
+        	return true;
+        	
+        case R.id.reset:
+        	if(connected==true&&timerisAlive==true){
+        		colorArray = GeneralUtils.emptyArray(8,8);
+        		buttoneffect.setArray(colorArray);
+        	}
         	return true;
         
         }
