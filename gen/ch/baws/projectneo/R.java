@@ -83,8 +83,10 @@ public final class R {
         public static final int cfsub1=0x7f06004e;
         public static final int cfsub2=0x7f06004f;
         public static final int cfsub3=0x7f060050;
-        public static final int connect=0x7f060055;
-        public static final int effects=0x7f060056;
+        public static final int connect=0x7f060058;
+        public static final int effects=0x7f06005a;
+        public static final int eppi=0x7f060056;
+        public static final int gameoflife=0x7f060055;
         public static final int linearLayout0=0x7f060003;
         public static final int linearLayout1=0x7f06000c;
         public static final int linearLayout2=0x7f060015;
@@ -94,7 +96,9 @@ public final class R {
         public static final int linearLayout6=0x7f060039;
         public static final int linearLayout7=0x7f060042;
         public static final int matrix=0x7f060054;
+        public static final int placeholder=0x7f060057;
         public static final int progressBar=0x7f060002;
+        public static final int reset=0x7f060059;
         public static final int rsnake=0x7f060051;
         public static final int starsky=0x7f060052;
         public static final int text=0x7f060053;
@@ -116,8 +120,12 @@ public final class R {
         public static final int choose=0x7f040005;
         public static final int connect=0x7f040002;
         public static final int effects=0x7f040004;
+        public static final int eppi=0x7f04000f;
+        public static final int gameoflife=0x7f04000e;
         public static final int hello=0x7f040000;
         public static final int matrix=0x7f04000c;
+        public static final int placeholder=0x7f040010;
+        public static final int reset=0x7f04000d;
         public static final int rsnake=0x7f040008;
         public static final int send=0x7f040003;
         public static final int starsky=0x7f040007;

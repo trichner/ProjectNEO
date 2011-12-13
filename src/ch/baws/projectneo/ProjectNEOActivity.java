@@ -4,6 +4,7 @@ package ch.baws.projectneo;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import ch.baws.projectneo.effects.Colorfield;
 import ch.baws.projectneo.effects.RandomSnakePlayer;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
@@ -30,7 +32,7 @@ public class ProjectNEOActivity extends Activity {
 	
 	private static final String TAG = "PN_ACTIVITY";
 
-	private static final boolean D = false;
+	private static final boolean D = true;
 
 	private int[][] colorArray; // array to store the current LED colors
 
@@ -48,11 +50,19 @@ public class ProjectNEOActivity extends Activity {
 	
 	Button[][] button;
 	
+	PowerManager pm;
+	PowerManager.WakeLock wl;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        
+        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
+        wl.acquire();
         
         colorArray = GeneralUtils.emptyArray(8,8); // fills array with zeros
         button = new Button[8][8];
@@ -188,13 +198,13 @@ public class ProjectNEOActivity extends Activity {
    		if (D)
    			Log.e(TAG, "- ON PAUSE -");
 
-   		if (outStream != null) {
-   			try {
-   				outStream.flush();
-   			} catch (IOException e) {
-   				Log.e(TAG, "ON PAUSE: Couldn't flush output stream.", e);
-   			}
-   		}
+//   		if (outStream != null) {
+//   			try {
+//   				outStream.flush();
+//   			} catch (IOException e) {
+//   				Log.e(TAG, "ON PAUSE: Couldn't flush output stream.", e);
+//   			}
+//   		}
    		//Bluetooth.Close();
 
 
@@ -214,6 +224,7 @@ public class ProjectNEOActivity extends Activity {
    	@Override
    	public void onDestroy() {
    		super.onDestroy();
+   		wl.release();
     	if(timerisAlive==true)
     	timer.cancel();
     	if(connected)
