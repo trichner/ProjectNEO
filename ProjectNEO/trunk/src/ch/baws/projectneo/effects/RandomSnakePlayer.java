@@ -23,8 +23,9 @@ public class RandomSnakePlayer extends Effect{
 			boolean quit = false;
 			while(!quit){
 				whereToGo = rand.nextInt(4);	
-				
-				
+				if(snake.isValidMove(snake.getDir()) && rand.nextBoolean()){
+					break;
+				}
 				switch(whereToGo){
 				case 0:
 					if(snake.isValidMove(Dir.DOWN)){
@@ -54,7 +55,7 @@ public class RandomSnakePlayer extends Effect{
 			}
 			
 			try {
-				sleep(1000);
+				sleep(400);
 			} catch (InterruptedException e) {}
 		}
 		snake.exit();
