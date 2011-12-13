@@ -286,6 +286,7 @@ public class ProjectNEOActivity extends Activity {
         	if(connected==true&&timerisAlive==true){
         		colorArray = GeneralUtils.emptyArray(8,8);
         		buttoneffect.setArray(colorArray);
+        		resetColor();
         	}
         	return true;
         
@@ -306,6 +307,15 @@ public void toggleColor(View v){
 		}
 	}
 
+}
+
+public void resetColor(){
+	
+	for(int m=0;m<8;m++){
+		for(int n=0;n<8;n++){
+			button[m][n].setBackgroundColor(Color.GRAY);				
+		}
+	}
 }
 
 /**
