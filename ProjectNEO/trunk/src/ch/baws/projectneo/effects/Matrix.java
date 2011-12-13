@@ -52,7 +52,7 @@ public class Matrix extends Effect{
 			
 			for(int i=0;i<8;i++){
 				strips[i].step();
-				if(strips[i].position>8){
+				if((strips[i].position-strips[i].position)>8){
 					strips[i] = new Strip(0,rand.nextDouble()+0.7,rand.nextInt(5)+2);
 				}
 			}
