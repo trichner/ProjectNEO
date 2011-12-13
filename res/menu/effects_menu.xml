@@ -20,7 +20,7 @@
           android:title="@string/wave" />
     
     <item android:id="@+id/starsky" android:title="@string/starsky" android:icon="@android:drawable/ic_menu_gallery"></item><item android:id="@+id/rsnake" android:title="@string/rsnake" android:icon="@android:drawable/ic_input_get" />
-    <item android:id="@+id/cfield" android:title="@string/cfield" android:icon="i@android:drawable/ic_menu_mapmode"></item>
+    <item android:id="@+id/cfield" android:title="@string/cfield" android:icon="@android:drawable/ic_menu_mapmode"></item>
     <item android:id="@+id/text" android:title="@string/text" android:icon="@android:drawable/ic_menu_sort_alphabetically"></item>
     
 </menu>
