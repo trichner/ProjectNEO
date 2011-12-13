@@ -22,63 +22,24 @@
     android:layout_height="wrap_content" 
     android:text="---------------------"
     />
-<TextView  
-    android:id="@+id/textview0"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/tvdefault"
-    android:textSize="50px"
-    />
-<TextView  
-    android:id="@+id/textview1"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/tvdefault"
-    android:textSize="50px"
-    />
-<TextView  
-    android:id="@+id/textview2"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/tvdefault"
-    android:textSize="50px"
-    />
-<TextView  
-    android:id="@+id/textview3"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/tvdefault"
-    android:textSize="50px"
-    />
-<TextView
-    android:id="@+id/textview4"  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/tvdefault"
-    android:textSize="50px"
-    />
-<TextView 
-    android:id="@+id/textview5" 
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/tvdefault"
-    android:textSize="50px"
-    />
-<TextView  
-    android:id="@+id/textview6"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/tvdefault"
-    android:textSize="50px"
-    />
-<TextView  
-    android:id="@+id/textview7"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/tvdefault"
-    android:textSize="50px"
-    />
 </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:orientation="vertical" >
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+</LinearLayout>
+
+
+
 
 
 </LinearLayout>
