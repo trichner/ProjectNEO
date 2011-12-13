@@ -28,6 +28,7 @@ public class EffectActivity extends Activity {
 	
 	private BluetoothUtils Bluetooth = null;
 	
+	Colorfield cfield;
 
 	private boolean timerisAlive = false; 
 	
@@ -63,7 +64,7 @@ public class EffectActivity extends Activity {
     	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
     	timer = new Timer(); 
     	snd = new SendTimer(eff, Bluetooth);  
-    	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps
+    	timer.schedule  ( snd, 100, 66 ); // frequency 15 fps
     	      		       			
     	timerisAlive = true;
        	
@@ -167,18 +168,6 @@ public class EffectActivity extends Activity {
            	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
         	
-        case R.id.cfield:
-       		if (D) 
-       			Log.e(TAG, "+ CFIELD BUTTON SELECT +");   	
-        	
-        	title.setText("Colorfield Effect started");
-        	        	
-        	Colorfield cfield = new Colorfield();
-        	//randomsnake.setEffectActivity(this);
-        	snd.setEffect(cfield);
-        	
-           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
-        	return true;
         
         case R.id.text:
        		if (D) 
@@ -192,7 +181,54 @@ public class EffectActivity extends Activity {
         	
            	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
+        	
+        	
+        case R.id.matrix:
+       		if (D) 
+       			Log.e(TAG, "+ MATRIX BUTTON SELECT +");   	
+        	
+        	title.setText("Matrix Effect started");
+        	        	
+//        	Matrix matrix = new Matrix();
+//        	//randomsnake.setEffectActivity(this);
+//        	snd.setEffect(matrix);
+        	
+           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
+        	return true;
         
+        case R.id.cfield:
+       		if (D) 
+       			Log.e(TAG, "+ CFIELD BUTTON SELECT +");   	
+        	
+        	title.setText("Colorfield Effect started");
+        	        	
+        	cfield = new Colorfield();
+        	//randomsnake.setEffectActivity(this);
+        	snd.setEffect(cfield);
+        	
+           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
+        	return true;
+        	
+        case R.id.cfsub0:
+       		if (D) 
+       			Log.e(TAG, "+ CFSUB1 BUTTON SELECT +");   	
+        	cfield.setColor(0);
+           return true;
+        case R.id.cfsub1:
+       		if (D) 
+       			Log.e(TAG, "+ CFSUB2 BUTTON SELECT +");   	
+       		cfield.setColor(1);
+           	return true;
+        case R.id.cfsub2:
+       		if (D) 
+       			Log.e(TAG, "+ CFSUB3 BUTTON SELECT +");   	
+       		cfield.setColor(2);
+           	return true;
+        case R.id.cfsub3:
+       		if (D) 
+       			Log.e(TAG, "+ CFSUB3 BUTTON SELECT +");   	
+       		cfield.setColor(3);
+           	return true;
         }
         return false;
     }

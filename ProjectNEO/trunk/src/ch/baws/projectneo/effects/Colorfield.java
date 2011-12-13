@@ -14,7 +14,7 @@ public class Colorfield extends Effect{
 	}
 	
 	public void setColor(int c)
-	{
+	{	
 		this.color = c;
 	}
 

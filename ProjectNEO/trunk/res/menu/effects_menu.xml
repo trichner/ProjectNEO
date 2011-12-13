@@ -19,8 +19,33 @@
           android:icon="@android:drawable/ic_menu_sort_by_size"
           android:title="@string/wave" />
     
-    <item android:id="@+id/starsky" android:title="@string/starsky" android:icon="@android:drawable/ic_menu_gallery"></item><item android:id="@+id/rsnake" android:title="@string/rsnake" android:icon="@android:drawable/ic_input_get" />
-    <item android:id="@+id/cfield" android:title="@string/cfield" android:icon="@android:drawable/ic_menu_mapmode"></item>
-    <item android:id="@+id/text" android:title="@string/text" android:icon="@android:drawable/ic_menu_sort_alphabetically"></item>
+
+    <item android:id="@+id/cfield"
+          android:title="@string/cfield" 
+          android:icon="@android:drawable/ic_menu_mapmode">        
+    <menu>
+        <item android:id="@+id/cfsub0"
+        	android:title="Off" />
+    	<item android:id="@+id/cfsub1"
+        	android:title="Red" />
+        <item android:id="@+id/cfsub2"
+        	android:title="Green" />
+        <item android:id="@+id/cfsub3"
+        	android:title="Blue" />
+   </menu>
+        </item>
+
+   <item android:id="@+id/rsnake" 
+         android:title="@string/rsnake" 
+         android:icon="@android:drawable/ic_input_get" />
+    <item android:id="@+id/starsky" 
+         android:title="@string/starsky" 
+       	 android:icon="@android:drawable/ic_menu_gallery"></item>
+    <item android:id="@+id/text" 
+         android:title="@string/text" 
+         android:icon="@android:drawable/ic_menu_sort_alphabetically"></item>
+    <item android:id="@+id/matrix" 
+         android:title="@string/matrix" 
+         android:icon="@android:drawable/ic_menu_view" />
     
 </menu>
