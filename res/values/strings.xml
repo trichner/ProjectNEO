@@ -12,4 +12,5 @@
     <string name="tvdefault">O O O O O O O O</string>
     <string name="text">Text</string>
     <string name="cfield">Colorfield</string>
+    <string name="matrix">Matrix</string>
 </resources>
