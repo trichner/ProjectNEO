@@ -2,10 +2,12 @@ package ch.baws.projectneo.effects;
 
 import java.util.Random;
 
+import ch.baws.projectneo.effects.Snake.Dir;
+
 public class RandomSnakePlayer extends Effect{
 
 	private Snake snake = new Snake();
-	
+		
 	@Override
 	public int[][] getArray() {
 		return snake.getArray();
@@ -18,30 +20,37 @@ public class RandomSnakePlayer extends Effect{
 		
 		snake.start();
 		while(!EXIT){
-			whereToGo = rand.nextInt(3);
-			switch(whereToGo){
-			case 0:
-				if(snake.isValidMove(snake.getDir())) break;
-			case 1:
-				snake.turnLeft();
-				if(snake.isValidMove(snake.getDir())){
+			boolean quit = false;
+			while(!quit){
+				whereToGo = rand.nextInt(4);	
+				
+				
+				switch(whereToGo){
+				case 0:
+					if(snake.isValidMove(Dir.DOWN)){
+						snake.setDir(Dir.DOWN);
+						quit = true;
+					}
 					break;
-				}else{
-					snake.turnRight();
-					if(snake.isValidMove(snake.getDir()))
-						break;
-				}
-			case 2:
-				snake.turnRight();
-				if(snake.isValidMove(snake.getDir())){
+				case 1:
+					if(snake.isValidMove(Dir.UP)){
+						snake.setDir(Dir.UP);
+						quit = true;
+					}
 					break;
-				}else{
-					snake.turnLeft();
-					if(snake.isValidMove(snake.getDir()))
-						break;
+				case 2:
+					if(snake.isValidMove(Dir.LEFT)){
+						snake.setDir(Dir.LEFT);
+						quit = true;
+					}
+					break;
+				case 3:
+					if(snake.isValidMove(Dir.RIGHT)){
+						snake.setDir(Dir.RIGHT);
+						quit = true;
+					}
+					break;
 				}
-				snake.turnLeft();
-				break;
 			}
 			
 			try {
