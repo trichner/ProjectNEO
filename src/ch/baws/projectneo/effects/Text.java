@@ -1,7 +1,6 @@
 package ch.baws.projectneo.effects;
 
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.List;
 
 
@@ -28,7 +27,7 @@ public class Text extends Effect {
 	
 	//Declare Arrays
 	private List<Integer> hexArray = new ArrayList<Integer>();
-	private int[][] clrArray;
+	private List<int[]> clrArray = new ArrayList<int[]>();
 	
 	//Define Layout
 	int TEXT = RED;
@@ -111,17 +110,17 @@ public class Text extends Effect {
 		while (!EXIT) 
 		{
 			//create array from color array
-			for (int i=0; i<clrArray.length-8; i++)
+			for (int i=0; i<clrArray.size()-8; i++)
 			{
-				for(int line=0; line<8; line++)
-					for(int col=0; col<8; col++)
-						array[line][col] = clrArray[line][col+i];
-				
-				//wait for next step
-				try {
-					sleep(500);
-				} catch (InterruptedException e) {}
+				for(int col=0; col<8; col++)
+					for(int line=0; line<8; line++)
+						array[line][col] = clrArray.get(col+i)[line];
 			}
+			
+			//wait for next step
+			try {
+				sleep(500);
+			} catch (InterruptedException e) {}
 		}
 	}
 	
@@ -139,13 +138,13 @@ public class Text extends Effect {
     	
     	//fill in the Letters
    	
-    	text.toUpperCase();
+    	text = text.toUpperCase();
     	
     	for (int i=0; i<text.length(); i++)
     	{
-    		for (int j=0; j<6; j++)
+    		for (int j=0; j<5; j++)
     		{
-    			hexArray.add(letters[text.charAt(i)-65][j]);
+    			hexArray.add(letters[(int)text.charAt(i)-65][j]);
     		}
     		//add space
     		hexArray.add(0);    		
@@ -154,18 +153,20 @@ public class Text extends Effect {
     	//create color array
     	for (int col=0; col<hexArray.size(); col++)
     	{
+    		//save column here
+    		int[] tempcol = new int[8];
+    		
     		for (int line=0;line<8;line++)
     		{
     			int mask = (0x80 >> line);
     			if ((hexArray.get(col) & mask) != 0)
-    				clrArray[line][col] = TEXT;
+    				tempcol[line] = TEXT;
     			else
-    				clrArray[line][col] = BACK;
+    				tempcol[line] = BACK;
     		}
+    		//write saved col into array
+    		clrArray.add(tempcol);
     	}
 	}
-	
-	
-	
 	
 }
