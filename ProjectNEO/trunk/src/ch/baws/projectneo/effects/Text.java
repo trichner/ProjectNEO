@@ -3,8 +3,6 @@ package ch.baws.projectneo.effects;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.w3c.dom.Text;
-
 
 public class Text extends Effect {
 
@@ -128,7 +126,7 @@ public class Text extends Effect {
     		{
     		textArray.add(letters[text.charAt(i)-65][j]);
     		}
-    		textArray.add()
+    		
     		
     	}
     	
