@@ -219,4 +219,9 @@ public class Snake extends Thread{
 		return dir;
 	}
 
+	public void setDir(Dir dir) {
+		this.dir = dir;
+	}
+	
+
 }
