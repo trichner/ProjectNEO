@@ -17,6 +17,8 @@ import java.util.Timer;
 
 import ch.baws.projectneo.R;
 import ch.baws.projectneo.effects.Buttons;
+import ch.baws.projectneo.effects.Colorfield;
+import ch.baws.projectneo.effects.RandomSnakePlayer;
 
 
 import android.content.Intent;
@@ -159,9 +161,7 @@ public class ProjectNEOActivity extends Activity {
     if (D)
     		Log.e(TAG, "+++ DONE IN ON CREATE, GOT LOCAL BT ADAPTER +++");
     
-    
-
-    
+	
     }
 
     @Override
@@ -242,21 +242,30 @@ public class ProjectNEOActivity extends Activity {
        			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
        			
        		}
-        	Bluetooth.connect();
+        	if (!connected) Bluetooth.connect();
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-        	connected = true; //TODO
+        	connected = true;
       		
+       		
+       		
+       		if(timerisAlive==true)
+       		{
+       			timer.cancel();
+       			snd.cancel();
+       		}  
        		timer = new Timer(); // daemon to send current colorcode
        		
-
-       		
-       		
-
+        	Buttons buttoneffect = new Buttons();
        		buttoneffect.setArray(colorArray);
-       		snd = new SendTimer(buttoneffect, Bluetooth);
-       		//snd.setBluetooth(Bluetooth);
-       		timer.schedule  ( snd, 1000, 100 ); // frequency 30 fps
+       		
+       		timer = new Timer(); 
+       		snd = new SendTimer(buttoneffect, Bluetooth);  
+        	snd.setEffect(buttoneffect);
+       		timer.schedule  ( snd, 100, 66 ); // frequency 15 fps
        		timerisAlive = true;
+       		
+       		
+
        		
        		Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
        		

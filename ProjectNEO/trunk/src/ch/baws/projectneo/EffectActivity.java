@@ -65,8 +65,8 @@ public class EffectActivity extends Activity {
     	timer = new Timer(); 
     	snd = new SendTimer(eff, Bluetooth);  
     	timer.schedule  ( snd, 100, 66 ); // frequency 15 fps
-    	      		       			
     	timerisAlive = true;
+    	
        	
 
 	}
@@ -189,9 +189,9 @@ public class EffectActivity extends Activity {
         	
         	title.setText("Matrix Effect started");
         	        	
-//        	Matrix matrix = new Matrix();
-//        	//randomsnake.setEffectActivity(this);
-//        	snd.setEffect(matrix);
+        	Matrix matrix = new Matrix();
+        	//randomsnake.setEffectActivity(this);
+        	snd.setEffect(matrix);
         	
            	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
