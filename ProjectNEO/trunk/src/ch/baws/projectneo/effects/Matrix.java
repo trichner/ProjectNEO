@@ -22,7 +22,7 @@ public class Matrix extends Effect{
 		int length;
 	}
 	private static final int COLOR = Frame.NEO_GREEN;
-	Strip[] strips;
+	Strip[] strips= new Strip[8];
 	
 	public Matrix(){
 		super();
