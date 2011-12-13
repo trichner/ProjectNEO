@@ -25,7 +25,7 @@ public class Wave extends Effect{
 		while(!EXIT){
 			if(line==8)
 				line=0;
-			if(color==4)
+			if(color==8)
 				color=0;
 			for (int i=0;i<8;i++)
 			{
@@ -36,7 +36,7 @@ public class Wave extends Effect{
 				color++;
 			//ea.draw(array); //prints the array
 			try {
-				sleep(500);
+				sleep(250);
 			} catch (InterruptedException e) {}
 		}
 		
