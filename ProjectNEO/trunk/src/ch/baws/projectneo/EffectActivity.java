@@ -6,7 +6,9 @@ import ch.baws.projectneo.R;
 import ch.baws.projectneo.effects.*;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +23,7 @@ public class EffectActivity extends Activity {
 	ProgressBar progressBar;
 	
 	private static final String TAG = "EFFECTS_ACTIVITY";
-	private static final boolean D = false;
+	private static final boolean D = true;
 	
 	Timer timer;
 	SendTimer snd;
@@ -32,10 +34,18 @@ public class EffectActivity extends Activity {
 
 	private boolean timerisAlive = false; 
 	
+	PowerManager pm;
+	PowerManager.WakeLock wl;
+	
 	public void onCreate(Bundle bndl)
 	{
     	super.onCreate(bndl);
     	setContentView(R.layout.effects);
+    	
+    	pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+    	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
+    	wl.acquire();
+    	
     	progressBar = findViewItemById(R.id.progressBar);
     	//progressBar.setVisibility(View.INVISIBLE);
     	
@@ -105,6 +115,7 @@ public class EffectActivity extends Activity {
    	@Override
    	public void onDestroy() {
    		super.onDestroy();
+   		wl.release();
     	if(timerisAlive==true)
     	{
     		timer.cancel();
