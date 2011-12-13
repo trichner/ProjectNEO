@@ -24,30 +24,31 @@ public class RandomSnakePlayer extends Effect{
 			while(!quit){
 				whereToGo = rand.nextInt(4);	
 				if(snake.isValidMove(snake.getDir())){
-					if(rand.nextBoolean())
+					if(whereToGo>1)
 						break;
 				}
+				whereToGo = rand.nextInt(4);
 				switch(whereToGo){
 				case 0:
-					if(snake.isValidMove(Dir.DOWN)){
+					if(snake.isValidMove(Dir.DOWN)&&snake.getDir()!=Dir.UP){
 						snake.setDir(Dir.DOWN);
 						quit = true;
 					}
 					break;
 				case 1:
-					if(snake.isValidMove(Dir.UP)){
+					if(snake.isValidMove(Dir.UP)&&snake.getDir()!=Dir.DOWN){
 						snake.setDir(Dir.UP);
 						quit = true;
 					}
 					break;
 				case 2:
-					if(snake.isValidMove(Dir.LEFT)){
+					if(snake.isValidMove(Dir.LEFT)&&snake.getDir()!=Dir.RIGHT){
 						snake.setDir(Dir.LEFT);
 						quit = true;
 					}
 					break;
 				case 3:
-					if(snake.isValidMove(Dir.RIGHT)){
+					if(snake.isValidMove(Dir.RIGHT)&&snake.getDir()!=Dir.LEFT){
 						snake.setDir(Dir.RIGHT);
 						quit = true;
 					}
@@ -56,7 +57,7 @@ public class RandomSnakePlayer extends Effect{
 			}
 			
 			try {
-				sleep(400);
+				sleep(100);
 			} catch (InterruptedException e) {}
 		}
 		snake.exit();
