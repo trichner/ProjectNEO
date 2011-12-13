@@ -13,7 +13,9 @@
     <string name="text">Text</string>
     <string name="cfield">Colorfield</string>
     <string name="matrix">Matrix</string>
+    <string name="reset">Reset</string>
     <string name="gameoflife">GameOfLife</string>
     <string name="eppi">Eppi</string>
     <string name="placeholder">PlaceHolder</string>
+    
 </resources>
