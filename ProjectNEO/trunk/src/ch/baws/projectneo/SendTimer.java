@@ -28,7 +28,15 @@ public class SendTimer extends TimerTask{
 	}
 
 	public void setEffect(Effect in_effect) {
+		
+		if(effect.isAlive()) effect.exit();
+		
 		this.effect = in_effect;
+		
+		if(!(this.effect.isAlive())){
+			if(D) Log.e(TAG, "STARTEFFECT");
+        	this.effect.start();			
+		}
 	}
 
 	public void run()

@@ -48,6 +48,23 @@ public class GeneralUtils {
     	}
 		return array;
 	}
+	/**
+	 * method fillArray - fills the array with a constant value c
+	 * @param m
+	 * @param n
+	 * @param c the colorcode
+	 * @return
+	 */
+	public static int[][] fillArray(int m, int n, int c)
+	{
+		int[][] array = new int[m][n]; // default Array, makes sure it contains zeros
+    	for (int i=0;i<m;i++){
+    		for (int j=0;j<n;j++){
+    			array[i][j] = c;
+    		}
+    	}
+		return array;
+	}
 	
 	public static void drawArray(int[][] array, int m, int n)
 	{

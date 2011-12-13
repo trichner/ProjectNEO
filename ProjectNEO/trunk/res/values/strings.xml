@@ -10,4 +10,6 @@
     <string name="starsky">Star-Sky</string>
     <string name="rsnake">Random Snake</string>
     <string name="tvdefault">O O O O O O O O</string>
+    <string name="text">Text</string>
+    <string name="cfield">Colorfield</string>
 </resources>

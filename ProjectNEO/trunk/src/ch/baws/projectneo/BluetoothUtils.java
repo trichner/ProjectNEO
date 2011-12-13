@@ -135,9 +135,10 @@ public class BluetoothUtils {
 	{
 
    		// Create a data stream so we can talk to server.
-   		if (D)
+   		if (D){
    			Log.e(TAG, "+ ABOUT TO SAY SOMETHING TO SERVER +");
    			Log.e(TAG, "colorArray[0][0]: "+ (new Integer(colorArray[0][0])));
+   		}
 
    		try {
    			outStream = btSocket.getOutputStream();

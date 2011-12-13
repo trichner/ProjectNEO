@@ -49,6 +49,24 @@ public class EffectActivity extends Activity {
     	textview[6] = (TextView)findViewById(R.id.textview6);
     	textview[7] = (TextView)findViewById(R.id.textview7);
     	
+   		Bluetooth = new BluetoothUtils();
+
+    	Bluetooth.init();
+    	Bluetooth.connect();
+    	if(timerisAlive==true)
+    	{
+    		timer.cancel();
+    	}       
+    	
+    	Colorfield eff = new Colorfield();
+    	eff.setColor(7);
+    	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
+    	timer = new Timer(); 
+    	snd = new SendTimer(eff, Bluetooth);  
+    	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps
+    	      		       			
+    	timerisAlive = true;
+       	
 
 	}
     @Override
@@ -83,6 +101,7 @@ public class EffectActivity extends Activity {
     	{
     		timer.cancel();
     	}
+    	Bluetooth.close();
    		if (D)
    			Log.e(TAG, "-- ON STOP --");
    	}
@@ -94,6 +113,7 @@ public class EffectActivity extends Activity {
     	{
     		timer.cancel();
     	}
+    	Bluetooth.close();
    		if (D)
    			Log.e(TAG, "--- ON DESTROY ---");
    	}
@@ -109,28 +129,14 @@ public class EffectActivity extends Activity {
         	
        		if (D) 
        			Log.e(TAG, "+ WAVE BUTTON SELECT +");
-        	if(timerisAlive==true)
-        	{
-        		timer.cancel();
-        	}     
-        	
-        	title.setText("Wave Effect started");
-        	
-       		Bluetooth = new BluetoothUtils();
-
-        	Bluetooth.init();
-        	Bluetooth.connect();
+           	
+        	title.setText("Wave Effect started");        	
         	
         	Wave wave = new Wave();       	
-        	wave.setEffectActivity(this);
+        	//wave.setEffectActivity(this);
+        	snd.setEffect(wave);
 
-        	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-        	timer = new Timer(); 
-        	snd = new SendTimer(wave, Bluetooth);  
-        	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps
-        	      		       			
-        	timerisAlive = true;
-           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
        		
             return true;
 
@@ -138,53 +144,52 @@ public class EffectActivity extends Activity {
         case R.id.starsky:
        		if (D) 
        			Log.e(TAG, "+ STARSKY BUTTON SELECT +");
-        	if(timerisAlive==true)
-        	{
-        		timer.cancel();
-        	}       	
-        	
+    	        	
         	title.setText("StarSky Effect started");
-        	
-       		Bluetooth = new BluetoothUtils();
-
-        	Bluetooth.init();
-        	Bluetooth.connect();
-        	
+        	        	
         	StarSky sky = new StarSky();
-        	sky.setEffectActivity(this);
+        	//sky.setEffectActivity(this);
+        	snd.setEffect(sky);
         	
-        	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-        	timer = new Timer(); 
-        	snd = new SendTimer(sky, Bluetooth);  
-        	timer.schedule  ( snd, 1000, 33 ); // frequency 30 fps
-        	      		       			
-        	timerisAlive = true;
            	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
         	
         case R.id.rsnake:
        		if (D) 
-       			Log.e(TAG, "+ RSNAKE BUTTON SELECT +");
-        	if(timerisAlive==true)
-        	{
-        		timer.cancel();
-        	}       	
+       			Log.e(TAG, "+ RSNAKE BUTTON SELECT +");   	
         	
-        	title.setText("Wave Effect started");
-        	
-       		Bluetooth = new BluetoothUtils();
-        	Bluetooth.init();
-        	Bluetooth.connect();
-        	
+        	title.setText("RandomSnake Effect started");
+        	        	
         	RandomSnakePlayer randomsnake = new RandomSnakePlayer();
-        	randomsnake.setEffectActivity(this);
+        	//randomsnake.setEffectActivity(this);
+        	snd.setEffect(randomsnake);
         	
-        	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-        	timer = new Timer(); 
-        	snd = new SendTimer(randomsnake, Bluetooth);  
-        	timer.schedule  ( snd, 100, 33 ); // frequency 30 fps   
+           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
+        	return true;
         	
-        	timerisAlive = true;
+        case R.id.cfield:
+       		if (D) 
+       			Log.e(TAG, "+ CFIELD BUTTON SELECT +");   	
+        	
+        	title.setText("Colorfield Effect started");
+        	        	
+        	Colorfield cfield = new Colorfield();
+        	//randomsnake.setEffectActivity(this);
+        	snd.setEffect(cfield);
+        	
+           	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
+        	return true;
+        
+        case R.id.text:
+       		if (D) 
+       			Log.e(TAG, "+ TEXT BUTTON SELECT +");   	
+        	
+        	title.setText("Text Effect started");
+        	        	
+        	Text text = new Text();
+        	//randomsnake.setEffectActivity(this);
+        	snd.setEffect(text);
+        	
            	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         	return true;
         

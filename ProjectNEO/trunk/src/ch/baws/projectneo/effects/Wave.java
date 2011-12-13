@@ -1,11 +1,10 @@
 package ch.baws.projectneo.effects;
 
-import ch.baws.projectneo.GeneralUtils;
+
 
 
 public class Wave extends Effect{
 	
-
 	@Override
 	public int[][] getArray() {
 		return this.array;
@@ -15,8 +14,6 @@ public class Wave extends Effect{
 	public void run() {
 		
 		
-		this.array = new int[8][8];
-		this.array = GeneralUtils.emptyArray(8, 8);
 		int line = 0;
 		int color = 0;
 		

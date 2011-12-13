@@ -1,6 +1,7 @@
 package ch.baws.projectneo.effects;
 
 import ch.baws.projectneo.EffectActivity;
+import ch.baws.projectneo.GeneralUtils;
 
 public abstract class Effect extends Thread{
 	
@@ -8,6 +9,13 @@ public abstract class Effect extends Thread{
 	protected boolean EXIT = false;
 	protected EffectActivity ea;
 	
+	protected static final String TAG = "EFFECTS";
+	protected static final boolean D = false;
+	
+	
+	public Effect(){
+		this.array = GeneralUtils.emptyArray(8, 8);
+	}
 	/**
 	 * @return the array
 	 */	
