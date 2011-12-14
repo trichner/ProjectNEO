@@ -6,7 +6,17 @@ import java.util.List;
 
 public class Text extends Effect {
 
-
+	Text(String text, int textclr, int backclr, int spd) {
+		
+		this.text = text;
+		this.TEXT = textclr;
+		this.BACK = backclr;
+		if (spd == 0)
+			this.speed = SLO;
+		else
+			this.speed = FST;
+	}
+	
 	@Override
 	public int[][] getArray() {
 		return array;
@@ -105,15 +115,6 @@ public class Text extends Effect {
 	}
 	
 	
-	public void setText(String text, int textclr, int backclr, int spd) {
-		this.text = text;
-		this.TEXT = textclr;
-		this.BACK = backclr;
-		if (spd == 0)
-			this.speed = SLO;
-		else
-			this.speed = FST;
-	}
 
 	private void setTextArray(String text) {
 		//First screen is empty
@@ -137,6 +138,10 @@ public class Text extends Effect {
     		//add space
     		hexArray.add(0);    		
     	}
+    	
+    	//add last space
+    	for(int i=0; i<5; i++)
+    		hexArray.add(0);
     	
     	//create color array
     	for (int col=0; col<hexArray.size(); col++)
