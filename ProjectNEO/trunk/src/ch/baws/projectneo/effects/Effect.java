@@ -12,6 +12,7 @@ public abstract class Effect extends Thread{
 	protected static final String TAG = "EFFECTS";
 	protected static final boolean D = false;
 	
+	public static String author;
 	
 	public Effect(){
 		this.array = GeneralUtils.emptyArray(8, 8);
