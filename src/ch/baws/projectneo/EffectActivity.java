@@ -7,6 +7,7 @@ import ch.baws.projectneo.effects.*;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
@@ -33,6 +34,7 @@ public class EffectActivity extends Activity {
 	Colorfield cfield;
 
 	private boolean timerisAlive = false; 
+	public boolean connected = false;
 	
 	PowerManager pm;
 	PowerManager.WakeLock wl;
@@ -54,7 +56,8 @@ public class EffectActivity extends Activity {
    		Bluetooth = new BluetoothUtils();
 
     	Bluetooth.init();
-    	Bluetooth.connect();
+    	if (!connected) Bluetooth.connect();
+    	connected = true;
     	if(timerisAlive==true)
     	{
     		timer.cancel();
@@ -178,11 +181,15 @@ public class EffectActivity extends Activity {
        			Log.e(TAG, "+ TEXT BUTTON SELECT +");   	
         	
         	title.setText("Text Effect started");
-        	        	
-        	Text text = new Text();
-        	//randomsnake.setEffectActivity(this);
-        	snd.setEffect(text);
+       
+        	final Intent intent2 = new Intent(this,TextActivity.class);           
+        	startActivity(intent2);
+        	if(timerisAlive==true)
+        	timer.cancel();
+        	if(connected) Bluetooth.close();
+        	connected =false;
         	return true;
+        	
         	
         	
         case R.id.matrix:
