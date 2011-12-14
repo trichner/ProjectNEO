@@ -48,7 +48,5 @@
          android:title="@string/matrix" 
          android:icon="@android:drawable/ic_menu_view" />
     <item android:id="@+id/gameoflife" android:title="@string/gameoflife"></item>
-    <item android:id="@+id/eppi" android:title="@string/eppi"></item>
-    <item android:id="@+id/placeholder" android:title="@string/placeholder"></item>
     
 </menu>
