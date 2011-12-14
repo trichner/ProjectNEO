@@ -31,7 +31,7 @@ public class ProjectNEOActivity extends Activity {
 	
 	private OutputStream outStream = null;
 
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	private int[][] colorArray; // array to store the current LED colors
 
@@ -57,9 +57,9 @@ public class ProjectNEOActivity extends Activity {
         setContentView(R.layout.main);
         
         
-        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-        wl.acquire();
+//        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+//        wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
+//        wl.acquire();
         
         colorArray = GeneralUtils.emptyArray(8,8); // fills array with zeros
         button = new Button[8][8];
@@ -219,7 +219,7 @@ public class ProjectNEOActivity extends Activity {
    	@Override
    	public void onDestroy() {
    		super.onDestroy();
-   		wl.release();
+   		//wl.release();
     	if(timerisAlive==true)
     	timer.cancel();
     	if(connected)
@@ -248,7 +248,7 @@ public class ProjectNEOActivity extends Activity {
        			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
        			
        		}
-        	if (!connected) Bluetooth.connect();
+        	Bluetooth.connect();
         	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
         	connected = true;
       		

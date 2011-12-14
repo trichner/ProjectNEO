@@ -48,7 +48,7 @@ public class GameOfLife extends Effect {
 				
 			}
 			
-			if(alive<5){			
+			if(alive<10){			
 				for(int i=0;i<8;i++){
 					for(int j=0;j<8;j++){
 						array[i][j] = rand.nextInt(8);
@@ -71,8 +71,8 @@ public class GameOfLife extends Effect {
 		for(int i=-1;i<=1;i++){
 			for(int j=-1;j<=1;j++){
 				if(i==0 && j==0) continue;
-				if(x<0 || x>7) continue;
-				if(y<0 || y>7) continue;
+				if((x+i)<0 || (x+i)>7) continue;
+				if((y+j)<0 || (y+j)>7) continue;
 				if(array[x+i][y+j]>0) count++;
 			}
 		}

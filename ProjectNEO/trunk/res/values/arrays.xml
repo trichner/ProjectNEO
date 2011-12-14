@@ -14,6 +14,7 @@
     <string-array name="speeds">
         <item>Slow</item>
         <item>Fast</item>
+        <item>Ultrafast</item>
     </string-array>
           
     

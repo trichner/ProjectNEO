@@ -24,7 +24,7 @@ public class EffectActivity extends Activity {
 	ProgressBar progressBar;
 	
 	private static final String TAG = "EFFECTS_ACTIVITY";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	
 	Timer timer;
 	SendTimer snd;
@@ -43,10 +43,10 @@ public class EffectActivity extends Activity {
 	{
     	super.onCreate(bndl);
     	setContentView(R.layout.effects);
-    	
-    	pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-    	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-    	wl.acquire();
+//    	
+//    	pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+//    	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
+//    	wl.acquire();
     	
     	progressBar = findViewItemById(R.id.progressBar);
     	//progressBar.setVisibility(View.INVISIBLE);
@@ -118,7 +118,7 @@ public class EffectActivity extends Activity {
    	@Override
    	public void onDestroy() {
    		super.onDestroy();
-   		wl.release();
+   		//wl.release();
     	if(timerisAlive==true)
     	{
     		timer.cancel();

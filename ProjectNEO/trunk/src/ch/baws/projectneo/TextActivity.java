@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,6 +47,8 @@ public class TextActivity extends Activity {
 	PowerManager pm;
 	PowerManager.WakeLock wl;
 	
+	int icolor, iback, ispeed;
+	
 	Text text;
 	
     /** Called when the activity is first created. */
@@ -54,9 +58,9 @@ public class TextActivity extends Activity {
         setContentView(R.layout.text);
         
         
-        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-        wl.acquire();
+//        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+//        wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
+//        wl.acquire();
         
         colorArray = GeneralUtils.emptyArray(8,8); // fills array with zeros
         
@@ -65,22 +69,25 @@ public class TextActivity extends Activity {
         et = (EditText) findViewById(R.id.text_input);
         
         Spinner colorspin = (Spinner) findViewById(R.id.textcolor);
-        ArrayAdapter adapter1 = ArrayAdapter.createFromResource(
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
                 this, R.array.colors, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         colorspin.setAdapter(adapter1); 
+        colorspin.setOnItemSelectedListener(new ColorSelectedListener());
         
         Spinner backspin = (Spinner) findViewById(R.id.backgroundcolor);
-        ArrayAdapter adapter2 = ArrayAdapter.createFromResource(
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(
                 this, R.array.colors, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         backspin.setAdapter(adapter2); 
+        backspin.setOnItemSelectedListener(new BackSelectedListener());
         
         Spinner speedspin = (Spinner) findViewById(R.id.speed);
-        ArrayAdapter adapter3 = ArrayAdapter.createFromResource(
+        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(
                 this, R.array.speeds, android.R.layout.simple_spinner_item);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         speedspin.setAdapter(adapter3); 
+        speedspin.setOnItemSelectedListener(new SpeedSelectedListener());
         
  		Bluetooth = new BluetoothUtils();
 
@@ -151,7 +158,7 @@ public class TextActivity extends Activity {
    	@Override
    	public void onDestroy() {
    		super.onDestroy();
-   		wl.release();
+  // 		wl.release();
     	if(timerisAlive==true)
     	timer.cancel();
     	if(connected)
@@ -160,20 +167,59 @@ public class TextActivity extends Activity {
    			Log.e(TAG, "--- ON DESTROY ---");
    	}
 
-       	  
+   	public class ColorSelectedListener implements OnItemSelectedListener {
+		@Override
+		public void onItemSelected(AdapterView<?> arg0, View view, int pos, long id) {
+						icolor = pos;	   	   	        	  
+	   	}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+			
+		} 
+   	}
+   	
+   	public class BackSelectedListener implements OnItemSelectedListener {
+		@Override
+		public void onItemSelected(AdapterView<?> arg0, View view, int pos, long id) {
+						iback = pos;	   	   	        	  
+	   	}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+			
+		} 
+   	}
+ 
+   	public class SpeedSelectedListener implements OnItemSelectedListener {
+		@Override
+		public void onItemSelected(AdapterView<?> arg0, View view, int pos, long id) {
+						ispeed = pos;	   	   	        	  
+	   	}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+			
+		} 
+   	}
 
    	public void sendText(View v){
    		if (D) 
-   			Log.e(TAG, "+ TEXT BUTTON SELECT +"); 
+   			Log.e(TAG, "+ TEXT BUTTON SELECT +");
    		
-    	if (!timerisAlive) {
-    		text = new Text();
-    		snd.setEffect(text);
-    	}
-    	//String str = (et.getText()).toString();
-    	//if(str=="") str="ABC"; //TODO
-    	String str = "ABC";
-    	text.setText(str, 1, 0, 0);
+   		String str = (et.getText()).toString();
+    	if(str=="") str="Project Neo"; //TODO
+    	//if (!timerisAlive) {
+   			text = new Text(str, icolor, iback, ispeed);
+   			snd.setEffect(text);
+   		//}
+    	
+
+    	//String str = "ABC";
+    	//text.setText(str, 1, 0, 0);
     	
 
 
