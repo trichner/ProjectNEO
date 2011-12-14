@@ -127,7 +127,7 @@ public class Text extends Effect {
     	
     	for (int i=0; i<text.length(); i++)
     	{
-    		for (int j=0; j<8; j++)
+    		for (int j=0; j<5; j++)
     		{
     			if (Character.isLetter(text.charAt(i)))
     				hexArray.add(letters[(int)text.charAt(i)-65][j]);
@@ -139,7 +139,7 @@ public class Text extends Effect {
     	}
     	
     	//add last space
-    	for(int i=0; i<5; i++)
+    	for(int i=0; i<8; i++)
     		hexArray.add(0);
     	
     	//create color array
