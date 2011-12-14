@@ -17,5 +17,8 @@
     <string name="gameoflife">GameOfLife</string>
     <string name="eppi">Eppi</string>
     <string name="placeholder">PlaceHolder</string>
+    <string name="speed_prompt">Choose a speed</string>
+    <string name="back_prompt">Choose a background</string>
+    <string name="color_prompt">Choose a color</string>
     
 </resources>
