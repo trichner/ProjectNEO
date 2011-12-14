@@ -6,15 +6,16 @@ import java.util.List;
 
 public class Text extends Effect {
 
-	Text(String text, int textclr, int backclr, int spd) {
+	public Text(String text, int textclr, int backclr, int spd) {
 		
 		this.text = text;
 		this.TEXT = textclr;
 		this.BACK = backclr;
-		if (spd == 0)
-			this.speed = SLO;
-		else
-			this.speed = FST;
+		switch (spd) {
+			case 1 : this.speed = FST; break;
+			case 2 : this.speed = IMB; break;
+			default: this.speed = SLO; break;
+		}
 	}
 	
 	@Override
@@ -47,6 +48,8 @@ public class Text extends Effect {
 	//Define Speed
 	static final int SLO = 500;
 	static final int FST = 100;
+	static final int IMB = 70;
+	
 	int speed = SLO;
 	
 	
@@ -87,10 +90,6 @@ public class Text extends Effect {
 	@Override
 	public void run() {
 		
-		try {
-			sleep(100);
-		} catch (InterruptedException e1) {}	
-		
 		/*
 		 * Array format: array[line][column]
 		 * HexArray format: hexArray[hexcolumn]
@@ -128,7 +127,7 @@ public class Text extends Effect {
     	
     	for (int i=0; i<text.length(); i++)
     	{
-    		for (int j=0; j<5; j++)
+    		for (int j=0; j<8; j++)
     		{
     			if (Character.isLetter(text.charAt(i)))
     				hexArray.add(letters[(int)text.charAt(i)-65][j]);
