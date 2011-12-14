@@ -6,10 +6,7 @@ import java.util.List;
 
 public class Text extends Effect {
 
-	public Text() {
-		super();
-	}
-	
+
 	@Override
 	public int[][] getArray() {
 		return array;
@@ -34,7 +31,7 @@ public class Text extends Effect {
 	int BACK = BLU;
 	
 	//Define Textvar
-	String text = "abcd";
+	String text = "abcdefghijklmnopqrstuvwxyz";
 	
 	
 	//Define Speed
@@ -42,31 +39,8 @@ public class Text extends Effect {
 	static final int FST = 100;
 	int speed = SLO;
 	
-	//Define Lines for letters
-	//final int[] a00000 = {BACK, BACK, BACK, BACK, BACK};
-//	final int[] a00001 = {BACK, BACK, BACK, BACK, TEXT};
-//	final int[] a00010 = {BACK, BACK, BACK, TEXT, BACK};
-//	final int[] a00100 = {BACK, BACK, TEXT, BACK, BACK};
-//	final int[] a01000 = {BACK, TEXT, BACK, BACK, BACK};
-//	final int[] a01010 = {BACK, TEXT, BACK, TEXT, BACK};
-//	final int[] a01110 = {BACK, TEXT, TEXT, TEXT, BACK};
-//	final int[] a01111 = {BACK, TEXT, TEXT, TEXT, TEXT};
-//	final int[] a10000 = {TEXT, BACK, BACK, BACK, BACK};
-//	final int[] a10001 = {TEXT, BACK, BACK, BACK, TEXT};
-//	final int[] a10010 = {TEXT, BACK, BACK, TEXT, BACK};
-//	final int[] a10011 = {TEXT, BACK, BACK, TEXT, TEXT};
-//	final int[] a10100 = {TEXT, BACK, TEXT, BACK, BACK};
-//	final int[] a10101 = {TEXT, BACK, TEXT, BACK, TEXT};
-//	final int[] a11000 = {TEXT, TEXT, BACK, BACK, BACK};
-//	final int[] a11001 = {TEXT, TEXT, BACK, BACK, TEXT};
-//	final int[] a11011 = {TEXT, TEXT, BACK, TEXT, TEXT};
-//	final int[] a11100 = {TEXT, TEXT, TEXT, BACK, BACK};
-//	final int[] a11110 = {TEXT, TEXT, TEXT, TEXT, BACK};
-//	final int[] a11111 = {TEXT, TEXT, TEXT, TEXT, TEXT};
 	
-	
-	
-	//Define Letters for Output
+	//Define Letters for Hexarray
 	
 	final int[] A = {0x7f, 0x90, 0x90, 0x90, 0x7f};
 	final int[] B = {0xff, 0x91, 0x91, 0x91, 0x6e};
@@ -80,39 +54,32 @@ public class Text extends Effect {
 	final int[] J = {0x8e, 0x81, 0xfe, 0x80, 0x90};
 	final int[] K = {0xff, 0x10, 0x28, 0x44, 0x83};
 	final int[] L = {0xff, 0x01, 0x01, 0x01, 0x01};
-//	final int[][] C = {a01111, a10000, a10000, a10000, a10000, a10000, a10000, a01111};
-//	final int[][] D = {a11110, a10001, a10001, a10001, a10001, a10001, a10001, a11110};
-//	final int[][] E = {a11111, a10000, a10000, a11100, a10000, a10000, a10000, a11111};
-//	final int[][] F = {a11111, a10000, a10000, a11100, a10000, a10000, a10000, a10000};
-//	final int[][] G = {a01111, a10000, a10000, a10011, a10001, a10001, a10001, a01110};
-//	final int[][] H = {a10001, a10001, a10001, a11111, a10001, a10001, a10001, a10001};
-//	final int[][] I = {a11111, a00100, a00100, a00100, a00100, a00100, a00100, a11111};
-//	final int[][] J = {a00001, a00001, a00001, a00001, a00001, a00001, a10001, a01110};
-//	final int[][] K = {a10001, a10010, a10100, a11000, a10100, a10010, a10001, a10001};
-//	final int[][] L = {a10000, a10000, a10000, a10000, a10000, a10000, a10000, a11111};
-//	final int[][] M = {a10001, a11011, a10101, a10101, a10001, a10001, a10001, a10001};
-//	final int[][] N = {a10001, a11001, a10101, a10101, a10101, a10011, a10001, a10001};
-//	final int[][] O = {a01110, a10001, a10001, a10001, a10001, a10001, a10001, a01110};
-//	final int[][] P = {a11110, a10001, a10001, a11110, a10000, a10000, a10000, a10000};
-//	final int[][] Q = {a01110, a10001, a10001, a10001, a10001, a10001, a10011, a01111};
-//	final int[][] R = {a11110, a10001, a10001, a11110, a10010, a10001, a10001, a10001};
-//	final int[][] S = {a01111, a10000, a10000, a01110, a00001, a00001, a00001, a11110};
-//	final int[][] T = {a11111, a00100, a00100, a00100, a00100, a00100, a00100, a00100};
-//	final int[][] U = {a10001, a10001, a10001, a10001, a10001, a10001, a10001, a01110};
-//	final int[][] V = {a10001, a10001, a10001, a10001, a01010, a01010, a00100, a00100};
-//	final int[][] W = {a10001, a10001, a10001, a10001, a10101, a01110, a01010, a01010};
-//	final int[][] X = {a10001, a10001, a01010, a00100, a01010, a10001, a10001, a10001};
-//	final int[][] Y = {a10001, a10001, a01010, a00100, a00100, a00100, a00100, a00100};
-//	final int[][] Z = {a11111, a00001, a00010, a00100, a01000, a10000, a10000, a11111};
-	
+	final int[] M = {0xff, 0x40, 0x30, 0x40, 0xff};
+	final int[] N = {0xff, 0x60, 0x10, 0x0C, 0xff};
+	final int[] O = {0x7e, 0x81, 0x81, 0x81, 0x73};
+	final int[] P = {0xff, 0x90, 0x90, 0x90, 0x60};
+	final int[] Q = {0xff, 0x81, 0x85, 0x82, 0x7c};
+	final int[] R = {0xff, 0x90, 0x98, 0x94, 0x63};
+	final int[] S = {0x61, 0x91, 0x91, 0x91, 0x8e};
+	final int[] T = {0x80, 0x80, 0xff, 0x80, 0x80};
+	final int[] U = {0xfe, 0x01, 0x01, 0x01, 0xfe};
+	final int[] V = {0xf0, 0x0c, 0x03, 0x0c, 0xf0};
+	final int[] W = {0xfc, 0x03, 0x0c, 0x03, 0xfc};
+	final int[] X = {0xc7, 0x28, 0x10, 0x28, 0xc7};
+	final int[] Y = {0xc0, 0x20, 0x1f, 0x20, 0xc0};
+	final int[] Z = {0x87, 0x89, 0x91, 0xa1, 0xc1};
 
 	
 	//Define Letter Array
-	final int[][] letters = {A,B,C,D,E,F,G,H};
+	final int[][] letters = {A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z};
 	
 	
 	@Override
 	public void run() {
+		
+		try {
+			sleep(100);
+		} catch (InterruptedException e1) {}	
 		
 		/*
 		 * Array format: array[line][column]
@@ -138,7 +105,7 @@ public class Text extends Effect {
 	}
 	
 	
-	public void settext(String text, int textclr, int backclr, int spd) {
+	public void setText(String text, int textclr, int backclr, int spd) {
 		this.text = text;
 		this.TEXT = textclr;
 		this.BACK = backclr;
@@ -162,7 +129,10 @@ public class Text extends Effect {
     	{
     		for (int j=0; j<5; j++)
     		{
-    			hexArray.add(letters[(int)text.charAt(i)-65][j]);
+    			if (Character.isLetter(text.charAt(i)))
+    				hexArray.add(letters[(int)text.charAt(i)-65][j]);
+    			else
+    				hexArray.add(0);
     		}
     		//add space
     		hexArray.add(0);    		
