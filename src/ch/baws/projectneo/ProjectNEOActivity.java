@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Timer;
 import ch.baws.projectneo.R;
@@ -26,6 +28,8 @@ public class ProjectNEOActivity extends Activity {
 
 	
 	private static final String TAG = "PN_ACTIVITY";
+	
+	private OutputStream outStream = null;
 
 	private static final boolean D = true;
 
@@ -189,13 +193,13 @@ public class ProjectNEOActivity extends Activity {
    		if (D)
    			Log.e(TAG, "- ON PAUSE -");
 
-//   		if (outStream != null) {
-//   			try {
-//   				outStream.flush();
-//   			} catch (IOException e) {
-//   				Log.e(TAG, "ON PAUSE: Couldn't flush output stream.", e);
-//   			}
-//   		}
+   		if (outStream != null) {
+   			try {
+   				outStream.flush();
+   			} catch (IOException e) {
+   				Log.e(TAG, "ON PAUSE: Couldn't flush output stream.", e);
+   			}
+   		}
    		//Bluetooth.Close();
 
 
