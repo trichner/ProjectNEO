@@ -84,15 +84,14 @@ public final class R {
         public static final int button75=0x7f070048;
         public static final int button76=0x7f070049;
         public static final int button77=0x7f07004a;
-        public static final int cfield=0x7f070055;
-        public static final int cfsub0=0x7f070056;
-        public static final int cfsub1=0x7f070057;
-        public static final int cfsub2=0x7f070058;
-        public static final int cfsub3=0x7f070059;
-        public static final int connect=0x7f070061;
-        public static final int effects=0x7f070063;
-        public static final int eppi=0x7f07005f;
-        public static final int gameoflife=0x7f07005e;
+        public static final int cfield=0x7f07005a;
+        public static final int cfsub0=0x7f07005b;
+        public static final int cfsub1=0x7f07005c;
+        public static final int cfsub2=0x7f07005d;
+        public static final int cfsub3=0x7f07005e;
+        public static final int connect=0x7f07005f;
+        public static final int effects=0x7f070061;
+        public static final int gameoflife=0x7f070057;
         public static final int linearLayout0=0x7f070003;
         public static final int linearLayout1=0x7f07000c;
         public static final int linearLayout2=0x7f070015;
@@ -101,14 +100,13 @@ public final class R {
         public static final int linearLayout5=0x7f070030;
         public static final int linearLayout6=0x7f070039;
         public static final int linearLayout7=0x7f070042;
-        public static final int matrix=0x7f07005d;
-        public static final int placeholder=0x7f070060;
+        public static final int matrix=0x7f070056;
         public static final int progressBar=0x7f070002;
-        public static final int reset=0x7f070062;
-        public static final int rsnake=0x7f07005a;
+        public static final int reset=0x7f070060;
+        public static final int rsnake=0x7f070054;
         public static final int speed=0x7f070052;
-        public static final int starsky=0x7f07005b;
-        public static final int text=0x7f07005c;
+        public static final int starsky=0x7f070058;
+        public static final int text=0x7f070055;
         public static final int textView1=0x7f07004b;
         public static final int text_input=0x7f07004c;
         public static final int textcolor=0x7f07004e;
@@ -117,7 +115,7 @@ public final class R {
         public static final int tv_backgroundcolor=0x7f07004f;
         public static final int tv_speed=0x7f070051;
         public static final int tv_textcolor=0x7f07004d;
-        public static final int wave=0x7f070054;
+        public static final int wave=0x7f070059;
     }
     public static final class layout {
         public static final int effects=0x7f030000;
@@ -131,6 +129,7 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f050001;
         public static final int back_prompt=0x7f050012;
+        public static final int bclock=0x7f050010;
         public static final int cfield=0x7f05000b;
         public static final int choose=0x7f050005;
         public static final int color_prompt=0x7f050013;
@@ -140,7 +139,6 @@ public final class R {
         public static final int gameoflife=0x7f05000e;
         public static final int hello=0x7f050000;
         public static final int matrix=0x7f05000c;
-        public static final int placeholder=0x7f050010;
         public static final int reset=0x7f05000d;
         public static final int rsnake=0x7f050008;
         public static final int send=0x7f050003;
