@@ -33,6 +33,10 @@ public class Text extends Effect {
 	int TEXT = RED;
 	int BACK = BLU;
 	
+	//Define Textvar
+	String text = "abcd";
+	
+	
 	//Define Speed
 	static final int SLO = 500;
 	static final int FST = 100;
@@ -70,8 +74,12 @@ public class Text extends Effect {
 	final int[] D = {0xff, 0x81, 0x81, 0x81, 0x7e};
 	final int[] E = {0xff, 0x91, 0x91, 0x81, 0x81};
 	final int[] F = {0xff, 0x90, 0x90, 0x80, 0x80};
-	final int[] G = {0x7e, 0x81, 0x81, 0x90, 0x9f};
+	final int[] G = {0x7e, 0x81, 0x81, 0x90, 0x8e};
 	final int[] H = {0xff, 0x10, 0x10, 0x10, 0xff};
+	final int[] I = {0x81, 0x81, 0xff, 0x81, 0x81};
+	final int[] J = {0x8e, 0x81, 0xfe, 0x80, 0x90};
+	final int[] K = {0xff, 0x10, 0x28, 0x44, 0x83};
+	final int[] L = {0xff, 0x01, 0x01, 0x01, 0x01};
 //	final int[][] C = {a01111, a10000, a10000, a10000, a10000, a10000, a10000, a01111};
 //	final int[][] D = {a11110, a10001, a10001, a10001, a10001, a10001, a10001, a11110};
 //	final int[][] E = {a11111, a10000, a10000, a11100, a10000, a10000, a10000, a11111};
@@ -110,7 +118,7 @@ public class Text extends Effect {
 		 * Array format: array[line][column]
 		 * HexArray format: hexArray[hexcolumn]
 		 */
-		setTextArray(gettext());
+		setTextArray(text);
 		
 		while (!EXIT) 
 		{
@@ -130,9 +138,14 @@ public class Text extends Effect {
 	}
 	
 	
-	private String gettext() {
-		
-		return "abcdefgh";
+	public void settext(String text, int textclr, int backclr, int spd) {
+		this.text = text;
+		this.TEXT = textclr;
+		this.BACK = backclr;
+		if (spd == 0)
+			this.speed = SLO;
+		else
+			this.speed = FST;
 	}
 
 	private void setTextArray(String text) {
