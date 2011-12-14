@@ -11,15 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Timer;
-
 import ch.baws.projectneo.R;
 import ch.baws.projectneo.effects.Buttons;
-import ch.baws.projectneo.effects.Colorfield;
-import ch.baws.projectneo.effects.RandomSnakePlayer;
 
 
 import android.content.Context;
@@ -41,8 +36,6 @@ public class ProjectNEOActivity extends Activity {
 	private boolean timerisAlive = false; 
 	
 	public boolean connected = false;
-
-	private OutputStream outStream = null;
 
 	private BluetoothUtils Bluetooth = null;
 	
@@ -140,7 +133,7 @@ public class ProjectNEOActivity extends Activity {
         button[7][6] = (Button) findViewById(R.id.button76);
         button[7][7] = (Button) findViewById(R.id.button77);
         
-        if(!D){
+        if(!D){ // disables the text on the buttons if DEBUG mode is disabled
         	for(int m=0;m<8;m++){
         		for(int n=0;n<8;n++){
         			button[m][n].setText("");
@@ -169,9 +162,7 @@ public class ProjectNEOActivity extends Activity {
       }
 
     if (D)
-    		Log.e(TAG, "+++ DONE IN ON CREATE, GOT LOCAL BT ADAPTER +++");
-    
-	
+    		Log.e(TAG, "+++ DONE IN ON CREATE, GOT LOCAL BT ADAPTER +++");	
     }
 
     @Override
