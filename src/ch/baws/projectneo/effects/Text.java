@@ -48,7 +48,7 @@ public class Text extends Effect {
 	//Define Speed
 	static final int SLO = 500;
 	static final int FST = 100;
-	static final int IMB = 70;
+	static final int IMB = 50;
 	
 	int speed = SLO;
 	

@@ -26,7 +26,7 @@ public class TextActivity extends Activity {
 	
 	private static final String TAG = "Text_ACTIVITY";
 
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	private int[][] colorArray; // array to store the current LED colors
 
