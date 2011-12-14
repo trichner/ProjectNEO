@@ -170,9 +170,10 @@ public class TextActivity extends Activity {
     		text = new Text();
     		snd.setEffect(text);
     	}
-    	String str = (et.getText()).toString();
-    	if(str=="") str="ABC"; //TODO
-    	text.settext(str, 1, 0, 0);
+    	//String str = (et.getText()).toString();
+    	//if(str=="") str="ABC"; //TODO
+    	String str = "ABC";
+    	text.setText(str, 1, 0, 0);
     	
 
 
