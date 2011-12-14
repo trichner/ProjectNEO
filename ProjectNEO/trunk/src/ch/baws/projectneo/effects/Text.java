@@ -33,6 +33,11 @@ public class Text extends Effect {
 	int TEXT = RED;
 	int BACK = BLU;
 	
+	//Define Speed
+	static final int SLO = 500;
+	static final int FST = 100;
+	int speed = SLO;
+	
 	//Define Lines for letters
 	//final int[] a00000 = {BACK, BACK, BACK, BACK, BACK};
 //	final int[] a00001 = {BACK, BACK, BACK, BACK, TEXT};
@@ -115,12 +120,12 @@ public class Text extends Effect {
 				for(int col=0; col<8; col++)
 					for(int line=0; line<8; line++)
 						array[line][col] = clrArray.get(col+i)[line];
-			}
 			
-			//wait for next step
-			try {
-				sleep(500);
-			} catch (InterruptedException e) {}
+				//wait for next step
+				try {
+					sleep(speed);
+				} catch (InterruptedException e) {}
+			}
 		}
 	}
 	
