@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="colors">
+        <item>Off</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Yellow</item>
+        <item>Turqoise</item>
+        <item>Pink</item>
+        <item>White</item>
+    </string-array>
+    
+    <string-array name="speeds">
+        <item>Slow</item>
+        <item>Fast</item>
+        <item>Ultrafast</item>
+    </string-array>
+          
+    
+</resources>
