@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Welcome to ProjectNEO by Thomas Richner, Stefan Mach, Marcel Mohler</string>
+    <string name="app_name">ProjectNEO</string>
+    <string name="connect">Connect</string>
+    <string name="send">Send</string>
+    <string name="effects">Effects</string>
+    <string name="choose">Choose an effect</string>
+    <string name="wave">Wave-Effect</string>
+    <string name="starsky">Star-Sky</string>
+    <string name="rsnake">Random Snake</string>
+    <string name="tvdefault">O O O O O O O O</string>
+    <string name="text">Text</string>
+    <string name="cfield">Colorfield</string>
+    <string name="matrix">Matrix</string>
+    <string name="reset">Reset</string>
+    <string name="gameoflife">GameOfLife</string>
+    <string name="eppi">Eppi</string>
+    <string name="bclock">BinaryClock</string>
+    <string name="speed_prompt">Choose a speed</string>
+    <string name="back_prompt">Choose a background</string>
+    <string name="color_prompt">Choose a color</string>
+    
+</resources>
