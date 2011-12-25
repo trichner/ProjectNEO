@@ -4,6 +4,9 @@ import java.util.Timer;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import timers.SendJob;
+import timers.SendTimer;
+
 import ch.baws.projectneo.R;
 import ch.baws.projectneo.effects.*;
 
@@ -30,8 +33,7 @@ public class EffectActivity extends Activity {
 	private static final boolean D = false;
 	private static final boolean WL = true;
 	
-	ScheduledThreadPoolExecutor timer;
-	SendTimer snd;
+	private SendJob sendJob;
 	
 	private BluetoothUtils Bluetooth = null;
 	
@@ -76,15 +78,13 @@ public class EffectActivity extends Activity {
     		timer.cancel();
     	}      */ 
     	//NO FLAGS! UGLY PROGRAMMING!!!
-    	if(timer!=null) timer.purge();
     	
     	Colorfield eff = new Colorfield();
     	eff.setColor(7);
     	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
     	
-    	timer = new ScheduledThreadPoolExecutor(1); 
-    	snd = new SendTimer(eff,Bluetooth);  
-    	timer.scheduleAtFixedRate(snd, 100, 66, TimeUnit.MILLISECONDS);//timer.schedule  ( snd, 100, 66 ); // frequency 15 fps
+    	sendJob = new SendJob(Bluetooth); 
+    	sendJob.start();
     	timerisAlive = true;
     	
        	
@@ -136,7 +136,7 @@ public class EffectActivity extends Activity {
    	public void onDestroy() {
    		super.onDestroy();
    		//if(WL) wl.release();
-   		timer.shutdown();//timer.cancel();
+   		sendJob.stop();
    		Bluetooth.close();
    		/*if(timerisAlive==true)
     	{
@@ -166,7 +166,7 @@ public class EffectActivity extends Activity {
         	
         	Wave wave = new Wave();       	
         	//wave.setEffectActivity(this);
-        	snd.setEffect(wave);
+        	sendJob.setEffect(wave);
 
 
         	return true;
@@ -180,7 +180,7 @@ public class EffectActivity extends Activity {
         	        	
         	StarSky sky = new StarSky();
         	//sky.setEffectActivity(this);
-        	snd.setEffect(sky);
+        	sendJob.setEffect(sky);
         	return true;
         	
         case R.id.rsnake:
@@ -191,7 +191,7 @@ public class EffectActivity extends Activity {
         	        	
         	RandomSnakePlayer randomsnake = new RandomSnakePlayer();
         	//randomsnake.setEffectActivity(this);
-        	snd.setEffect(randomsnake);
+        	sendJob.setEffect(randomsnake);
         	return true;
         	
         
@@ -204,7 +204,7 @@ public class EffectActivity extends Activity {
         	final Intent intent2 = new Intent(this,TextActivity.class);           
         	startActivity(intent2);
         	if(timerisAlive==true)
-        	timer.shutdown();//timer.cancel();
+        	sendJob.stop();//timer.cancel();
         	if(connected) Bluetooth.close();
         	connected =false;
         	return true;
@@ -219,7 +219,7 @@ public class EffectActivity extends Activity {
         	        	
         	Matrix matrix = new Matrix();
         	//randomsnake.setEffectActivity(this);
-        	snd.setEffect(matrix);
+        	sendJob.setEffect(matrix);
         	return true;
         
         case R.id.cfield:
@@ -230,7 +230,7 @@ public class EffectActivity extends Activity {
         	        	
         	cfield = new Colorfield();
         	//randomsnake.setEffectActivity(this);
-        	snd.setEffect(cfield);
+        	sendJob.setEffect(cfield);
         	return true;
         	
         case R.id.cfsub0:
@@ -263,7 +263,7 @@ public class EffectActivity extends Activity {
         	        	
         	GameOfLife gol = new GameOfLife();
         	//randomsnake.setEffectActivity(this);
-        	snd.setEffect(gol);
+        	sendJob.setEffect(gol);
         	return true;
  
         }

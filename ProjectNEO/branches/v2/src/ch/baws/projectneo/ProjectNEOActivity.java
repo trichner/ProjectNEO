@@ -15,6 +15,8 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Timer;
+
+import timers.SendTimer;
 import ch.baws.projectneo.R;
 import ch.baws.projectneo.effects.Buttons;
 
@@ -161,8 +163,8 @@ public class ProjectNEOActivity extends Activity {
     	}
     	
       if (!Bluetooth.active()) { // request popup if BT isnt activated
-      Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-      startActivityForResult(enableBtIntent, 1);
+    	  Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+    	  startActivityForResult(enableBtIntent, 1);
       }
 
     if (D)
@@ -282,10 +284,12 @@ public class ProjectNEOActivity extends Activity {
         case R.id.effects:
         	final Intent intent = new Intent(this,EffectActivity.class);           
         	startActivity(intent);
+        	
         	if(timerisAlive==true)
         	timer.cancel();
         	if(connected) Bluetooth.close();
         	connected =false;
+        	
         	return true;
         	
         case R.id.reset:
