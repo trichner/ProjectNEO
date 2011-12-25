@@ -7,7 +7,14 @@ import android.util.Log;
 
 import ch.baws.projectneo.BluetoothUtils;
 import ch.baws.projectneo.effects.Effect;
-
+/**
+ * SendJob implements all the stuff that is needed to send constant data over bluetooth,
+ * no need for Timers & co.
+ * see EffectActivity for usage
+ * 
+ * @author Thomas Richner
+ *
+ */
 public class SendJob {
 	
 	private static final String TAG = "SEND_JOB";
