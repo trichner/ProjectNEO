@@ -1,11 +1,14 @@
 package ch.baws.projectneo;
 
 import java.util.Timer;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import ch.baws.projectneo.R;
 import ch.baws.projectneo.effects.*;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,8 +28,9 @@ public class EffectActivity extends Activity {
 	
 	private static final String TAG = "EFFECTS_ACTIVITY";
 	private static final boolean D = false;
+	private static final boolean WL = true;
 	
-	Timer timer;
+	ScheduledThreadPoolExecutor timer;
 	SendTimer snd;
 	
 	private BluetoothUtils Bluetooth = null;
@@ -43,11 +47,11 @@ public class EffectActivity extends Activity {
 	{
     	super.onCreate(bndl);
     	setContentView(R.layout.effects);
-//    	
-//    	pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-//    	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-//    	wl.acquire();
-    	
+    	/*if(WL){
+	    	pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+	    	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
+	    	wl.acquire();
+    	}*/
     	progressBar = findViewItemById(R.id.progressBar);
     	//progressBar.setVisibility(View.INVISIBLE);
     	
@@ -55,20 +59,32 @@ public class EffectActivity extends Activity {
     	
    		Bluetooth = new BluetoothUtils();
 
+   		
     	Bluetooth.init();
-    	if (!connected) Bluetooth.connect();
-    	connected = true;
+        if (!Bluetooth.active()) { // request popup if BT isnt activated
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, 1);
+        }
+    	if (!connected){
+    		Bluetooth.connect();
+    		connected = true;
+    	}
+    	
+    	/*
     	if(timerisAlive==true)
     	{
     		timer.cancel();
-    	}       
+    	}      */ 
+    	//NO FLAGS! UGLY PROGRAMMING!!!
+    	if(timer!=null) timer.purge();
     	
     	Colorfield eff = new Colorfield();
     	eff.setColor(7);
     	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-    	timer = new Timer(); 
-    	snd = new SendTimer(eff, Bluetooth);  
-    	timer.schedule  ( snd, 100, 66 ); // frequency 15 fps
+    	
+    	timer = new ScheduledThreadPoolExecutor(1); 
+    	snd = new SendTimer(eff,Bluetooth);  
+    	timer.scheduleAtFixedRate(snd, 100, 66, TimeUnit.MILLISECONDS);//timer.schedule  ( snd, 100, 66 ); // frequency 15 fps
     	timerisAlive = true;
     	
        	
@@ -106,11 +122,12 @@ public class EffectActivity extends Activity {
    	@Override
    	public void onStop() {
    		super.onStop();
-    	if(timerisAlive==true)
+    	/*
+   		if(timerisAlive==true)
     	{
     		timer.cancel();
     	}
-    	Bluetooth.close();
+    	Bluetooth.close();*/
    		if (D)
    			Log.e(TAG, "-- ON STOP --");
    	}
@@ -118,12 +135,14 @@ public class EffectActivity extends Activity {
    	@Override
    	public void onDestroy() {
    		super.onDestroy();
-   		//wl.release();
-    	if(timerisAlive==true)
+   		//if(WL) wl.release();
+   		timer.shutdown();//timer.cancel();
+   		Bluetooth.close();
+   		/*if(timerisAlive==true)
     	{
     		timer.cancel();
-    	}
-    	Bluetooth.close();
+    	}*/
+    	
    		if (D)
    			Log.e(TAG, "--- ON DESTROY ---");
    	}
@@ -185,7 +204,7 @@ public class EffectActivity extends Activity {
         	final Intent intent2 = new Intent(this,TextActivity.class);           
         	startActivity(intent2);
         	if(timerisAlive==true)
-        	timer.cancel();
+        	timer.shutdown();//timer.cancel();
         	if(connected) Bluetooth.close();
         	connected =false;
         	return true;
