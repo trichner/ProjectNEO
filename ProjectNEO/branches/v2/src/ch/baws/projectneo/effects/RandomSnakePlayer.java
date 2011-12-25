@@ -59,7 +59,7 @@ public class RandomSnakePlayer extends Effect{
 			}
 			
 			try {
-				sleep(100);
+				sleep(400);
 			} catch (InterruptedException e) {}
 		}
 		snake.exit();

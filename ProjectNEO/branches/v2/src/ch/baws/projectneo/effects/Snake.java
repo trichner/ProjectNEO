@@ -151,7 +151,7 @@ public class Snake extends Thread{
 		
 			//Speed of Snake :)
 			try {
-				sleep(500);
+				sleep(400);
 			} catch (InterruptedException e) {	}
 		}
 	}
