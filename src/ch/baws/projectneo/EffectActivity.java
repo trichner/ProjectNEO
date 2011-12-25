@@ -37,7 +37,7 @@ public class EffectActivity extends Activity {
 	
 	private BluetoothUtils Bluetooth = null;
 	
-	Colorfield cfield;
+	Colorfield cfield; //TODO UGLY
 
 	private boolean timerisAlive = false; 
 	public boolean connected = false;
@@ -144,18 +144,19 @@ public class EffectActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
     	
     	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
-        
+        Effect effect;
         switch (item.getItemId()) {
         case R.id.wave:
         	
        		if (D) 
        			Log.e(TAG, "+ WAVE BUTTON SELECT +");
            	
-        	title.setText("Wave Effect started");        	
+        	        	
         	
-        	Wave wave = new Wave();       	
+        	effect = new Wave();     
+        	title.setText(effect.title + " started");
         	//wave.setEffectActivity(this);
-        	sendJob.setEffect(wave);
+        	sendJob.setEffect(effect);
 
 
         	return true;
@@ -165,22 +166,19 @@ public class EffectActivity extends Activity {
        		if (D) 
        			Log.e(TAG, "+ STARSKY BUTTON SELECT +");
     	        	
-        	title.setText("StarSky Effect started");
-        	        	
-        	StarSky sky = new StarSky();
-        	//sky.setEffectActivity(this);
-        	sendJob.setEffect(sky);
+        	        	        	
+        	effect = new StarSky();
+        	title.setText(effect.title + " started");
+        	sendJob.setEffect(effect);
         	return true;
         	
         case R.id.rsnake:
        		if (D) 
        			Log.e(TAG, "+ RSNAKE BUTTON SELECT +");   	
-        	
-        	title.setText("RandomSnake Effect started");
         	        	
-        	RandomSnakePlayer randomsnake = new RandomSnakePlayer();
-        	//randomsnake.setEffectActivity(this);
-        	sendJob.setEffect(randomsnake);
+        	effect = new RandomSnakePlayer();
+        	title.setText(effect.title + " started");
+        	sendJob.setEffect(effect);
         	return true;
         	
         
@@ -203,12 +201,10 @@ public class EffectActivity extends Activity {
         case R.id.matrix:
        		if (D) 
        			Log.e(TAG, "+ MATRIX BUTTON SELECT +");   	
-        	
-        	title.setText("Matrix Effect started");
-        	        	
-        	Matrix matrix = new Matrix();
-        	//randomsnake.setEffectActivity(this);
-        	sendJob.setEffect(matrix);
+        	  	
+        	effect = new Matrix();
+        	title.setText(effect.title + " started");
+        	sendJob.setEffect(effect);
         	return true;
         
         case R.id.cfield:
@@ -218,7 +214,7 @@ public class EffectActivity extends Activity {
         	title.setText("Colorfield Effect started");
         	        	
         	cfield = new Colorfield();
-        	//randomsnake.setEffectActivity(this);
+        	title.setText(cfield.title + " started");
         	sendJob.setEffect(cfield);
         	return true;
         	
@@ -250,9 +246,9 @@ public class EffectActivity extends Activity {
         	
         	title.setText("Matrix Effect started");
         	        	
-        	GameOfLife gol = new GameOfLife();
-        	//randomsnake.setEffectActivity(this);
-        	sendJob.setEffect(gol);
+        	effect = new GameOfLife();
+        	title.setText(effect.title + " started");
+        	sendJob.setEffect(effect);
         	return true;
  
         }

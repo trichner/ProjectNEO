@@ -5,10 +5,8 @@ import java.util.List;
 
 
 public class Text extends Effect {
-	public static final String author = "StefanM";
-	public static final String title = "MarqueeV1";
 	public Text(String text, int textclr, int backclr, int spd) {
-		
+		super("StefanM","MarqueeV1");
 		this.text = text;
 		this.TEXT = textclr;
 		this.BACK = backclr;

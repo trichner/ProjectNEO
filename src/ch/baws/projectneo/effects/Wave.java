@@ -4,8 +4,10 @@ package ch.baws.projectneo.effects;
 
 
 public class Wave extends Effect{
-	public static final String author = "MarcelM";
-	public static final String title = "Wave";
+	public Wave(){
+		super("MarcelM","Wave");
+	}
+	
 	@Override
 	public int[][] getArray() {
 		return this.array;
