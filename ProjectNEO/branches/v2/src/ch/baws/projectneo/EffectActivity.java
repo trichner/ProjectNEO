@@ -154,7 +154,7 @@ public class EffectActivity extends Activity {
         	        	
         	
         	effect = new Wave();     
-        	title.setText(effect.title + " started");
+        	title.setText(effect.TITLE + " started");
         	//wave.setEffectActivity(this);
         	sendJob.setEffect(effect);
 
@@ -168,7 +168,7 @@ public class EffectActivity extends Activity {
     	        	
         	        	        	
         	effect = new StarSky();
-        	title.setText(effect.title + " started");
+        	title.setText(effect.TITLE + " started");
         	sendJob.setEffect(effect);
         	return true;
         	
@@ -176,8 +176,8 @@ public class EffectActivity extends Activity {
        		if (D) 
        			Log.e(TAG, "+ RSNAKE BUTTON SELECT +");   	
         	        	
-        	effect = new RandomSnakePlayer();
-        	title.setText(effect.title + " started");
+        	effect = new Nexus();//new RandomSnakePlayer();
+        	title.setText(effect.TITLE + " started");
         	sendJob.setEffect(effect);
         	return true;
         	
@@ -203,7 +203,7 @@ public class EffectActivity extends Activity {
        			Log.e(TAG, "+ MATRIX BUTTON SELECT +");   	
         	  	
         	effect = new Matrix();
-        	title.setText(effect.title + " started");
+        	title.setText(effect.TITLE + " started");
         	sendJob.setEffect(effect);
         	return true;
         
@@ -214,7 +214,7 @@ public class EffectActivity extends Activity {
         	title.setText("Colorfield Effect started");
         	        	
         	cfield = new Colorfield();
-        	title.setText(cfield.title + " started");
+        	title.setText(cfield.TITLE + " started");
         	sendJob.setEffect(cfield);
         	return true;
         	
@@ -247,7 +247,7 @@ public class EffectActivity extends Activity {
         	title.setText("Matrix Effect started");
         	        	
         	effect = new GameOfLife();
-        	title.setText(effect.title + " started");
+        	title.setText(effect.TITLE + " started");
         	sendJob.setEffect(effect);
         	return true;
  
