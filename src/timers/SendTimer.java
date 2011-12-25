@@ -7,7 +7,7 @@ import android.util.Log;
 import ch.baws.projectneo.BluetoothUtils;
 import ch.baws.projectneo.effects.*;
 
-public class SendTimer extends TimerTask{
+public class SendTimer extends TimerTask{ //implements Runnable
 	
 	private static final String TAG = "SEND_TIMER";
 	private static final boolean D = false;	
@@ -36,12 +36,6 @@ public class SendTimer extends TimerTask{
 			if(D) Log.e(TAG, "STARTEFFECT");
         	this.effect.start();			
 		}
-	}
-	
-	
-	
-	public void setBluetooth(BluetoothUtils in_bluetooth) {
-		this.bluetooth = in_bluetooth;
 	}
 
 	public void setEffect(Effect in_effect) {
