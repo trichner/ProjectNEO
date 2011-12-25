@@ -7,6 +7,9 @@ import ch.baws.projectneo.GeneralUtils;
 
 public class Matrix extends Effect{
 	
+	public static final String author = "ThomasR";
+	public static final String title = "Matrix Screen";
+	
 	private class Strip{
 		public Strip(double position,double speed,int length){
 			this.position = position;

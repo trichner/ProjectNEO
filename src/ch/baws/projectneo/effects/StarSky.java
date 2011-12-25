@@ -3,7 +3,8 @@ package ch.baws.projectneo.effects;
 import java.util.Random;
 
 public class StarSky extends Effect{
-
+	public static final String author = "ThomasR";
+	public static final String title = "Star-Sky";
 	synchronized public int[][] getArray() {
 		return array;
 	}
