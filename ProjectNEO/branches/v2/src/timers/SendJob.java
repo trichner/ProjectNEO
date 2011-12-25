@@ -19,6 +19,7 @@ public class SendJob {
 	
 	private static final String TAG = "SEND_JOB";
 	private static final boolean D = true;
+	private final int FPS = 20;
 	
 	private ScheduledThreadPoolExecutor executor;
 	private SendTimer sendTimer;
@@ -45,7 +46,8 @@ public class SendJob {
 	
 	public void start(){
 		if (D)		Log.e(TAG, "starting the SendJob");
-		executor.scheduleAtFixedRate(sendTimer, 0, 66, TimeUnit.MILLISECONDS);
+		bluetooth.connect();
+		executor.scheduleAtFixedRate(sendTimer, 0, 1000/FPS, TimeUnit.MILLISECONDS);
 	}
 
 	public void stop(){

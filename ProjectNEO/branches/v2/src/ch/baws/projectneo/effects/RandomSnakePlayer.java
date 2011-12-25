@@ -5,7 +5,8 @@ import java.util.Random;
 import ch.baws.projectneo.effects.Snake.Dir;
 
 public class RandomSnakePlayer extends Effect{
-
+	public static final String author = "ThomasR";
+	public static final String title = "SnakeV1";
 	private Snake snake = new Snake();
 		
 	@Override

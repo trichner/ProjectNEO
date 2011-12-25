@@ -6,6 +6,10 @@ import ch.baws.projectneo.GeneralUtils;
 
 public class GameOfLife extends Effect {
 	Random rand = new Random();
+	
+	public static final String author = "ThomasR";
+	public static final String title = "Conways Game of Life";
+	
 	public GameOfLife(){
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++){
