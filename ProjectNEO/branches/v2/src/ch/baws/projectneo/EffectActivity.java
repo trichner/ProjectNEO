@@ -4,10 +4,10 @@ import java.util.Timer;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import timers.SendJob;
-import timers.SendTimer;
 
 import ch.baws.projectneo.R;
+import ch.baws.projectneo.bthandler.SendJob;
+import ch.baws.projectneo.bthandler.SendTimer;
 import ch.baws.projectneo.effects.*;
 
 import android.app.Activity;

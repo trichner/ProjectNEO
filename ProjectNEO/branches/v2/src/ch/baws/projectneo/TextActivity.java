@@ -14,8 +14,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import java.util.Timer;
 
-import timers.SendTimer;
 import ch.baws.projectneo.R;
+import ch.baws.projectneo.bthandler.SendTimer;
 import ch.baws.projectneo.effects.Buttons;
 import ch.baws.projectneo.effects.Colorfield;
 import ch.baws.projectneo.effects.Text;

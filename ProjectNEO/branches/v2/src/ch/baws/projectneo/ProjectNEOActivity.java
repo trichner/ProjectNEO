@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Timer;
 
-import timers.SendTimer;
 import ch.baws.projectneo.R;
+import ch.baws.projectneo.bthandler.SendTimer;
 import ch.baws.projectneo.effects.Buttons;
 
 
