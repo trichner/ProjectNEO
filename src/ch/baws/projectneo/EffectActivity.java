@@ -67,28 +67,7 @@ public class EffectActivity extends Activity {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, 1);
         }
-    	if (!connected){
-    		Bluetooth.connect();
-    		connected = true;
-    	}
     	
-    	/*
-    	if(timerisAlive==true)
-    	{
-    		timer.cancel();
-    	}      */ 
-    	//NO FLAGS! UGLY PROGRAMMING!!!
-    	
-    	Colorfield eff = new Colorfield();
-    	eff.setColor(7);
-    	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-    	
-    	sendJob = new SendJob(Bluetooth); 
-    	sendJob.start();
-    	timerisAlive = true;
-    	
-       	
-
 	}
     private ProgressBar findViewItemById(int progressbar2) {
 		// TODO Auto-generated method stub
@@ -103,6 +82,18 @@ public class EffectActivity extends Activity {
    	@Override
    	public void onResume() {
    		super.onResume();
+   		
+        if (!connected){
+    		Bluetooth.connect();
+    		connected = true;
+    	}
+    	Colorfield eff = new Colorfield();
+    	eff.setColor(7);
+    	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
+    	
+    	sendJob = new SendJob(Bluetooth); 
+    	sendJob.start();
+    	timerisAlive = true;
 
    		if (D) {
    			Log.e(TAG, "+ ON RESUME +");
