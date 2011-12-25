@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.util.Log;
+
 /**
  * class Bluetooth utils
  * provides basic bluetooth functions
@@ -18,6 +21,8 @@ public class BluetoothUtils {
 	private static final boolean D = false;
 	private static final boolean E = false;
 	private OutputStream outStream = null;
+	
+	private boolean FLAG_connected = false;
 	
 	private BluetoothAdapter mBluetoothAdapter = null;
 	private BluetoothSocket btSocket = null;
@@ -41,22 +46,15 @@ public class BluetoothUtils {
         if (D)
         	Log.e(TAG, "+++ Init +++");
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		if (mBluetoothAdapter == null) {
-			return false;
-		}
-		else {
-		return true;
-		}
+		
+		return mBluetoothAdapter != null;
 	}
 	
 	public boolean active()
 	{
         if (D)
         	Log.e(TAG, "+++ Active +++");
-		if (!mBluetoothAdapter.isEnabled()) {
-			 return false;
-		}
-		else return true;
+		return mBluetoothAdapter.isEnabled();
 	}
 	
 	/**
@@ -115,6 +113,7 @@ public class BluetoothUtils {
    		// don't care if it blocks.
    		try {
    			if(!E) btSocket.connect();
+   			FLAG_connected = true;
    			Log.e(TAG, "ON RESUME: BT connection established, data transfer link open.");
    		} catch (IOException e) {
    			try {
@@ -133,12 +132,15 @@ public class BluetoothUtils {
 	 **/
 	public void send(int[][] colorArray) 
 	{
-
+		if(E) return; //Emulator mode, do nothing
+		
    		// Create a data stream so we can talk to server.
    		if (D){
    			Log.e(TAG, "+ ABOUT TO SAY SOMETHING TO SERVER +");
-   			Log.e(TAG, "colorArray[0][0]: "+ (new Integer(colorArray[0][0])));
+   			Log.e(TAG, "colorArray[0][0]: "+ colorArray[0][0]);
    		}
+   		
+   		//if(btSocket !=null)	this.connect();
 
    		try {
    			outStream = btSocket.getOutputStream();
@@ -155,12 +157,17 @@ public class BluetoothUtils {
     	//String message = "Hello message from client to server.";
 		//String message = GeneralUtils.randomCharString();
     	//byte[] msgBuffer = message.getBytes();
-		byte[] msgBuffer = packet;
+		//byte[] msgBuffer = packet;
     	try {
-    		outStream.write(msgBuffer);
+    		outStream.write(packet);
     	} catch (IOException e) {
     		//Log.e(TAG, "ON RESUME: Exception during write.", e);
     	}
+	}
+	
+	public boolean isConnected(){
+		//return this.btSocket.isConnected();  //Why doesn't this work???
+		return this.FLAG_connected;
 	}
 	
 	
@@ -171,10 +178,10 @@ public class BluetoothUtils {
 	 * @return
 	 */
 	public void close() //using this method gives FC
-	//TODO
 	{
    		try	{
    			btSocket.close();
+   			this.FLAG_connected = false;
    		} catch (IOException e2) {
    			Log.e(TAG, "ON PAUSE: Unable to close socket.", e2);
 		}

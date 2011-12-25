@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import java.util.Timer;
+
+import timers.SendTimer;
 import ch.baws.projectneo.R;
 import ch.baws.projectneo.effects.Buttons;
 import ch.baws.projectneo.effects.Colorfield;
@@ -168,12 +170,12 @@ public class TextActivity extends Activity {
    	}
 
    	public class ColorSelectedListener implements OnItemSelectedListener {
-		@Override
+		//@Override
 		public void onItemSelected(AdapterView<?> arg0, View view, int pos, long id) {
 						icolor = pos;	   	   	        	  
 	   	}
 
-		@Override
+		//@Override
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
 			
@@ -181,12 +183,12 @@ public class TextActivity extends Activity {
    	}
    	
    	public class BackSelectedListener implements OnItemSelectedListener {
-		@Override
+		//@Override
 		public void onItemSelected(AdapterView<?> arg0, View view, int pos, long id) {
 						iback = pos;	   	   	        	  
 	   	}
 
-		@Override
+		//@Override
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
 			
@@ -194,12 +196,12 @@ public class TextActivity extends Activity {
    	}
  
    	public class SpeedSelectedListener implements OnItemSelectedListener {
-		@Override
+		//@Override
 		public void onItemSelected(AdapterView<?> arg0, View view, int pos, long id) {
 						ispeed = pos;	   	   	        	  
 	   	}
 
-		@Override
+		//@Override
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
 			
