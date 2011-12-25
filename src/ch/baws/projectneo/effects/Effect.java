@@ -12,19 +12,19 @@ public abstract class Effect extends Thread{
 	protected static final String TAG = "EFFECTS";
 	protected static final boolean D = false;
 	
-	public final String author;
-	public final String title;
+	public final String AUTHOR;
+	public final String TITLE;
 	
 	public Effect(String author,String title){
 		this.array = GeneralUtils.emptyArray(8, 8);
-		this.author = author;
-		this.title = title;
+		this.AUTHOR = author;
+		this.TITLE = title;
 	}
 	
 	public Effect(){
 		this.array = GeneralUtils.emptyArray(8, 8);
-		author = "brownies";
-		title = "CookieEffect";	
+		AUTHOR = "brownies";
+		TITLE = "CookieEffect";	
 	}
 	
 	/**
