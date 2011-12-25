@@ -12,20 +12,25 @@ public abstract class Effect extends Thread{
 	protected static final String TAG = "EFFECTS";
 	protected static final boolean D = false;
 	
-	public static final String author = "Someone";
-	public static final String title = "DefaultEffect";
+	public final String author;
+	public final String title;
+	
+	public Effect(String author,String title){
+		this.array = GeneralUtils.emptyArray(8, 8);
+		this.author = author;
+		this.title = title;
+	}
 	
 	public Effect(){
 		this.array = GeneralUtils.emptyArray(8, 8);
+		author = "brownies";
+		title = "CookieEffect";	
 	}
+	
 	/**
 	 * @return the array
 	 */	
 	public abstract int[][] getArray();
-	
-	public void setEffectActivity(EffectActivity in_ea){
-		 this.ea = in_ea;
-	}
 	
 	
 	public void exit(){

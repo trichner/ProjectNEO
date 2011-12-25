@@ -7,6 +7,10 @@ import ch.baws.projectneo.GeneralUtils;
 
 public class Colorfield extends Effect{
 	
+	public Colorfield(){
+		super("MarcelM", "Colorfield");
+	}
+	
 	int color=0;
 	@Override
 	public int[][] getArray() {

@@ -7,9 +7,6 @@ import ch.baws.projectneo.GeneralUtils;
 
 public class Matrix extends Effect{
 	
-	public static final String author = "ThomasR";
-	public static final String title = "Matrix Screen";
-	
 	private class Strip{
 		public Strip(double position,double speed,int length){
 			this.position = position;
@@ -28,7 +25,7 @@ public class Matrix extends Effect{
 	Strip[] strips= new Strip[8];
 	
 	public Matrix(){
-		super();
+		super("ThomasR", "Matrix Screen");
 		Random rand = new Random();
 		for(int i=0;i<8;i++){
 			strips[i] = new Strip(0,rand.nextDouble()+0.5,rand.nextInt(5)+2);
