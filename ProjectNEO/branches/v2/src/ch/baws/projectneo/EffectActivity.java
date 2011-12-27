@@ -49,11 +49,11 @@ public class EffectActivity extends Activity {
 	{
     	super.onCreate(bndl);
     	setContentView(R.layout.effects);
-    	/*if(WL){
+    	if(WL){
 	    	pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-	    	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-	    	wl.acquire();
-    	}*/
+	    	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "ProjectNeo");
+	    	if(!wl.isHeld()) wl.acquire();
+    	}
     	progressBar = findViewItemById(R.id.progressBar);
     	//progressBar.setVisibility(View.INVISIBLE);
     	
@@ -125,7 +125,9 @@ public class EffectActivity extends Activity {
    	@Override
    	public void onDestroy() {
    		super.onDestroy();
-   		//if(WL) wl.release();
+   		if(WL){
+   			if(wl.isHeld()) wl.release();
+   		}
 
    		/*if(timerisAlive==true)
     	{
