@@ -9,6 +9,7 @@ public class Colorfield extends Effect{
 	
 	public Colorfield(){
 		super("MarcelM", "Colorfield");
+		array = GeneralUtils.fillArray(8,8, 2);
 	}
 	
 	int color=0;
@@ -26,7 +27,7 @@ public class Colorfield extends Effect{
 	public void run() {
 		
 		while(!EXIT){
-			array = GeneralUtils.fillArray(8,8, color);
+			
 			//ea.draw(array); //prints the array
 			try {
 				sleep(100);

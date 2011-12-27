@@ -30,7 +30,7 @@ public class EffectActivity extends Activity {
 	ProgressBar progressBar;
 	
 	private static final String TAG = "EFFECTS_ACTIVITY";
-	private static final boolean D = false;
+	private static final boolean D = true;
 	private static final boolean WL = true;
 	
 	private SendJob sendJob;
