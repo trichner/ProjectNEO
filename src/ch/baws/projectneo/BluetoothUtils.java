@@ -1,6 +1,7 @@
 package ch.baws.projectneo;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
@@ -140,7 +141,7 @@ public class BluetoothUtils {
    			Log.e(TAG, "colorArray[0][0]: "+ colorArray[0][0]);
    		}
    		
-   		//if(btSocket !=null)	this.connect();
+   		if(btSocket ==null)	Log.e(TAG, "ERROR: Socket is NULL.");
 
    		try {
    			outStream = btSocket.getOutputStream();
@@ -161,13 +162,32 @@ public class BluetoothUtils {
     	try {
     		outStream.write(packet);
     	} catch (IOException e) {
-    		//Log.e(TAG, "ON RESUME: Exception during write.", e);
+    		Log.e(TAG, "ERROR: Exception during write. IOException.", e);
     	}
 	}
 	
 	public boolean isConnected(){
 		//return this.btSocket.isConnected();  //Why doesn't this work???
 		return this.FLAG_connected;
+	}
+	
+	public byte[] read(){
+		InputStream in = null;
+		int read_bytes=0;
+		try {
+			in = btSocket.getInputStream();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			Log.e(TAG, "ERROR: Exception during read. IOException.", e1);
+		}
+		byte[] buffer = new byte[64];
+		try {
+			read_bytes = in.read(buffer);
+		} catch (IOException e) {
+			e.printStackTrace();
+			Log.e(TAG, "ERROR: Exception during read. IOException.", e);
+		}
+		return buffer;
 	}
 	
 	

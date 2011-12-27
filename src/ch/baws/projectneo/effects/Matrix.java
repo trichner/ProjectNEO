@@ -2,6 +2,8 @@ package ch.baws.projectneo.effects;
 
 import java.util.Random;
 
+import android.util.Log;
+
 import ch.baws.projectneo.Frame;
 import ch.baws.projectneo.GeneralUtils;
 
@@ -56,7 +58,7 @@ public class Matrix extends Effect{
 					strips[i] = new Strip(0,rand.nextDouble()+0.7,rand.nextInt(5)+2);
 				}
 			}
-			
+			Log.d("EFFECT", "next run...");
 			try {
 				sleep(100);
 			} catch (InterruptedException e) {}
