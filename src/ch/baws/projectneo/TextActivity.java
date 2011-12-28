@@ -93,7 +93,7 @@ public class TextActivity extends Activity {
         
  		Bluetooth = new BluetoothUtils();
 
-    	Bluetooth.init();
+    	//Bluetooth.init();
     	if (!connected) Bluetooth.connect();
     	connected=true;
     	if(timerisAlive)

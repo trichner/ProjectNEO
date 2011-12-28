@@ -153,14 +153,14 @@ public class ProjectNEOActivity extends Activity {
 
         if (D)
         	Log.e(TAG, "+++ ON CREATE +++");
-        
+        /*
     	if (Bluetooth.init()==false) { //no BT adapter available
     		Toast.makeText(this, 
     			"You need Bluetooth in order to use this program", 
     			Toast.LENGTH_LONG).show();
     		//finish();
     		return;
-    	}
+    	}*/
     	
       if (!Bluetooth.active()) { // request popup if BT isnt activated
     	  Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
