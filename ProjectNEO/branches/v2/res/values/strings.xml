@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Welcome to ProjectNEO by Thomas Richner, Stefan Mach, Marcel Mohler</string>
-    <string name="app_name">ProjectNEO</string>
+    <string name="app_name">ProjectMORPHEUS</string>
     <string name="connect">Connect</string>
     <string name="send">Send</string>
     <string name="effects">Effects</string>

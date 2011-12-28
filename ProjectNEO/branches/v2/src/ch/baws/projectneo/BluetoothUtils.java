@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import ch.baws.projectneo.frameGenerator.Frame;
+import ch.baws.projectneo.frameGenerator.PacketGenerator;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -21,12 +24,14 @@ public class BluetoothUtils {
 	private static final String TAG = "BN_BTUTILS";
 	private static final boolean D = false;
 	private static final boolean E = false;
-	private OutputStream outStream = null;
 	
 	private boolean FLAG_connected = false;
 	
 	private BluetoothAdapter mBluetoothAdapter = null;
 	private BluetoothSocket btSocket = null;
+	
+	private OutputStream out;
+	private InputStream in;
 	
 	
 	// Well known SPP UUID (will *probably* map to
@@ -124,6 +129,18 @@ public class BluetoothUtils {
    					"ON RESUME: Unable to close socket during connection failure", e2);
    			}
    		}		
+   		
+   		//get streams
+   		try {
+   			in = btSocket.getInputStream();
+			out = btSocket.getOutputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			Log.e(TAG, "ON RESUME: Output stream creation failed.", e);
+			e.printStackTrace();
+		}
+   		
+   		
 	}
 	/**
 	 * method Send
@@ -143,24 +160,11 @@ public class BluetoothUtils {
    		
    		if(btSocket ==null)	Log.e(TAG, "ERROR: Socket is NULL.");
 
-   		try {
-   			outStream = btSocket.getOutputStream();
-   		} catch (IOException e) {
-    		Log.e(TAG, "ON RESUME: Output stream creation failed.", e);
-    	}
+		Frame frame = new Frame(colorArray);
+   		byte[] packet = PacketGenerator.pack(frame);
 
-		Frame frame = new Frame();
-		//byte[] packet = frame.generate(GeneralUtils.randomArray());
-   		byte[] packet = frame.generate(colorArray);
-		//byte[] packet = frame.generateDebug();
-		//Frame.print(packet);
-		//Log.e(TAG, "ON SEND: "+Frame.print(packet));
-    	//String message = "Hello message from client to server.";
-		//String message = GeneralUtils.randomCharString();
-    	//byte[] msgBuffer = message.getBytes();
-		//byte[] msgBuffer = packet;
     	try {
-    		outStream.write(packet);
+    		out.write(packet);
     	} catch (IOException e) {
     		Log.e(TAG, "ERROR: Exception during write. IOException.", e);
     	}
@@ -172,14 +176,7 @@ public class BluetoothUtils {
 	}
 	
 	public byte[] read(){
-		InputStream in = null;
 		int read_bytes=0;
-		try {
-			in = btSocket.getInputStream();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			Log.e(TAG, "ERROR: Exception during read. IOException.", e1);
-		}
 		byte[] buffer = new byte[64];
 		try {
 			read_bytes = in.read(buffer);
@@ -187,6 +184,7 @@ public class BluetoothUtils {
 			e.printStackTrace();
 			Log.e(TAG, "ERROR: Exception during read. IOException.", e);
 		}
+		if(D) Log.d(TAG,"read " + read_bytes + " bytes from BluetoothSocket");
 		return buffer;
 	}
 	

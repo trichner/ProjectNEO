@@ -2,7 +2,7 @@ package ch.baws.projectneo.effects;
 
 import java.sql.Time;
 
-import ch.baws.projectneo.Frame;
+import ch.baws.projectneo.frameGenerator.*;
 import ch.baws.projectneo.GeneralUtils;
 //doesn't work^^
 public class BinaryClock extends Effect{
