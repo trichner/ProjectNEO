@@ -1,25 +1,11 @@
-package ch.baws.projectneo;
+package ch.baws.projectneo.frameGenerator;
 
 import java.nio.ByteBuffer;
 import java.util.Random;
 
-/*
- *   Frame Generator
- * 
- * This class processes values representing the NEO Matrix
- * and generates a Frame Package.
- * Those Frame Packages are then transmitted
- * 
- * Format:
- *  _____________   _____________   _______________________   _______________________   _______________________ 
- * | Headbyte    | | Commandbyte | | 8x Bytes Red Matrix   | | 8x Bytes Green Matrix | | 8x Bytes Blue Matrix  |
- * |_____________| |_____________| |_______________________| |_______________________| |_______________________|
- * 
- */
+
 
 public class Frame {
-										// head + cmdb + 3x 8Byte
-	private final static int PACKETLENGTH = 1+1+3*Long.SIZE/8;
 	public static final int NEO_RED = 1;
 	public static final int NEO_GREEN = 2;
 	public static final int NEO_BLUE = 3;
@@ -30,26 +16,29 @@ public class Frame {
 	public static final int NEO_PINK = 6;
 	
 	public static final int NEO_WHITE = 7;
+
 	
-	private final static byte head = (byte) 0x17;
-	
-	private byte cmdb = (byte) 0x00;
+	private CMDB cmdb= CMDB.CMD_NONE;
 	
 	private long blub = 0;
 	private long redb = 0;
 	private long greb = 0;
 	
+	public Frame(int[][] arr) {
+		set(arr);
+	}
+
+
+
+
 	//===== Generators
 	/**
 	 * Generates a Frame Packet out of a single array
-	 * 0 = white/off
-	 * 1 = NEO_RED
-	 * 2 = NEO_GREEN
-	 * 3 = NEO_BLUE
-	 * @param arr Array which has !0 for active LEDs
+	 * use the constants of the class 'Frame' for the colors
+	 * @param arr Array which has integers representing the color of an LED
 	 * @return Frame-Packet
 	 */
-	public byte[] generate(int[][] arr){
+	public void set(int[][] arr){
 		redb=0; greb=0; blub=0;
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++){
@@ -83,43 +72,19 @@ public class Frame {
 				}
 			}
 		}
-		return finish();
-	}
-	/**
-	 * Generates a Frame Packet out of a single array
-	 * @param arr Array which has !0 for active LEDs
-	 * @return
-	 */
-	public byte[] generate(int[][] blue,int[][] red,int[][] green){
-		blub = Bitfields.toBit(blue);
-		redb = Bitfields.toBit(red);
-		greb = Bitfields.toBit(green);
-		return finish();
+		return;
 	}
 
 	
-	//===== Finisher
-	private byte[] finish(){
-		
-		ByteBuffer packet = ByteBuffer.allocate(PACKETLENGTH);
-		//write the head
-		packet.put(head);
-		//write the commandbyte
-		packet.put(cmdb);
-		//---write the three matrices
-		packet.putLong(redb);
-		packet.putLong(greb);
-		packet.putLong(blub);
 
-		return packet.array();
-	}
 	
 	//===== Utils
 	
-	public byte[] generateDebug(){
+	public void setDebug(){
 		redb = ('t' << 56) | ('e' << 48) | ('s' << 40) | ('t' << 32) | ('m' << 24) | ('e' << 16) | ('s' << 8) | ( 's' << 0);
 		greb = ('a' << 56) | ('g' << 48) | ('e' << 40) | ('1' << 32) | ('2' << 24) | ('3' << 16) | ('4' << 8) | ('5' << 0);
 		
+		this.cmdb = CMDB.CMD_DEGUG;
 		
 		blub = 0;
 		Random rand = new Random();
@@ -129,15 +94,66 @@ public class Frame {
 			blub <<= 8;
 			blub |= chr;
 		}
-
-		return finish();
+		return;
+	}
+	/**
+	 * @return a string representation of the packed frame
+	 */
+	public String toString(){
+		StringBuffer str = new StringBuffer();
+		
+		byte[] packet = PacketGenerator.pack(this);
+		str.append('[');
+		
+		str.append(String.format("%1$#04x", packet[0]));
+		str.append(" ");
+		str.append(String.format("%1$#04x", packet[1]));
+		str.append(" ");
+		
+		str.append("{ ");
+		for(int i=2;i<10;i++){
+			str.append(String.format("%1$#04x", packet[i]));
+			str.append(" ");
+		}
+		str.append("}");
+		
+		str.append("{ ");
+		for(int i=10;i<18;i++){
+			str.append(String.format("%1$#04x", packet[i]));
+			str.append(" ");
+		}
+		str.append("}");
+		
+		str.append("{ ");
+		for(int i=18;i<26;i++){
+			str.append(String.format("%1$#04x", packet[i]));
+			str.append(" ");
+		}
+		str.append("}");
+		
+		str.append("]");
+		
+		return str.toString();
 	}
 	
-	public static String print(byte[] packet){
-		String str = new String();
-		for(int i=0;i<PACKETLENGTH;i++){
-			str+= ("-"+Integer.toBinaryString(packet[i]));
-		}
-		return str;
+	//Getter
+	public CMDB getCmdb() {
+		return cmdb;
 	}
+
+
+	public long getBlub() {
+		return blub;
+	}
+
+
+	public long getRedb() {
+		return redb;
+	}
+
+	public long getGreb() {
+		return greb;
+	}
+
+
 }

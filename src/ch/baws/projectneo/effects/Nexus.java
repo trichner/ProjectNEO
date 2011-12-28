@@ -2,7 +2,6 @@ package ch.baws.projectneo.effects;
 
 import java.util.Random;
 
-import ch.baws.projectneo.Frame;
 import ch.baws.projectneo.GeneralUtils;
 
 public class Nexus extends Effect{

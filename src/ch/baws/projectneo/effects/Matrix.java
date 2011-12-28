@@ -3,8 +3,7 @@ package ch.baws.projectneo.effects;
 import java.util.Random;
 
 import android.util.Log;
-
-import ch.baws.projectneo.Frame;
+import ch.baws.projectneo.frameGenerator.*;
 import ch.baws.projectneo.GeneralUtils;
 
 public class Matrix extends Effect{

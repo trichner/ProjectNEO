@@ -1,4 +1,4 @@
-package ch.baws.projectneo;
+package ch.baws.projectneo.frameGenerator;
 
 /**
  * Utils to handle 8x8 Bitfields
