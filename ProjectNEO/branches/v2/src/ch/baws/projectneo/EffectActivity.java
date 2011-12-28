@@ -31,11 +31,11 @@ public class EffectActivity extends Activity {
 	
 	private static final String TAG = "EFFECTS_ACTIVITY";
 	private static final boolean D = true;
-	private static final boolean WL = true;
+	private static final boolean WL = false; //doesn't work...
 	
 	private SendJob sendJob;
 	
-	private BluetoothUtils Bluetooth = null;
+	private BluetoothUtils bluetooth = null;
 	
 	Colorfield cfield; //TODO UGLY
 
@@ -59,15 +59,10 @@ public class EffectActivity extends Activity {
     	
     	title = (TextView)findViewById(R.id.title);
     	
-   		Bluetooth = new BluetoothUtils();
-
-   		
-    	Bluetooth.init();
-        if (!Bluetooth.active()) { // request popup if BT isnt activated
+    	if (!(new BluetoothUtils()).active()) { // request popup if BT isnt activated
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, 1);
         }
-        sendJob = new SendJob(Bluetooth);
     	
 	}
     private ProgressBar findViewItemById(int progressbar2) {
@@ -147,6 +142,7 @@ public class EffectActivity extends Activity {
     	
     	Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
         Effect effect;
+        ProjectMORPHEUS application = (ProjectMORPHEUS) getApplication();
         switch (item.getItemId()) {
         case R.id.wave:
         	
@@ -158,7 +154,7 @@ public class EffectActivity extends Activity {
         	effect = new Wave();     
         	title.setText(effect.TITLE + " started");
         	//wave.setEffectActivity(this);
-        	sendJob.setEffect(effect);
+        	application.setEffect(effect);
 
 
         	return true;
@@ -171,7 +167,7 @@ public class EffectActivity extends Activity {
         	        	        	
         	effect = new StarSky();
         	title.setText(effect.TITLE + " started");
-        	sendJob.setEffect(effect);
+        	application.setEffect(effect);
         	return true;
         	
         case R.id.rsnake:
@@ -180,7 +176,7 @@ public class EffectActivity extends Activity {
         	        	
         	effect = new Nexus();//new RandomSnakePlayer();
         	title.setText(effect.TITLE + " started");
-        	sendJob.setEffect(effect);
+        	application.setEffect(effect);
         	return true;
         	
         
@@ -192,10 +188,7 @@ public class EffectActivity extends Activity {
        
         	final Intent intent2 = new Intent(this,TextActivity.class);           
         	startActivity(intent2);
-        	if(timerisAlive==true)
-        	sendJob.stop();//timer.cancel();
-        	if(connected) Bluetooth.close();
-        	connected =false;
+        	
         	return true;
         	
         	
@@ -206,7 +199,7 @@ public class EffectActivity extends Activity {
         	  	
         	effect = new Matrix();
         	title.setText(effect.TITLE + " started");
-        	sendJob.setEffect(effect);
+        	application.setEffect(effect);
         	return true;
         
         case R.id.cfield:
@@ -217,7 +210,7 @@ public class EffectActivity extends Activity {
         	        	
         	cfield = new Colorfield();
         	title.setText(cfield.TITLE + " started");
-        	sendJob.setEffect(cfield);
+        	application.setEffect(cfield);
         	return true;
         	
         case R.id.cfsub0:
@@ -250,45 +243,12 @@ public class EffectActivity extends Activity {
         	        	
         	effect = new GameOfLife();
         	title.setText(effect.TITLE + " started");
-        	sendJob.setEffect(effect);
+        	application.setEffect(effect);
         	return true;
  
         }
         return false;
     }
-    
-//	public void draw(int[][] array){
-//		String str = new String();
-//		str = "";
-//		int pos=0;
-//		int i=0;
-//		if (D) Log.e(TAG, "Start drawing");
-//		GeneralUtils.drawArray(array,8,8);
-//		for(i=0;pos<8;pos++)
-//		{
-//			for(i=0;i<8;i++){ // first textview
-//				switch (array[pos][i]) {
-//					case 0:	
-//						str+=("O ");
-//					case 1:		        	
-//						str+=("R ");
-//
-//					case 2:		        	
-//						str+=("G ");
-//	
-//					case 3:		        	
-//						str+=("B ");
-//				}
-//
-//	        	
-//	        }
-//			textview[pos].setText(str);
-//		}
-//		
-//		
-//	}
-    
-
-
+ 
 
 }

@@ -47,13 +47,10 @@ public class BluetoothUtils {
 	 * method Available
 	 * initializes the BT connection
 	 */
-	public boolean init()
-	{
+	public BluetoothUtils(){
         if (D)
         	Log.e(TAG, "+++ Init +++");
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		
-		return mBluetoothAdapter != null;
 	}
 	
 	public boolean active()
