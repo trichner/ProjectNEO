@@ -56,6 +56,9 @@ public class BinaryClock extends Effect{
 
 	@Override
 	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 
+	
 }

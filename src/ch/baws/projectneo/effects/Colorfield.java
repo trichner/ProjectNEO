@@ -10,6 +10,7 @@ public class Colorfield extends Effect{
 	public Colorfield(){
 		super("MarcelM", "Colorfield");
 		array = GeneralUtils.fillArray(8,8, 2);
+		delay = 100;
 	}
 	
 	int color=0;
@@ -25,15 +26,9 @@ public class Colorfield extends Effect{
 
 	@Override
 	public void run() {
-		
-		while(!EXIT){
-			
-			//ea.draw(array); //prints the array
-			try {
-				sleep(100);
-			} catch (InterruptedException e) {}
-		}
+		// TODO Auto-generated method stub
 		
 	}
+
 
 }
