@@ -1,5 +1,6 @@
 package ch.baws.projectneo.effects;
 
+import android.util.Log;
 import ch.baws.projectneo.EffectActivity;
 import ch.baws.projectneo.GeneralUtils;
 
@@ -7,9 +8,9 @@ public abstract class Effect extends Thread{
 	
 	protected volatile int[][] array;
 	protected boolean EXIT = false;
-	protected EffectActivity ea;
+	protected int delay = 0;
 	
-	protected static final String TAG = "EFFECTS";
+	protected static final String TAG = "EFFECT";
 	protected static final boolean D = false;
 	
 	public final String AUTHOR;
@@ -38,5 +39,4 @@ public abstract class Effect extends Thread{
 	}
 	
 	public abstract void run();
-
 }

@@ -39,7 +39,7 @@ public class SendService extends Service {
 	public void onDestroy() {
 		super.onDestroy();
 		executor.shutdown();
-		application.getEffect().exit();
+		application.getEffect().exit();	
 	}
 
 	@Override
