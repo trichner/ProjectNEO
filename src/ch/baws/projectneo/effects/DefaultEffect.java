@@ -1,18 +1,15 @@
 package ch.baws.projectneo.effects;
 
-import ch.baws.projectneo.GeneralUtils;
-
 public class DefaultEffect extends Effect{
-
+	Effect effect = new StarSky();
 	@Override
 	public int[][] getArray() {
-		return GeneralUtils.emptyArray(8, 8);
+		return effect.getArray();
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		effect.run();		
 	}
 
 }

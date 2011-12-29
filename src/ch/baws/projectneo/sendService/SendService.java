@@ -5,10 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import ch.baws.projectneo.BluetoothUtils;
 import ch.baws.projectneo.ProjectMORPHEUS;
-import ch.baws.projectneo.effects.Effect;
 
 import android.app.Service;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
@@ -21,8 +19,10 @@ public class SendService extends Service {
 	
 	private ScheduledThreadPoolExecutor executor;
 	private SendTimer sendTimer;
+	private ReceiveTimer receiveTimer;
+	private boolean runFlag = false;
 	
-	private ProjectMORPHEUS application = (ProjectMORPHEUS) getApplication();
+	private ProjectMORPHEUS application;
 	
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -32,32 +32,39 @@ public class SendService extends Service {
 	@Override
 	public void onCreate(){
 		if (D)		Log.d(TAG, "onCreate SendJob");
+		application = (ProjectMORPHEUS) getApplication();
 		executor = new ScheduledThreadPoolExecutor(1);
+		//application.setBluetooth(new BluetoothUtils());
 		sendTimer = new SendTimer(application);
-		application.setBluetooth(new BluetoothUtils());
+		receiveTimer = new ReceiveTimer(application);
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		runFlag = false;
+		application.setServiceRunning(false);
 		if (D)		Log.d(TAG, "onDestroy SendJob");
 		executor.shutdown();
-		application.getEffect().exit();		//TODO
-		application.getBluetooth().close(); //TODO
+		application.stopEffect();
+		application.bluetoothClose();
 	}
 
 	@Override
-	public void onStart(Intent intent, int startId) {
-		super.onStart(intent, startId);
-		if (D)		Log.d(TAG, "onStart SendJob");
-		application.getBluetooth().connect(); //TODO
-		Effect effect = application.getEffect();
-		if(!effect.isAlive()) effect.start();
-		executor.scheduleAtFixedRate(sendTimer, 50, 1/FPS, TimeUnit.MILLISECONDS);
+	public int onStartCommand(Intent intent, int flag,int startId) {
+		super.onStartCommand(intent, flag, startId);
+		
+		if (D)		Log.d(TAG, "onStartCommand Service");
+		if(!runFlag){
+			runFlag = true;
+			((ProjectMORPHEUS) super.getApplication()).setServiceRunning(true);
+			application.setBluetooth(new BluetoothUtils());
+			application.bluetoothConnect();
+			application.startEffect();
+			executor.scheduleAtFixedRate(sendTimer, 50, 1000/FPS, TimeUnit.MILLISECONDS);
+			executor.scheduleAtFixedRate(receiveTimer, 50+500/FPS, 1000/FPS, TimeUnit.MILLISECONDS);
+		}
+		return Service.START_STICKY;
 	}
 	
-	
-	
-	
-
 }

@@ -44,7 +44,7 @@ public class PacketGenerator {
 		//write the head
 		packet.put(head);
 		//write the commandbyte
-		packet.put(CMDB.CMD_ROTATE_START.cmd());
+		packet.put(Frame.CMDB.CMD_ROTATE_START.cmd());
 		//---write the three matrices
 		packet.putLong(frames[0].getRedb());
 		packet.putLong(frames[0].getGreb());
@@ -55,7 +55,7 @@ public class PacketGenerator {
 			//write the head
 			packet.put(head);
 			//write the commandbyte
-			packet.put(CMDB.CMD_ROTATE.cmd());
+			packet.put(Frame.CMDB.CMD_ROTATE.cmd());
 			//---write the three matrices
 			packet.putLong(frames[i].getRedb());
 			packet.putLong(frames[i].getGreb());
@@ -65,7 +65,7 @@ public class PacketGenerator {
 		//write the head
 		packet.put(head);
 		//write the commandbyte
-		packet.put(CMDB.CMD_ROTATE_END.cmd());
+		packet.put(Frame.CMDB.CMD_ROTATE_END.cmd());
 		//---write the three matrices
 		packet.putLong(frames[i].getRedb());
 		packet.putLong(frames[i].getGreb());

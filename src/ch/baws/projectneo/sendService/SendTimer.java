@@ -1,12 +1,9 @@
 package ch.baws.projectneo.sendService;
 
-import java.util.TimerTask;
-
 import android.util.Log;
 
 import ch.baws.projectneo.BluetoothUtils;
 import ch.baws.projectneo.ProjectMORPHEUS;
-import ch.baws.projectneo.effects.*;
 
 public class SendTimer implements Runnable{ //implements Runnable
 	
@@ -27,24 +24,23 @@ public class SendTimer implements Runnable{ //implements Runnable
 	{
 		counter++;
 		byte[] in_buffer;
-		
-		int[][] arr = application.getEffect().getArray();
+		if (D)	Log.d(TAG, "SendTimer run...");
+		int[][] arr = application.getEffectArray();
 
-		if(bluetooth!=null){
-			
+		if(application.getBluetooth()!=null){
 			try{
-				//if((counter&0x01)==0) 
-				bluetooth.read();
-				bluetooth.send(arr);
-				if (D)	Log.e(TAG, "I've sent the array" + "  conter: " + counter);
-				in_buffer = bluetooth.read();
-				if(D) Log.e(TAG, "I read " + in_buffer.length + " bytes. First byte: " + Integer.toHexString(in_buffer[0]));
+				//application.bluetoothRead();
+				application.bluetoothSend(arr);
+				if (D)	Log.d(TAG, "I've sent the array" + "  conter: " + counter);
+				//in_buffer = application.bluetoothRead();
+				//if(D) Log.d(TAG, "I read " + in_buffer.length + " bytes. First byte: " + Integer.toHexString(in_buffer[0]));
 			} catch (RuntimeException e) {
 				Log.e(TAG, "ON SEND: Runtime Exception, size: "+ arr.length + "*" + arr[0].length, e);				
 			}
 		}else{
 			if (D)	Log.e(TAG, "not sending, no bluetooth");
 		}	
+		if (D)	Log.d(TAG, "... pause SendTimer run");
 	}
 	
 }

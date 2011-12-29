@@ -22,7 +22,7 @@ import android.util.Log;
 
 public class BluetoothUtils {
 	private static final String TAG = "BN_BTUTILS";
-	private static final boolean D = false;
+	private static final boolean D = true;
 	private static final boolean E = false;
 	
 	private boolean FLAG_connected = false;
@@ -79,6 +79,7 @@ public class BluetoothUtils {
 	 **/
 	public void connect() 
 	{
+		
    		// When this returns, it will 'know' about the server,
    		// via it's MAC address.
 		BluetoothDevice device;
@@ -117,7 +118,7 @@ public class BluetoothUtils {
    		try {
    			if(!E) btSocket.connect();
    			FLAG_connected = true;
-   			Log.e(TAG, "ON RESUME: BT connection established, data transfer link open.");
+   			Log.d(TAG, "BT connection established, data transfer link open.");
    		} catch (IOException e) {
    			try {
    				if(!E) btSocket.close();
@@ -173,8 +174,9 @@ public class BluetoothUtils {
 	}
 	
 	public byte[] read(){
+		if(D) Log.d(TAG,"Bluetooth read");
 		int read_bytes=0;
-		byte[] buffer = new byte[64];
+		byte[] buffer = new byte[1024];
 		try {
 			read_bytes = in.read(buffer);
 		} catch (IOException e) {
@@ -197,6 +199,7 @@ public class BluetoothUtils {
    		try	{
    			btSocket.close();
    			this.FLAG_connected = false;
+   			if(D) Log.d(TAG, "closed socket");
    		} catch (IOException e2) {
    			Log.e(TAG, "ON PAUSE: Unable to close socket.", e2);
 		}

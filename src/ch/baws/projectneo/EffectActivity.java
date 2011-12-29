@@ -36,7 +36,7 @@ public class EffectActivity extends Activity implements OnClickListener{
 	
 	private ToggleButton serviceButton;
 	
-	private boolean serviceRunning=false;
+	private ProjectMORPHEUS application;
 	
 	PowerManager pm;
 	PowerManager.WakeLock wl;
@@ -53,6 +53,7 @@ public class EffectActivity extends Activity implements OnClickListener{
     	progressBar = findViewItemById(R.id.progressBar);
     	serviceButton = (ToggleButton) this.findViewById(R.id.toggleButtonService);
     	title = (TextView)findViewById(R.id.title);
+    	application = (ProjectMORPHEUS) getApplication();
     	
     	serviceButton.setOnClickListener(this);
     	
@@ -65,19 +66,17 @@ public class EffectActivity extends Activity implements OnClickListener{
 	
 	@Override
 	public void onClick(View v) {
-		
+		application = (ProjectMORPHEUS) getApplication();
 		switch(v.getId()){
 		case R.id.toggleButtonService:
-			if(!serviceRunning){ //service running?
+			if(!application.isServiceRunning()){ //service running?
 				if(D) Log.d(TAG, "Starting Service...");
 				startService(new Intent(this, SendService.class));
 				serviceButton.setChecked(true);
-				serviceRunning=true;
 				Toast.makeText(this, "starting Service...", Toast.LENGTH_SHORT).show();
 			}else{ //stop service
 				if(D) Log.d(TAG, "Stopping Service...");
 				stopService(new Intent(this, SendService.class));
-				serviceRunning=false;
 				Toast.makeText(this, "stopping Service...", Toast.LENGTH_SHORT).show();
 			}
 			break;
@@ -98,20 +97,21 @@ public class EffectActivity extends Activity implements OnClickListener{
     }
    	@Override
    	public void onResume() {
+   		//application = (ProjectMORPHEUS) getApplication();
    		super.onResume();
-    	Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-    	
-    	//service running?
-    	serviceButton.setChecked(serviceRunning);
-    	
    		if (D) {
    			Log.d(TAG, "+ ON RESUME +");
-   			if(serviceRunning) Log.d(TAG, "Service is running");
-   			else Log.d(TAG, "Service is stopped");
-   		}
-   		
-   		
-   		
+   			if(application==null){ Log.wtf(TAG,"ERROR: Application is NULL");
+   			}else{
+   				if(application.isServiceRunning()) Log.d(TAG, "Service is running");
+   				else Log.d(TAG, "Service is stopped");
+   			}
+   		}	
+    	Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
+    	//service running?   	
+    	serviceButton.setChecked(application.isServiceRunning());
+    	
+
    	}
 
    	@Override
@@ -141,10 +141,7 @@ public class EffectActivity extends Activity implements OnClickListener{
    			if(wl.isHeld()) wl.release();
    		}
 
-   		/*if(timerisAlive==true)
-    	{
-    		timer.cancel();
-    	}*/
+   		
     	
    		if (D)
    			Log.e(TAG, "--- ON DESTROY ---");

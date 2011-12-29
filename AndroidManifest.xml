@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-sdk android:minSdkVersion="8" />
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
+    <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true" android:name=".ProjectMORPHEUS">
         <activity android:name=".ProjectNEOActivity"
 				  android:screenOrientation="portrait"
                   android:label="@string/app_name">
