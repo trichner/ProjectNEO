@@ -2,7 +2,6 @@ package ch.baws.projectneo.sendService;
 
 import android.util.Log;
 
-import ch.baws.projectneo.BluetoothUtils;
 import ch.baws.projectneo.ProjectMORPHEUS;
 
 public class SendTimer implements Runnable{ //implements Runnable
@@ -13,17 +12,14 @@ public class SendTimer implements Runnable{ //implements Runnable
 	private long counter = 0;
 	
 	private ProjectMORPHEUS application;
-	private BluetoothUtils bluetooth;
 	
 	public SendTimer(ProjectMORPHEUS application){
 		this.application = application;
-		bluetooth = application.getBluetooth();
 	}
 
 	public void run()
 	{
 		counter++;
-		byte[] in_buffer;
 		if (D)	Log.d(TAG, "SendTimer run...");
 		int[][] arr = application.getEffectArray();
 

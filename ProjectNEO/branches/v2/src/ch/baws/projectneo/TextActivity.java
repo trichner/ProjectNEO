@@ -12,13 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import java.util.Timer;
 
 import ch.baws.projectneo.R;
 import ch.baws.projectneo.effects.Buttons;
 import ch.baws.projectneo.effects.Colorfield;
 import ch.baws.projectneo.effects.Text;
-import android.content.Context;
 
 import android.util.Log;
 
@@ -29,7 +27,6 @@ public class TextActivity extends Activity {
 
 	private static final boolean D = false;
 
-	private int[][] colorArray; // array to store the current LED colors
 	private ProjectMORPHEUS morpheus;
 	Buttons buttoneffect = new Buttons();
 	
@@ -49,14 +46,7 @@ public class TextActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.text);
-        
-        
-//        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-//        wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-//        wl.acquire();
-        
-        colorArray = GeneralUtils.emptyArray(8,8); // fills array with zeros
-        
+                
         morpheus = (ProjectMORPHEUS) getApplication();
         button = (Button) findViewById(R.id.button1);
         et = (EditText) findViewById(R.id.text_input);

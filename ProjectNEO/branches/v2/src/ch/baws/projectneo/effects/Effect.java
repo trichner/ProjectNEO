@@ -1,7 +1,5 @@
 package ch.baws.projectneo.effects;
 
-import android.util.Log;
-import ch.baws.projectneo.EffectActivity;
 import ch.baws.projectneo.GeneralUtils;
 
 public abstract class Effect extends Thread{

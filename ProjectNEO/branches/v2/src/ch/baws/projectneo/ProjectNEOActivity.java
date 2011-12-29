@@ -2,7 +2,6 @@ package ch.baws.projectneo;
 
 
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.Menu;
@@ -12,15 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Timer;
-
 import ch.baws.projectneo.R;
 import ch.baws.projectneo.effects.Buttons;
 
-
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
@@ -29,9 +22,6 @@ public class ProjectNEOActivity extends Activity {
 
 	
 	private static final String TAG = "PN_ACTIVITY";
-	
-	private OutputStream outStream = null;
-
 	private static final boolean D = false;
 
 	private int[][] colorArray; // array to store the current LED colors
