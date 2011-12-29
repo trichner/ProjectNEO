@@ -35,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
+    <ToggleButton android:onClick="toggleService" android:textOn="stop" android:textOff="start" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:layout_width="118dp" android:id="@+id/toggleButtonService" android:text="@string/serviceBtn"></ToggleButton>
 
 </LinearLayout>
 

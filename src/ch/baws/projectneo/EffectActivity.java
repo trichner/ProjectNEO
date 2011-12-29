@@ -1,14 +1,8 @@
 package ch.baws.projectneo;
 
-import java.util.Timer;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-
 import ch.baws.projectneo.R;
-import ch.baws.projectneo.bthandler.SendJob;
-import ch.baws.projectneo.bthandler.SendTimer;
 import ch.baws.projectneo.effects.*;
+import ch.baws.projectneo.sendService.SendService;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -20,11 +14,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
-public class EffectActivity extends Activity {
+public class EffectActivity extends Activity implements OnClickListener{
 	
 	TextView title;
 	ProgressBar progressBar;
@@ -33,14 +30,13 @@ public class EffectActivity extends Activity {
 	private static final boolean D = true;
 	private static final boolean WL = false; //doesn't work...
 	
-	private SendJob sendJob;
-	
-	private BluetoothUtils bluetooth = null;
-	
 	Colorfield cfield; //TODO UGLY
 
-	private boolean timerisAlive = false; 
 	public boolean connected = false;
+	
+	private ToggleButton serviceButton;
+	
+	private boolean serviceRunning=false;
 	
 	PowerManager pm;
 	PowerManager.WakeLock wl;
@@ -55,9 +51,10 @@ public class EffectActivity extends Activity {
 	    	if(!wl.isHeld()) wl.acquire();
     	}
     	progressBar = findViewItemById(R.id.progressBar);
-    	//progressBar.setVisibility(View.INVISIBLE);
-    	
+    	serviceButton = (ToggleButton) this.findViewById(R.id.toggleButtonService);
     	title = (TextView)findViewById(R.id.title);
+    	
+    	serviceButton.setOnClickListener(this);
     	
     	if (!(new BluetoothUtils()).active()) { // request popup if BT isnt activated
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -65,6 +62,30 @@ public class EffectActivity extends Activity {
         }
     	
 	}
+	
+	@Override
+	public void onClick(View v) {
+		
+		switch(v.getId()){
+		case R.id.toggleButtonService:
+			if(!serviceRunning){ //service running?
+				if(D) Log.d(TAG, "Starting Service...");
+				startService(new Intent(this, SendService.class));
+				serviceButton.setChecked(true);
+				serviceRunning=true;
+				Toast.makeText(this, "starting Service...", Toast.LENGTH_SHORT).show();
+			}else{ //stop service
+				if(D) Log.d(TAG, "Stopping Service...");
+				stopService(new Intent(this, SendService.class));
+				serviceRunning=false;
+				Toast.makeText(this, "stopping Service...", Toast.LENGTH_SHORT).show();
+			}
+			break;
+		}
+
+	}
+	
+	
     private ProgressBar findViewItemById(int progressbar2) {
 		// TODO Auto-generated method stub
 		return null;
@@ -73,25 +94,22 @@ public class EffectActivity extends Activity {
     public void onStart() {
     	super.onStart();
     	if (D)
-    		Log.e(TAG, "++ ON START ++");
+    		Log.d(TAG, "++ ON START ++");
     }
    	@Override
    	public void onResume() {
    		super.onResume();
-   		/*
-        if (!connected){
-        	Bluetooth.connect();
-    		connected = true;
-    	}*/
-    	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
+    	Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
     	
-    	//sendJob = new SendJob(Bluetooth); 
-    	sendJob.start();
-    	//timerisAlive = true;
-
+    	//service running?
+    	serviceButton.setChecked(serviceRunning);
+    	
    		if (D) {
-   			Log.e(TAG, "+ ON RESUME +");
+   			Log.d(TAG, "+ ON RESUME +");
+   			if(serviceRunning) Log.d(TAG, "Service is running");
+   			else Log.d(TAG, "Service is stopped");
    		}
+   		
    		
    		
    	}
@@ -100,8 +118,7 @@ public class EffectActivity extends Activity {
    	public void onPause() {
    		super.onPause();
    		if (D)
-   			Log.e(TAG, "- ON PAUSE -");
-   		sendJob.stop();
+   			Log.d(TAG, "- ON PAUSE -");
    	}
 
    	@Override
@@ -114,7 +131,7 @@ public class EffectActivity extends Activity {
     	}
     	Bluetooth.close();*/
    		if (D)
-   			Log.e(TAG, "-- ON STOP --");
+   			Log.d(TAG, "-- ON STOP --");
    	}
 
    	@Override
@@ -146,23 +163,16 @@ public class EffectActivity extends Activity {
         switch (item.getItemId()) {
         case R.id.wave:
         	
-       		if (D) 
-       			Log.e(TAG, "+ WAVE BUTTON SELECT +");
-           	
-        	        	
-        	
+       		if (D) Log.d(TAG, "+ WAVE BUTTON SELECT +");
         	effect = new Wave();     
         	title.setText(effect.TITLE + " started");
-        	//wave.setEffectActivity(this);
         	application.setEffect(effect);
-
-
         	return true;
 
         
         case R.id.starsky:
        		if (D) 
-       			Log.e(TAG, "+ STARSKY BUTTON SELECT +");
+       			Log.d(TAG, "+ STARSKY BUTTON SELECT +");
     	        	
         	        	        	
         	effect = new StarSky();
@@ -172,7 +182,7 @@ public class EffectActivity extends Activity {
         	
         case R.id.rsnake:
        		if (D) 
-       			Log.e(TAG, "+ RSNAKE BUTTON SELECT +");   	
+       			Log.d(TAG, "+ RSNAKE BUTTON SELECT +");   	
         	        	
         	effect = new Nexus();//new RandomSnakePlayer();
         	title.setText(effect.TITLE + " started");
@@ -182,7 +192,7 @@ public class EffectActivity extends Activity {
         
         case R.id.text:
        		if (D) 
-       			Log.e(TAG, "+ TEXT BUTTON SELECT +");   	
+       			Log.d(TAG, "+ TEXT BUTTON SELECT +");   	
         	
         	title.setText("Text Effect started");
        
@@ -195,7 +205,7 @@ public class EffectActivity extends Activity {
         	
         case R.id.matrix:
        		if (D) 
-       			Log.e(TAG, "+ MATRIX BUTTON SELECT +");   	
+       			Log.d(TAG, "+ MATRIX BUTTON SELECT +");   	
         	  	
         	effect = new Matrix();
         	title.setText(effect.TITLE + " started");
@@ -204,7 +214,7 @@ public class EffectActivity extends Activity {
         
         case R.id.cfield:
        		if (D) 
-       			Log.e(TAG, "+ CFIELD BUTTON SELECT +");   	
+       			Log.d(TAG, "+ CFIELD BUTTON SELECT +");   	
         	
         	title.setText("Colorfield Effect started");
         	        	
@@ -215,29 +225,29 @@ public class EffectActivity extends Activity {
         	
         case R.id.cfsub0:
        		if (D) 
-       			Log.e(TAG, "+ CFSUB1 BUTTON SELECT +");   	
+       			Log.d(TAG, "+ CFSUB1 BUTTON SELECT +");   	
         	cfield.setColor(0);
            return true;
         case R.id.cfsub1:
        		if (D) 
-       			Log.e(TAG, "+ CFSUB2 BUTTON SELECT +");   	
+       			Log.d(TAG, "+ CFSUB2 BUTTON SELECT +");   	
        		cfield.setColor(1);
            	return true;
         case R.id.cfsub2:
        		if (D) 
-       			Log.e(TAG, "+ CFSUB3 BUTTON SELECT +");   	
+       			Log.d(TAG, "+ CFSUB3 BUTTON SELECT +");   	
        		cfield.setColor(2);
            	return true;
         case R.id.cfsub3:
        		if (D) 
-       			Log.e(TAG, "+ CFSUB3 BUTTON SELECT +");   	
+       			Log.d(TAG, "+ CFSUB3 BUTTON SELECT +");   	
        		cfield.setColor(3);
            	return true;
            	
            	
         case R.id.gameoflife:
        		if (D) 
-       			Log.e(TAG, "+ MATRIX BUTTON SELECT +");   	
+       			Log.d(TAG, "+ MATRIX BUTTON SELECT +");   	
         	
         	title.setText("Matrix Effect started");
         	        	
