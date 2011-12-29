@@ -17,7 +17,6 @@ import java.io.OutputStream;
 import java.util.Timer;
 
 import ch.baws.projectneo.R;
-import ch.baws.projectneo.bthandler.SendTimer;
 import ch.baws.projectneo.effects.Buttons;
 
 
@@ -37,14 +36,7 @@ public class ProjectNEOActivity extends Activity {
 
 	private int[][] colorArray; // array to store the current LED colors
 
-	private SendTimer snd; // Timertask
-	private Timer timer;
-	private boolean timerisAlive = false; 
-	
-	public boolean connected = false;
-
-	private BluetoothUtils Bluetooth = null;
-	
+	private ProjectMORPHEUS morpheus;
 	Buttons buttoneffect = new Buttons();
 	
 	Button[][] button;
@@ -57,11 +49,7 @@ public class ProjectNEOActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
-        
-//        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-//        wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-//        wl.acquire();
+        morpheus = (ProjectMORPHEUS) getApplication();
         
         colorArray = GeneralUtils.emptyArray(8,8); // fills array with zeros
         button = new Button[8][8];
@@ -147,42 +135,29 @@ public class ProjectNEOActivity extends Activity {
         	}
         }
     
-
-        
-        Bluetooth = new BluetoothUtils();
-
         if (D)
-        	Log.e(TAG, "+++ ON CREATE +++");
-        /*
-    	if (Bluetooth.init()==false) { //no BT adapter available
-    		Toast.makeText(this, 
-    			"You need Bluetooth in order to use this program", 
-    			Toast.LENGTH_LONG).show();
-    		//finish();
-    		return;
-    	}*/
-    	
-      if (!Bluetooth.active()) { // request popup if BT isnt activated
-    	  Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-    	  startActivityForResult(enableBtIntent, 1);
+        	Log.d(TAG, "+++ ON CREATE +++");
+
+      if (!morpheus.isServiceRunning()) { // request popup if BT isnt activated
+    	  Toast.makeText(this, "please start Service first", Toast.LENGTH_SHORT).show();
       }
 
     if (D)
-    		Log.e(TAG, "+++ DONE IN ON CREATE, GOT LOCAL BT ADAPTER +++");	
+    		Log.d(TAG, "+++ DONE IN ON CREATE, GOT LOCAL BT ADAPTER +++");	
     }
 
     @Override
     public void onStart() {
     	super.onStart();
     	if (D)
-    		Log.e(TAG, "++ ON START ++");
+    		Log.d(TAG, "++ ON START ++");
     }
    	@Override
    	public void onResume() {
    		super.onResume();
 
    		if (D) {
-   			Log.e(TAG, "+ ON RESUME +");
+   			Log.d(TAG, "+ ON RESUME +");
 //   			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
    		}
    		
@@ -193,27 +168,13 @@ public class ProjectNEOActivity extends Activity {
    		super.onPause();
 
    		if (D)
-   			Log.e(TAG, "- ON PAUSE -");
-
-   		if (outStream != null) {
-   			try {
-   				outStream.flush();
-   			} catch (IOException e) {
-   				Log.e(TAG, "ON PAUSE: Couldn't flush output stream.", e);
-   			}
-   		}
-   		//Bluetooth.Close();
-
+   			Log.d(TAG, "- ON PAUSE -");
 
    	}
 
    	@Override
    	public void onStop() {
    		super.onStop();
-    	if(timerisAlive==true)
-    	timer.cancel();
-    	if(connected)
-    		Bluetooth.close();
    		if (D)
    			Log.e(TAG, "-- ON STOP --");
    	}
@@ -222,10 +183,6 @@ public class ProjectNEOActivity extends Activity {
    	public void onDestroy() {
    		super.onDestroy();
    		//wl.release();
-    	if(timerisAlive==true)
-    	timer.cancel();
-    	if(connected)
-    		Bluetooth.close();
    		if (D)
    			Log.e(TAG, "--- ON DESTROY ---");
    	}
@@ -249,35 +206,12 @@ public class ProjectNEOActivity extends Activity {
        			Log.e(TAG, "+ SEND BUTTON SELECT +");
        			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
        			
-       		}
-        	Bluetooth.connect();
-        	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-        	connected = true;
-      		
-       		
-       		
-       		if(timerisAlive==true)
-       		{
-       			timer.cancel();
-       			snd.cancel();
-       		}  
-       		timer = new Timer(); // daemon to send current colorcode
-       		
+       		}		
+
         	buttoneffect = new Buttons();
        		buttoneffect.setArray(colorArray);
-       		
-       		timer = new Timer(); 
-       		snd = new SendTimer(buttoneffect, Bluetooth);  
-        	snd.setEffect(buttoneffect);
-       		timer.schedule  ( snd, 100, 66 ); // frequency 15 fps
-       		timerisAlive = true;
-       		
-       		
-
-       		
-       		Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
-       		
-       		
+       		morpheus.setEffect(buttoneffect);
+       		Toast.makeText(getApplicationContext(), "Ready!", Toast.LENGTH_SHORT).show();
             return true;
 
         
@@ -285,114 +219,101 @@ public class ProjectNEOActivity extends Activity {
         	final Intent intent = new Intent(this,EffectActivity.class);           
         	startActivity(intent);
         	
-        	if(timerisAlive==true)
-        	timer.cancel();
-        	if(connected) Bluetooth.close();
-        	connected =false;
-        	
         	return true;
         	
         case R.id.reset:
-        	if(connected==true&&timerisAlive==true){
-        		colorArray = GeneralUtils.emptyArray(8,8);
-        		buttoneffect.setArray(colorArray);
-        		resetColor();
-        	}
+    		colorArray = GeneralUtils.emptyArray(8,8);
+    		buttoneffect.setArray(colorArray);
+    		resetColor();
         	return true;
         
         }
         return false;
     }
-/**
- * method toggleColor  
- * @param v
- */
-public void toggleColor(View v){
+	/**
+	 * method toggleColor  
+	 * @param v
+	 */
+	public void toggleColor(View v){
+		
+		for(int m=0;m<8;m++){
+			for(int n=0;n<8;n++){
+				if(button[m][n].getId() == ((Button)v).getId()){
+					toggle(button[m][n], colorArray, m, n);
+				}
+			}
+		}
 	
-	for(int m=0;m<8;m++){
-		for(int n=0;n<8;n++){
-			if(button[m][n].getId() == ((Button)v).getId()){
-				toggle(button[m][n], colorArray, m, n);
+	}
+
+	public void resetColor(){
+		
+		for(int m=0;m<8;m++){
+			for(int n=0;n<8;n++){
+				button[m][n].setBackgroundColor(Color.GRAY);				
 			}
 		}
 	}
 
-}
-
-public void resetColor(){
-	
-	for(int m=0;m<8;m++){
-		for(int n=0;n<8;n++){
-			button[m][n].setBackgroundColor(Color.GRAY);				
+	/**
+	 * 
+	 * @param btn
+	 * @param colorArray
+	 * @param i x position
+	 * @param j y position
+	 */
+	public void toggle(Button btn, int[][] colorArray, int i, int j)
+	{
+		switch(colorArray[i][j]){
+		case 0:
+			colorArray[i][j] = 1;
+			buttoneffect.setArray(colorArray);
+			btn.setBackgroundColor(Color.RED);
+			break;
+		case 1:
+			colorArray[i][j] = 2;
+			buttoneffect.setArray(colorArray);
+			btn.setBackgroundColor(Color.GREEN);
+			break;
+		case 2:
+			colorArray[i][j] = 3;
+			buttoneffect.setArray(colorArray);
+			btn.setBackgroundColor(Color.BLUE);
+			break;
+		case 3:
+			colorArray[i][j] = 4;
+			buttoneffect.setArray(colorArray);
+			btn.setBackgroundColor(Color.YELLOW);
+			break;
+		case 4:
+			colorArray[i][j] = 5;
+			buttoneffect.setArray(colorArray);
+			btn.setBackgroundColor(Color.CYAN);
+			break;
+		case 5:
+			colorArray[i][j] = 6;
+			buttoneffect.setArray(colorArray);
+			btn.setBackgroundColor(Color.MAGENTA);
+			break;
+		case 6:
+			colorArray[i][j] = 7;
+			buttoneffect.setArray(colorArray);
+			btn.setBackgroundColor(Color.WHITE);
+			break;
+		case 7:
+			colorArray[i][j] = 0;
+			buttoneffect.setArray(colorArray);
+			btn.setBackgroundColor(Color.GRAY);
+			break;
 		}
-	}
-}
-
-/**
- * 
- * @param btn
- * @param colorArray
- * @param i x position
- * @param j y position
- */
-public void toggle(Button btn, int[][] colorArray, int i, int j)
-{
-if (connected==false)	
-{
-	Toast.makeText(getApplicationContext(), "Please connect first", Toast.LENGTH_SHORT).show();
-}
-else
-{
-	switch(colorArray[i][j]){
-	case 0:
-		colorArray[i][j] = 1;
-		buttoneffect.setArray(colorArray);
-		btn.setBackgroundColor(Color.RED);
-		break;
-	case 1:
-		colorArray[i][j] = 2;
-		buttoneffect.setArray(colorArray);
-		btn.setBackgroundColor(Color.GREEN);
-		break;
-	case 2:
-		colorArray[i][j] = 3;
-		buttoneffect.setArray(colorArray);
-		btn.setBackgroundColor(Color.BLUE);
-		break;
-	case 3:
-		colorArray[i][j] = 4;
-		buttoneffect.setArray(colorArray);
-		btn.setBackgroundColor(Color.YELLOW);
-		break;
-	case 4:
-		colorArray[i][j] = 5;
-		buttoneffect.setArray(colorArray);
-		btn.setBackgroundColor(Color.CYAN);
-		break;
-	case 5:
-		colorArray[i][j] = 6;
-		buttoneffect.setArray(colorArray);
-		btn.setBackgroundColor(Color.MAGENTA);
-		break;
-	case 6:
-		colorArray[i][j] = 7;
-		buttoneffect.setArray(colorArray);
-		btn.setBackgroundColor(Color.WHITE);
-		break;
-	case 7:
-		colorArray[i][j] = 0;
-		buttoneffect.setArray(colorArray);
-		btn.setBackgroundColor(Color.GRAY);
-		break;
-	}
-}	
+	}	
 		
 	
 	
 }
 
     
-}
+
     
     
 
