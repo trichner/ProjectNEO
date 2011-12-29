@@ -31,7 +31,7 @@ public class SendService extends Service {
 	
 	@Override
 	public void onCreate(){
-		if (D)		Log.e(TAG, "initialise SendJob");
+		if (D)		Log.d(TAG, "onCreate SendJob");
 		executor = new ScheduledThreadPoolExecutor(1);
 		sendTimer = new SendTimer(application);
 		application.setBluetooth(new BluetoothUtils());
@@ -40,6 +40,7 @@ public class SendService extends Service {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		if (D)		Log.d(TAG, "onDestroy SendJob");
 		executor.shutdown();
 		application.getEffect().exit();		//TODO
 		application.getBluetooth().close(); //TODO
@@ -48,6 +49,7 @@ public class SendService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
+		if (D)		Log.d(TAG, "onStart SendJob");
 		application.getBluetooth().connect(); //TODO
 		Effect effect = application.getEffect();
 		if(!effect.isAlive()) effect.start();

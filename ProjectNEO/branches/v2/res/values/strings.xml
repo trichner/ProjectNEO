@@ -20,5 +20,6 @@
     <string name="speed_prompt">Choose a speed</string>
     <string name="back_prompt">Choose a background</string>
     <string name="color_prompt">Choose a color</string>
+    <string name="serviceBtn">Service</string>
     
 </resources>
