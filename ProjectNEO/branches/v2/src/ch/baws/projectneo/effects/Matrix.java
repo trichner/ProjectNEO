@@ -8,6 +8,9 @@ import ch.baws.projectneo.GeneralUtils;
 
 public class Matrix extends Effect{
 	
+	private static final String TAG = "MATRIX";
+	private static final boolean D = true;
+	
 	private class Strip{
 		public Strip(double position,double speed,int length){
 			this.position = position;
@@ -57,7 +60,7 @@ public class Matrix extends Effect{
 					strips[i] = new Strip(0,rand.nextDouble()+0.7,rand.nextInt(5)+2);
 				}
 			}
-			Log.d("EFFECT", "next run...");
+			if(D) Log.d(TAG, "next run...");
 			try {
 				sleep(100);
 			} catch (InterruptedException e) {}

@@ -1,8 +1,9 @@
 package ch.baws.projectneo;
 
 import ch.baws.projectneo.effects.*;
-import ch.baws.projectneo.effects.Effect;
+import ch.baws.projectneo.sendService.SendService;
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 
 public class ProjectMORPHEUS extends Application{
@@ -12,12 +13,38 @@ public class ProjectMORPHEUS extends Application{
 	
 	BluetoothUtils bluetooth = null;
 	Effect effect = null;
-	Effect defaultEffect = new DefaultEffect();
+	Effect defaultEffect = new StarSky();
+	
+	private boolean isServiceRunning;
+	
+	public boolean isServiceRunning(){
+		return isServiceRunning;
+	}
+	
+	public void setServiceRunning(boolean isServiceRunning){
+		this.isServiceRunning = isServiceRunning;
+	}
 	
 	@Override
 	public void onCreate(){
 		bluetooth = new BluetoothUtils();
 		effect = defaultEffect;
+	}
+	
+	public byte[] bluetoothRead(){
+		return bluetooth.read();
+	}
+	
+	public void bluetoothSend(int[][] arr){
+		bluetooth.send(arr);
+	}
+	
+	public void bluetoothConnect(){
+		bluetooth.connect();
+	}
+	
+	public void bluetoothClose(){
+		bluetooth.close();
 	}
 
 	public BluetoothUtils getBluetooth() {
@@ -37,11 +64,10 @@ public class ProjectMORPHEUS extends Application{
 	}
 
 	public void setEffect(Effect effect) {
-		Effect oldEffect = this.effect;
+		this.effect.exit();
 		this.effect = effect;
 		//only start the new if the old was started
-		if(oldEffect.isAlive()){
-			oldEffect.exit();
+		if(isServiceRunning){
 			if(!(this.effect.isAlive())){
 				if(D) Log.e(TAG, "STARTEFFECT");
 	        	this.effect.start();			
@@ -50,11 +76,26 @@ public class ProjectMORPHEUS extends Application{
 	}
 	
 	public void startEffect(){
-		if(!effect.isAlive()) effect.start();
+		if(effect.getState()==Thread.State.TERMINATED){
+			if(D) Log.e(TAG, "ERROR:Effect was somewhere terminated");
+			effect = new DefaultEffect();
+		}
+		effect.start();
+		if(D) Log.d(TAG, "started effect...");
+
 	}
 	
 	public void stopEffect(){
 		effect.exit();
+		if(D) Log.d(TAG, "stopped effect...");
+	}
+	
+	public void suspendEffect(){
+		effect.suspend();
+	}
+	
+	public void resumeEffect(){
+		effect.resume();
 	}
 
 	@Override
@@ -62,6 +103,11 @@ public class ProjectMORPHEUS extends Application{
 		// TODO Auto-generated method stub
 		super.onTerminate();
 		effect.exit();
+		stopService(new Intent(this,SendService.class));
+	}
+
+	public int[][] getEffectArray() {
+		return effect.getArray();
 	}
 
 	
