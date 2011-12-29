@@ -8,11 +8,9 @@ import java.util.UUID;
 import ch.baws.projectneo.frameGenerator.Frame;
 import ch.baws.projectneo.frameGenerator.PacketGenerator;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
 import android.util.Log;
 
 /**

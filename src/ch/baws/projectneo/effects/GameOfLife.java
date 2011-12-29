@@ -2,8 +2,6 @@ package ch.baws.projectneo.effects;
 
 import java.util.Random;
 
-import ch.baws.projectneo.GeneralUtils;
-
 public class GameOfLife extends Effect {
 	Random rand = new Random();
 	

@@ -1,6 +1,5 @@
 package ch.baws.projectneo.frameGenerator;
 
-import java.nio.ByteBuffer;
 import java.util.Random;
 
 

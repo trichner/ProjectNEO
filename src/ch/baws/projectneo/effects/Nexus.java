@@ -21,7 +21,7 @@ public class Nexus extends Effect{
 				this.position = 0;
 				this.speed = rand.nextDouble()+0.7;
 			}else{
-				this.position = 8;
+				this.position = 8+this.length; //TODO maybe only 8...
 				this.speed = -(rand.nextDouble()+0.7);
 			}
 			this.length = rand.nextInt(5)+2;
