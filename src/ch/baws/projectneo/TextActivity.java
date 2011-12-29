@@ -15,7 +15,6 @@ import android.widget.Toast;
 import java.util.Timer;
 
 import ch.baws.projectneo.R;
-import ch.baws.projectneo.bthandler.SendTimer;
 import ch.baws.projectneo.effects.Buttons;
 import ch.baws.projectneo.effects.Colorfield;
 import ch.baws.projectneo.effects.Text;
@@ -31,15 +30,7 @@ public class TextActivity extends Activity {
 	private static final boolean D = false;
 
 	private int[][] colorArray; // array to store the current LED colors
-
-	private SendTimer snd; // Timertask
-	private Timer timer;
-	private boolean timerisAlive = false; 
-	
-	public boolean connected = false;
-
-	private BluetoothUtils Bluetooth = null;
-	
+	private ProjectMORPHEUS morpheus;
 	Buttons buttoneffect = new Buttons();
 	
 	Button button;
@@ -66,7 +57,7 @@ public class TextActivity extends Activity {
         
         colorArray = GeneralUtils.emptyArray(8,8); // fills array with zeros
         
-        
+        morpheus = (ProjectMORPHEUS) getApplication();
         button = (Button) findViewById(R.id.button1);
         et = (EditText) findViewById(R.id.text_input);
         
@@ -90,23 +81,9 @@ public class TextActivity extends Activity {
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         speedspin.setAdapter(adapter3); 
         speedspin.setOnItemSelectedListener(new SpeedSelectedListener());
-        
- 		Bluetooth = new BluetoothUtils();
-
-    	//Bluetooth.init();
-    	if (!connected) Bluetooth.connect();
-    	connected=true;
-    	if(timerisAlive)
-    	{
-    		timer.cancel();
-    	}       
+           
     	Colorfield eff = new Colorfield();
     	eff.setColor(7);
-    	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-    	timer = new Timer(); 
-    	snd = new SendTimer(eff, Bluetooth);  
-    	timer.schedule  ( snd, 100, 66 ); // frequency 15 fps
-    	timerisAlive = true;
     }
     
 
@@ -119,7 +96,7 @@ public class TextActivity extends Activity {
    	@Override
    	public void onResume() {
    		super.onResume();
-
+   		if(!morpheus.isServiceRunning()) Toast.makeText(this, "start Service first", Toast.LENGTH_SHORT).show();
    		if (D) {
    			Log.e(TAG, "+ ON RESUME +");
 //   			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
@@ -149,10 +126,6 @@ public class TextActivity extends Activity {
    	@Override
    	public void onStop() {
    		super.onStop();
-    	if(timerisAlive==true)
-    	timer.cancel();
-    	if(connected)
-    		Bluetooth.close();
    		if (D)
    			Log.e(TAG, "-- ON STOP --");
    	}
@@ -161,10 +134,6 @@ public class TextActivity extends Activity {
    	public void onDestroy() {
    		super.onDestroy();
   // 		wl.release();
-    	if(timerisAlive==true)
-    	timer.cancel();
-    	if(connected)
-    		Bluetooth.close();
    		if (D)
    			Log.e(TAG, "--- ON DESTROY ---");
    	}
@@ -216,7 +185,7 @@ public class TextActivity extends Activity {
     	if(str=="") str="Project Neo"; //TODO
     	//if (!timerisAlive) {
    			text = new Text(str, icolor, iback, ispeed);
-   			snd.setEffect(text);
+   			morpheus.setEffect(text);
    		//}
     	
 
