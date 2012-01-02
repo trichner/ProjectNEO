@@ -13,7 +13,7 @@ public class ProjectMORPHEUS extends Application{
 	
 	BluetoothUtils bluetooth = null;
 	Effect effect = null;
-	Effect defaultEffect = new StarSky();
+	Effect defaultEffect = new DefaultEffect();
 	
 	private boolean isServiceRunning;
 	
@@ -32,18 +32,23 @@ public class ProjectMORPHEUS extends Application{
 	}
 	
 	public byte[] bluetoothRead(){
+		if(bluetooth==null) return null;
 		return bluetooth.read();
 	}
 	
 	public void bluetoothSend(int[][] arr){
+		if(bluetooth==null) bluetoothConnect();
 		bluetooth.send(arr);
 	}
 	
 	public void bluetoothConnect(){
-		bluetooth.connect();
+		if(bluetooth==null) bluetooth = new BluetoothUtils();
+		boolean error = bluetooth.connect();
+		if(error) bluetooth =null;
 	}
 	
 	public void bluetoothClose(){
+		if(bluetooth==null) return;
 		bluetooth.close();
 	}
 
@@ -88,14 +93,6 @@ public class ProjectMORPHEUS extends Application{
 	public void stopEffect(){
 		effect.exit();
 		if(D) Log.d(TAG, "stopped effect...");
-	}
-	
-	public void suspendEffect(){
-		effect.suspend();
-	}
-	
-	public void resumeEffect(){
-		effect.resume();
 	}
 
 	@Override
