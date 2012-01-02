@@ -75,9 +75,9 @@ public class BluetoothUtils {
 	 * @param BluetoothSocket
 	 * @return void
 	 **/
-	public void connect() 
+	public boolean connect() 
 	{
-		
+		boolean error = false;
    		// When this returns, it will 'know' about the server,
    		// via it's MAC address.
 		BluetoothDevice device;
@@ -99,6 +99,7 @@ public class BluetoothUtils {
 				btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
 			} catch (IOException e) {
 				Log.e(TAG, "ON RESUME: Socket creation failed.", e);
+				error = true;
 			}
 
    		// Discovery may be going on, e.g., if you're running a
@@ -124,6 +125,7 @@ public class BluetoothUtils {
    				Log.e(TAG, 
    					"ON RESUME: Unable to close socket during connection failure", e2);
    			}
+   			error = true;
    		}		
    		
    		//get streams
@@ -132,11 +134,11 @@ public class BluetoothUtils {
 			out = btSocket.getOutputStream();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			Log.e(TAG, "ON RESUME: Output stream creation failed.", e);
-			e.printStackTrace();
+			Log.e(TAG, "ON RESUME: Output stream creation failed.");
+			error = true;
 		}
    		
-   		
+		return error;
 	}
 	/**
 	 * method Send
