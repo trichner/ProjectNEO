@@ -36,18 +36,19 @@ public class ProjectMORPHEUS extends Application{
 		return bluetooth.read();
 	}
 	
-	public void bluetoothSend(int[][] arr){
-		if(bluetooth==null) bluetoothConnect();
-		bluetooth.send(arr);
+	public boolean bluetoothSend(int[][] arr){
+		if(bluetooth==null) return false; //bluetoothConnect();
+		return bluetooth.send(arr);
 	}
 	
-	public void bluetoothConnect(){
-		if(bluetooth==null) bluetooth = new BluetoothUtils();
+	public boolean bluetoothConnect(){
+		if(bluetooth==null) return false; //bluetooth = new BluetoothUtils();
 		boolean error = bluetooth.connect();
-		if(error) bluetooth =null;
+		return error;
+		//if(error) bluetooth =null;
 	}
 	
-	public void bluetoothClose(){
+	public void bluetoothClose(){ //no need for return, don't care if something went wrong
 		if(bluetooth==null) return;
 		bluetooth.close();
 	}
