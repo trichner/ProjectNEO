@@ -33,7 +33,7 @@ public class SendService extends Service {
 	public void onCreate(){
 		if (D)		Log.d(TAG, "onCreate SendJob");
 		application = (ProjectMORPHEUS) getApplication();
-		executor = new ScheduledThreadPoolExecutor(1);
+		executor = new ScheduledThreadPoolExecutor(2);
 		//application.setBluetooth(new BluetoothUtils());
 		sendTimer = new SendTimer(application);
 		receiveTimer = new ReceiveTimer(application);
