@@ -22,7 +22,7 @@ public abstract class Effect extends Thread{
 	
 	public Effect(){
 		this.array = GeneralUtils.emptyArray(8, 8);
-		AUTHOR = "brownies";
+		AUTHOR = "busy beaver";
 		TITLE = "CookieEffect";	
 	}
 	
@@ -37,4 +37,6 @@ public abstract class Effect extends Thread{
 	}
 	
 	public abstract void run();
+	
+	
 }
