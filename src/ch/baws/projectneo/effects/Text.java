@@ -17,6 +17,12 @@ public class Text extends Effect {
 		}
 	}
 	
+	public Text(){
+		super("StefanM","MarqueeV1");
+		//default stuff
+		
+	}
+	
 	@Override
 	public int[][] getArray() {
 		return array;
