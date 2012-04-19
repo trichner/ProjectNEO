@@ -201,20 +201,29 @@ public class ProjectNEOActivity extends Activity {
         	buttoneffect = new Buttons();
        		buttoneffect.setArray(colorArray);
        		morpheus.setEffect(buttoneffect);
+       		
        		Toast.makeText(getApplicationContext(), "Ready!", Toast.LENGTH_SHORT).show();
-            return true;
+            
+       		return true;
 
         
         case R.id.effects:
-        	final Intent intent = new Intent(this,EffectActivity.class);           
-        	startActivity(intent);
-        	
+        	{
+	        	final Intent intent = new Intent(this,EffectActivity.class);           
+	        	startActivity(intent);
+        	}	
         	return true;
         	
         case R.id.reset:
     		colorArray = GeneralUtils.emptyArray(8,8);
     		buttoneffect.setArray(colorArray);
     		resetColor();
+        	return true;
+        case R.id.to_trinity:
+        	{
+	        	final Intent intent = new Intent(this,TrinityActivity.class);           
+	        	startActivity(intent);
+        	}	
         	return true;
         
         }
