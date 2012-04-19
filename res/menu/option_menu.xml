@@ -24,5 +24,6 @@
     <item android:id="@+id/effects" 
           android:title="@string/effects" 
           android:icon="@android:drawable/ic_menu_slideshow" />
+    <item android:id="@+id/to_trinity" android:title="Trinity"></item>
     
 </menu>
