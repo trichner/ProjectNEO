@@ -72,20 +72,16 @@ public class ProjectMORPHEUS extends Application{
 	public void setEffect(Effect effect) {
 		this.effect.exit();
 		this.effect = effect;
-		//only start the new if the old was started
+		//only start the new if the service is running
 		if(isServiceRunning){
-			if(!(this.effect.isAlive())){
-				if(D) Log.e(TAG, "STARTEFFECT");
-	        	this.effect.start();			
-			}
+			if(D) Log.e(TAG, "STARTEFFECT");
+        	this.effect.start();
 		}
 	}
 	
 	public void startEffect(){
-		if(effect.getState()==Thread.State.TERMINATED){
-			if(D) Log.e(TAG, "ERROR:Effect was somewhere terminated");
-			effect = new DefaultEffect();
-		}
+		effect.exit(); 				//stop any old threads, prevent zombies
+		effect = new DefaultEffect();
 		effect.start();
 		if(D) Log.d(TAG, "started effect...");
 
@@ -98,7 +94,7 @@ public class ProjectMORPHEUS extends Application{
 
 	@Override
 	public void onTerminate() {
-		// TODO Auto-generated method stub
+		// Kill everything...
 		super.onTerminate();
 		effect.exit();
 		stopService(new Intent(this,SendService.class));
@@ -107,7 +103,5 @@ public class ProjectMORPHEUS extends Application{
 	public int[][] getEffectArray() {
 		return effect.getArray();
 	}
-
-	
 	
 }

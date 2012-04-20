@@ -47,8 +47,10 @@ public class BluetoothUtils {
 	 */
 	public BluetoothUtils(){
         if (D)
-        	Log.e(TAG, "+++ Init +++");
+        	Log.d(TAG, "+++ Init +++");
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (D)
+        	Log.d(TAG, " Inited...");
 	}
 	
 	public boolean active()
@@ -77,6 +79,7 @@ public class BluetoothUtils {
 	 **/
 	public boolean connect() 
 	{
+		if (D) Log.d(TAG, "Bluetooth connecting");
 		boolean error = false;
 		if(!mBluetoothAdapter.isEnabled()){
 			error = true;

@@ -3,6 +3,8 @@ package ch.baws.projectneo.effects;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.baws.projectneo.TextActivity;
+
 
 public class Text extends Effect {
 	public Text(String text, int textclr, int backclr, int spd) {
@@ -19,6 +21,7 @@ public class Text extends Effect {
 	
 	public Text(){
 		super("StefanM","MarqueeV1");
+		activity = TextActivity.class;
 		//default stuff
 		
 	}

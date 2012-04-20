@@ -10,6 +10,7 @@ public abstract class Effect extends Thread{
 	
 	protected static final String TAG = "EFFECT";
 	protected static final boolean D = false;
+	protected Class activity = null;
 	
 	public final String AUTHOR;
 	public final String TITLE;
@@ -36,7 +37,13 @@ public abstract class Effect extends Thread{
 		EXIT = true;
 	}
 	
-	public abstract void run();
+	public boolean hasAnActivity(){
+		return activity!=null;
+	}
 	
-	
+	public Class getActivity(){
+		return activity;
+	}
+		
+	public abstract void run();	
 }

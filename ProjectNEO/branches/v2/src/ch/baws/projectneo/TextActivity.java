@@ -100,17 +100,6 @@ public class TextActivity extends Activity {
 
    		if (D)
    			Log.e(TAG, "- ON PAUSE -");
-
-//   		if (outStream != null) {
-//   			try {
-//   				outStream.flush();
-//   			} catch (IOException e) {
-//   				Log.e(TAG, "ON PAUSE: Couldn't flush output stream.", e);
-//   			}
-//   		}
-   		//Bluetooth.Close();
-
-
    	}
 
    	@Override
