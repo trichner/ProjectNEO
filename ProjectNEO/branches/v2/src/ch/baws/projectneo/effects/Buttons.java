@@ -23,7 +23,4 @@ public class Buttons extends Effect{
 		
 	}
 
-
-	
-
 }
