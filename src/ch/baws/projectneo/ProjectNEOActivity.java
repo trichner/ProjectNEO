@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -18,7 +19,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 
-public class ProjectNEOActivity extends Activity {
+public class ProjectNEOActivity extends Activity implements OnClickListener {
 
 	
 	private static final String TAG = "PN_ACTIVITY";
@@ -27,24 +28,25 @@ public class ProjectNEOActivity extends Activity {
 	private int[][] colorArray; // array to store the current LED colors
 
 	private ProjectMORPHEUS morpheus;
-	Buttons buttoneffect = new Buttons();
+	
+	Buttons buttoneffect;
 	
 	Button[][] button;
-	
-	PowerManager pm;
-	PowerManager.WakeLock wl;
+	Button btn_reset;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.neo);
         morpheus = (ProjectMORPHEUS) getApplication();
         
         colorArray = GeneralUtils.emptyArray(8,8); // fills array with zeros
+        
+        btn_reset = (Button) findViewById(R.id.btn_reset);
+        btn_reset.setOnClickListener(this);
         button = new Button[8][8];
-        
-        
+                
         button[0][0] = (Button) findViewById(R.id.button00);
         button[0][1] = (Button) findViewById(R.id.button01); // makes sure we can use buttonxx like a variable
         button[0][2] = (Button) findViewById(R.id.button02);
@@ -145,7 +147,8 @@ public class ProjectNEOActivity extends Activity {
    	@Override
    	public void onResume() {
    		super.onResume();
-
+   		buttoneffect = new Buttons();
+   		morpheus.setEffect(buttoneffect);
    		if (D) {
    			Log.d(TAG, "+ ON RESUME +");
 //   			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
@@ -177,58 +180,7 @@ public class ProjectNEOActivity extends Activity {
    			Log.e(TAG, "--- ON DESTROY ---");
    	}
 
-       	  
 
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.option_menu, menu);
-        return true;
-    }
-    
-    
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.connect:
-        	
-       		if (D) {
-       			Log.e(TAG, "+ SEND BUTTON SELECT +");
-       			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
-       			
-       		}		
-
-        	buttoneffect = new Buttons();
-       		buttoneffect.setArray(colorArray);
-       		morpheus.setEffect(buttoneffect);
-       		
-       		Toast.makeText(getApplicationContext(), "Ready!", Toast.LENGTH_SHORT).show();
-            
-       		return true;
-
-        
-        case R.id.effects:
-        	{
-	        	final Intent intent = new Intent(this,EffectActivity.class);           
-	        	startActivity(intent);
-        	}	
-        	return true;
-        	
-        case R.id.reset:
-    		colorArray = GeneralUtils.emptyArray(8,8);
-    		buttoneffect.setArray(colorArray);
-    		resetColor();
-        	return true;
-        case R.id.to_trinity:
-        	{
-	        	final Intent intent = new Intent(this,TrinityActivity.class);           
-	        	startActivity(intent);
-        	}	
-        	return true;
-        
-        }
-        return false;
-    }
 	/**
 	 * method toggleColor  
 	 * @param v
@@ -305,6 +257,14 @@ public class ProjectNEOActivity extends Activity {
 			btn.setBackgroundColor(Color.GRAY);
 			break;
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		if(v.getId()!=R.id.btn_reset) return; //wasn't the reset button...
+		colorArray = GeneralUtils.emptyArray(8,8);
+		buttoneffect.setArray(colorArray);
+		resetColor();
 	}	
 		
 	
