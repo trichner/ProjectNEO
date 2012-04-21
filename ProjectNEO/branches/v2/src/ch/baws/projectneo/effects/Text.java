@@ -22,6 +22,7 @@ public class Text extends Effect {
 	public Text(){
 		super("StefanM","MarqueeV1");
 		activity = TextActivity.class;
+		this.icon = ch.baws.projectneo.R.drawable.ic_eff_marquee;
 		//default stuff
 		
 	}
@@ -31,12 +32,12 @@ public class Text extends Effect {
 		return array;
 	}
 	
-	//Define Colors
-	static final int OFF = 0;
-	static final int RED = 1;
-	static final int GRN = 2;
-	static final int BLU = 3;
-	static final int YEL = 4;
+	//Define Colors --> you should better take the ones from Frame i.e. Frame.NEO_RED and so on...
+	static final int OFF = 0; //private?
+	static final int RED = 1; //Frame.NEO_RED
+	static final int GRN = 2; //Frame.NEO_GREEN
+	static final int BLU = 3; //Frame.NEO_BLUE
+	static final int YEL = 4; //....
 	static final int TUR = 5;
 	static final int PUR = 6;
 	static final int WHT = 7;

@@ -1,6 +1,8 @@
 package ch.baws.projectneo.effects;
 
+import ch.baws.projectneo.ColorfieldActivity;
 import ch.baws.projectneo.GeneralUtils;
+import ch.baws.projectneo.R;
 
 
 
@@ -11,17 +13,18 @@ public class Colorfield extends Effect{
 		super("MarcelM", "Colorfield");
 		array = GeneralUtils.fillArray(8,8, 2);
 		delay = 100;
+		this.activity = ColorfieldActivity.class;
+		icon = R.drawable.ic_eff_colorfield;
 	}
-	
-	int color=0;
+
 	@Override
 	public int[][] getArray() {
 		return this.array;
 	}
 	
-	public void setColor(int c)
+	public void setColor(int color)
 	{	
-		this.color = c;
+		array = GeneralUtils.fillArray(8,8, color);
 	}
 
 	@Override

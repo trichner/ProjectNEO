@@ -5,6 +5,7 @@ import java.util.Random;
 import android.util.Log;
 import ch.baws.projectneo.frameGenerator.*;
 import ch.baws.projectneo.GeneralUtils;
+import ch.baws.projectneo.R;
 
 public class Matrix extends Effect{
 	
@@ -34,6 +35,7 @@ public class Matrix extends Effect{
 		for(int i=0;i<8;i++){
 			strips[i] = new Strip(0,rand.nextDouble()+0.5,rand.nextInt(5)+2);
 		}
+		this.icon = R.drawable.ic_eff_matrix2;
 	}
 	
 	@Override

@@ -60,13 +60,15 @@ public class SendService extends Service {
 			((ProjectMORPHEUS) super.getApplication()).setServiceRunning(true);
 			if (D)		Log.d(TAG, "Set new bluetooth");
 			application.setBluetooth(new BluetoothUtils());
-			if (D)		Log.d(TAG, "connect bluetooth");
-			application.bluetoothConnect();
-			if (D)		Log.d(TAG, "start Effect");
-			application.startEffect();
-			if (D)		Log.d(TAG, "schedule Jobs");
-			executor.scheduleAtFixedRate(sendTimer, 50, 1000/FPS, TimeUnit.MILLISECONDS);
-			executor.scheduleAtFixedRate(receiveTimer, 50+500/FPS, 1000/FPS, TimeUnit.MILLISECONDS);
+			//if(!application.getBluetooth().active()){
+				if (D)		Log.d(TAG, "connect bluetooth");
+				application.bluetoothConnect();
+				if (D)		Log.d(TAG, "start Effect");
+				application.startEffect();
+				if (D)		Log.d(TAG, "schedule Jobs");
+				executor.scheduleAtFixedRate(sendTimer, 50, 1000/FPS, TimeUnit.MILLISECONDS);
+				executor.scheduleAtFixedRate(receiveTimer, 50+500/FPS, 1000/FPS, TimeUnit.MILLISECONDS);
+			//}
 		}
 		return Service.START_STICKY;
 	}

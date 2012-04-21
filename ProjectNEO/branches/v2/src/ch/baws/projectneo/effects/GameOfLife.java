@@ -2,11 +2,14 @@ package ch.baws.projectneo.effects;
 
 import java.util.Random;
 
+import ch.baws.projectneo.R;
+
 public class GameOfLife extends Effect {
 	Random rand = new Random();
 	
 	public GameOfLife(){
 		super("ThomasR", "Conways Game of Life");
+		this.icon = R.drawable.ic_eff_gol;
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++){
 				array[i][j] = rand.nextInt(8);

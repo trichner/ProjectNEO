@@ -8,7 +8,7 @@ import ch.baws.projectneo.ProjectMORPHEUS;
 public class SendTimer implements Runnable{ //implements Runnable
 	
 	private static final String TAG = "SEND_TIMER";
-	private static final boolean D = true;	
+	private static final boolean D = false;	
 	
 	private static final int RETRIES = 100;
 	

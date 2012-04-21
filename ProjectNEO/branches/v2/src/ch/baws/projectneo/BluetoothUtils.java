@@ -20,7 +20,7 @@ import android.util.Log;
 
 public class BluetoothUtils {
 	private static final String TAG = "BN_BTUTILS";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	private static final boolean E = false;
 	
 	private boolean FLAG_connected = false;
@@ -81,9 +81,9 @@ public class BluetoothUtils {
 	{
 		if (D) Log.d(TAG, "Bluetooth connecting");
 		boolean error = false;
+		
 		if(!mBluetoothAdapter.isEnabled()){
-			error = true;
-			return error;
+			return true;
 		}
 		
 		if(E) return true;
@@ -216,8 +216,12 @@ public class BluetoothUtils {
 	 */
 	public void close() //using this method gives FC
 	{
+		if(!mBluetoothAdapter.isEnabled()){
+			if(D) Log.d(TAG, "no bluetoothadapter to close?");
+		}
+		
    		try	{
-   			btSocket.close();
+   			if(btSocket!=null) btSocket.close();
    			this.FLAG_connected = false;
    			if(D) Log.d(TAG, "closed socket");
    		} catch (IOException e2) {

@@ -3,6 +3,7 @@ package ch.baws.projectneo.effects;
 import java.util.Random;
 
 import ch.baws.projectneo.GeneralUtils;
+import ch.baws.projectneo.R;
 
 public class Nexus extends Effect{
 	
@@ -43,6 +44,7 @@ public class Nexus extends Effect{
 	public Nexus(){
 		super("ThomasR", "Nexus");
 		//Random rand = new Random();
+		this.icon = R.drawable.ic_eff_nexus;
 		for(int i=0;i<8;i++){
 			vStrips[i] = new Strip(); //Strip(0,rand.nextDouble()+0.5,rand.nextInt(5)+2,rand.nextInt(8));
 			hStrips[i] = new Strip(); //(0,rand.nextDouble()+0.5,rand.nextInt(5)+2,rand.nextInt(8));
