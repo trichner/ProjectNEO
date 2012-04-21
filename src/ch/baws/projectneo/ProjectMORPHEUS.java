@@ -49,7 +49,9 @@ public class ProjectMORPHEUS extends Application{
 	}
 	
 	public void bluetoothClose(){ //no need for return, don't care if something went wrong
+		if(D) Log.d(TAG, "bluetoothClose");
 		if(bluetooth==null) return;
+		if(D) Log.d(TAG, "bluetooth not null...");
 		bluetooth.close();
 	}
 
@@ -70,11 +72,12 @@ public class ProjectMORPHEUS extends Application{
 	}
 
 	public void setEffect(Effect effect) {
+		if(D) Log.d(TAG, "setEffect");
 		this.effect.exit();
 		this.effect = effect;
 		//only start the new if the service is running
 		if(isServiceRunning){
-			if(D) Log.e(TAG, "STARTEFFECT");
+			if(D) Log.d(TAG, "STARTEFFECT");
         	this.effect.start();
 		}
 	}

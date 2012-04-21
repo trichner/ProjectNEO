@@ -64,6 +64,7 @@ public class TrinityActivity extends Activity implements OnClickListener{
 				TextView description = (TextView) v.findViewById(R.id.item_description);
 				
 				ImageView icon = (ImageView) v.findViewById(R.id.item_icon);
+				icon.setImageResource(effect.getIcon());
 				// convert Time Data etc.
 				
 				title.setText(effect.TITLE);
@@ -184,6 +185,11 @@ public class TrinityActivity extends Activity implements OnClickListener{
 			case R.id.tbtn_service:
 				if(!application.isServiceRunning()){ //service running?
 					if(D) Log.d(TAG, "Starting Service...");
+					// Bluetooth active?
+			    	if (!(new BluetoothUtils()).active()) { // request popup if BT isnt activated
+			            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			            startActivityForResult(enableBtIntent, 1);
+			        }
 					startService(new Intent(this, SendService.class));
 					tbtn_service.setChecked(true);
 					Toast.makeText(this, "starting Service...", Toast.LENGTH_SHORT).show();

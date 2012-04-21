@@ -45,7 +45,7 @@ public class TextActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.text);
+        setContentView(R.layout.eff_text);
                 
         morpheus = (ProjectMORPHEUS) getApplication();
         button = (Button) findViewById(R.id.button1);

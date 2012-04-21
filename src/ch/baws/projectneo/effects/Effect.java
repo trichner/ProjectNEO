@@ -1,6 +1,7 @@
 package ch.baws.projectneo.effects;
 
 import ch.baws.projectneo.GeneralUtils;
+import ch.baws.projectneo.R;
 
 public abstract class Effect extends Thread{
 	
@@ -11,6 +12,7 @@ public abstract class Effect extends Thread{
 	protected static final String TAG = "EFFECT";
 	protected static final boolean D = false;
 	protected Class activity = null;
+	protected int icon = R.drawable.ic_app;
 	
 	public final String AUTHOR;
 	public final String TITLE;
@@ -43,6 +45,10 @@ public abstract class Effect extends Thread{
 	
 	public Class getActivity(){
 		return activity;
+	}
+	
+	public int getIcon(){
+		return this.icon;
 	}
 		
 	public abstract void run();	

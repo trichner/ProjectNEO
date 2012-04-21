@@ -38,7 +38,7 @@ public class ProjectNEOActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.neo);
+        setContentView(R.layout.eff_neo);
         morpheus = (ProjectMORPHEUS) getApplication();
         
         colorArray = GeneralUtils.emptyArray(8,8); // fills array with zeros
