@@ -22,5 +22,6 @@
     <string name="color_prompt">Choose a color</string>
     <string name="serviceBtn">Service</string>
     <string name="about">\nGUI:\n  Marcel Mohler\n  Thomas Richner\nHardware:\n  Stefan Mach\n  Thomas Richner\nEffects:\n  Thomas Richner\n  Stefan Mach\n  Marcel Mohler\nSupport:\n  IFH ETHZ\n  Karl Seeliger</string>
+    <string name="bugreport">You can now report any feedback to feedback@k42.ch!</string>
     
 </resources>

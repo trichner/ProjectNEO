@@ -101,6 +101,8 @@ public class TrinityActivity extends Activity implements OnClickListener{
 	final static boolean D = true;
 	final static String TAG = "TrinityActivity";
 	
+	private static boolean BT_ON = false;
+	
 	private ListView effects_list;
 	private Button btn_settings;
 	private Button btn_about;
@@ -171,11 +173,10 @@ public class TrinityActivity extends Activity implements OnClickListener{
 		btn_settings.setOnClickListener(this);
     	
 		// Bluetooth active?
-    	if (!(new BluetoothUtils()).active()) { // request popup if BT isnt activated
+    	if (!BluetoothUtils.active()) { // request popup if BT isnt activated
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, 1);
+            startActivityForResult(enableBtIntent, 17);
         }
-		
 	}
 	
 	@Override
@@ -186,17 +187,19 @@ public class TrinityActivity extends Activity implements OnClickListener{
 				if(!application.isServiceRunning()){ //service running?
 					if(D) Log.d(TAG, "Starting Service...");
 					// Bluetooth active?
-			    	if (!(new BluetoothUtils()).active()) { // request popup if BT isnt activated
+			    	if(!BluetoothUtils.active()) { // request popup if BT isnt activated
 			            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-			            startActivityForResult(enableBtIntent, 1);
+			            startActivityForResult(enableBtIntent, 17);
 			        }
+
 					startService(new Intent(this, SendService.class));
 					tbtn_service.setChecked(true);
-					Toast.makeText(this, "starting Service...", Toast.LENGTH_SHORT).show();
+
 				}else{ //stop service
-					if(D) Log.d(TAG, "Stopping Service...");
+					//if(D) Log.d(TAG, "Stopping Service...");
+					if(!application.isServiceRunning()) return;
 					stopService(new Intent(this, SendService.class));
-					Toast.makeText(this, "stopping Service...", Toast.LENGTH_SHORT).show();
+					//Toast.makeText(this, "stopping Service...", Toast.LENGTH_SHORT).show();
 				}
 				break;
 			case R.id.btn_about:
@@ -205,10 +208,24 @@ public class TrinityActivity extends Activity implements OnClickListener{
 				break;
 			case R.id.btn_settings:
 				if(D) Log.d(TAG, "Settings Button Clicked");
-				Toast.makeText(this, "no settings available", Toast.LENGTH_LONG).show();
+				showDialog(1);
 				break;
 		}
 
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		if(requestCode==17){
+			if (resultCode == RESULT_OK) {
+			}else{
+				if(D) Log.d(TAG, "Result NO, stop service");
+            	if(!application.isServiceRunning()) if(D) Log.d(TAG, "Service not even running"); 
+            	stopService(new Intent(this, SendService.class));
+            	Log.d(TAG, "stopped service"); 
+            	application.setServiceRunning(false); // -> onResume misses it the other way
+            }
+		}
 	}
 
 	@Override
@@ -251,15 +268,34 @@ public class TrinityActivity extends Activity implements OnClickListener{
 	@Override
     protected Dialog onCreateDialog(int id) {
 		if(D) Log.d(TAG, "onCreateDialog");
-		AlertDialog Credits = new AlertDialog.Builder(this).create();
-		Credits.setTitle("ProjectNEO::TRINITY");
-		Credits.setMessage(getResources().getText(R.string.about));
-		Credits.setIcon(R.drawable.icon);
-		Credits.setButton("Done", new DialogInterface.OnClickListener() {
-		   public void onClick(DialogInterface dialog, int which) {
-				// do nothing.
-		   }
-		});
-		return Credits;
+		switch(id){
+		case 0:
+			if(D) Log.d(TAG, "About Dialog");
+			AlertDialog Credits = new AlertDialog.Builder(this).create();
+			Credits.setTitle("ProjectNEO::TRINITY");
+			Credits.setMessage(getResources().getText(R.string.about));
+			Credits.setIcon(R.drawable.ic_app);
+			Credits.setButton("Done", new DialogInterface.OnClickListener() {
+			   public void onClick(DialogInterface dialog, int which) {
+					// do nothing.
+			   }
+			});
+			return Credits;
+		case 1:
+			if(D) Log.d(TAG, "About Dialog");
+			AlertDialog BugRep = new AlertDialog.Builder(this).create();
+			BugRep.setTitle("ProjectNEO::TRINITY");
+			BugRep.setMessage(getResources().getText(R.string.bugreport));
+			BugRep.setIcon(R.drawable.ic_app);
+			BugRep.setButton("Done", new DialogInterface.OnClickListener() {
+			   public void onClick(DialogInterface dialog, int which) {
+					// do nothing.
+			   }
+			});
+			return BugRep;
+		}
+		if(D) Log.e(TAG, "Unknown Dialog ID!");
+		return null;
+		
 	}
 }
