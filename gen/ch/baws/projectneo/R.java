@@ -157,6 +157,7 @@ public final class R {
         public static final int app_name=0x7f050001;
         public static final int back_prompt=0x7f050012;
         public static final int bclock=0x7f050010;
+        public static final int bugreport=0x7f050016;
         public static final int cfield=0x7f05000b;
         public static final int choose=0x7f050005;
         public static final int color_prompt=0x7f050013;

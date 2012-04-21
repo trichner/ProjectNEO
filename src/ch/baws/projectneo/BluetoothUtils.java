@@ -53,11 +53,11 @@ public class BluetoothUtils {
         	Log.d(TAG, " Inited...");
 	}
 	
-	public boolean active()
+	public static boolean active()
 	{
         if (D)
         	Log.e(TAG, "+++ Active +++");
-		return mBluetoothAdapter.isEnabled();
+		return BluetoothAdapter.getDefaultAdapter().isEnabled();
 	}
 	
 	/**
