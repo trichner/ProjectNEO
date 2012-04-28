@@ -10,6 +10,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.audiofx.AudioEffect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,7 +54,7 @@ public class TrinityActivity extends Activity implements OnClickListener{
 			}
 			//Fetch item
 			Class effectClass = items.get(position);
-			Effect effect = null;
+			Effect effect;
 			try {
 				effect = (Effect) effectClass.newInstance();
 				// fill View with info
@@ -73,7 +74,7 @@ public class TrinityActivity extends Activity implements OnClickListener{
 				
 				v.setTag(effectClass);
 			} catch (Exception e) {
-				Toast.makeText(getApplicationContext(), "Oh noes! Wrong Effect!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Oh noes! Invalid Effect!", Toast.LENGTH_SHORT).show();
 			}
 			return v;
 		}
@@ -131,6 +132,7 @@ public class TrinityActivity extends Activity implements OnClickListener{
 		effects.add(Buttons.class);
 		effects.add(Colorfield.class);
 		effects.add(DefaultEffect.class);
+		effects.add(AudioVisualizer.class);
 		//effects.add(BinaryClock.class);
 		
 		//find all Views

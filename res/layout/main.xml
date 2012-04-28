@@ -11,29 +11,32 @@
         android:layout_gravity="center_horizontal"
         android:text="ProjectNEO::TRINITY"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
+
         <ToggleButton
             android:id="@+id/tbtn_service"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:text="tbtn_service" />
-
+
         <Button
             android:id="@+id/btn_settings"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:text="Feedback" />
 
         <Button
             android:id="@+id/btn_about"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:text="About" />
 
