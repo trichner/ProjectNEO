@@ -10,7 +10,7 @@ import ch.baws.projectneo.frameGenerator.Frame;
 public class AudioVisualizer extends Effect {
 	
 	private static final String TAG = "AudioVisualizer";
-	private static final boolean D = true;	
+	private static final boolean D = false;	
 	
 	private static final double maxFrequency = 10000*1000;	//in mHz
 	private static final double minFrequency = 50*1000;	
@@ -71,30 +71,30 @@ public class AudioVisualizer extends Effect {
 			}else{
 				if(D) Log.d(TAG,"FFT success");
 				
-				for(int j=0;j<8;j++){
+				for(int j=0;j<8;j++){	// calculate the magnitude of each bar as a sum of frequencies
 					mag=0;
-					for(int i=0; i<bandwidth;i+=2){					//add up a whole band
-						real = buffer_fft[kmin+j*bandwidth+i];		//real part of a frequency
-						imag = buffer_fft[kmin+j*bandwidth+i+1]; 	//imaginary part of a frequency
-						mag += Math.sqrt(real*real+imag*imag);		//only use the absolute value, phase is not interesting
+					for(int i=0; i<bandwidth;i+=2){					// add up a whole band
+						real = buffer_fft[kmin+j*bandwidth+i];		// real part of a frequency
+						imag = buffer_fft[kmin+j*bandwidth+i+1]; 	// imaginary part of a frequency
+						mag += Math.sqrt(real*real+imag*imag);		// only use the absolute value, phase is not interesting
 					}
 					magnitude[j] = (int) (10 * Math.log10(mag)); 	// use dB value
 					
-					tMAX = Math.max(magnitude[j],tMAX);
-					tMIN = Math.min(magnitude[j],tMIN);
+					tMAX = Math.max(magnitude[j],tMAX);				// get the maximum and minimum of the magnitudes
+					tMIN = Math.min(magnitude[j],tMIN);				
 					
 					if(D) Log.v(TAG, "MAX"+j+": "+tMAX);
 					if(D) Log.v(TAG, "MIN"+j+": "+tMIN);
 				}
 				
 				//get an average
-				if(tMAX-tMIN>5 && tMAX>10 && tMIN>5 && tMAX<50){ 	//magic values
-					averageMIN = (((9*averageMIN+tMIN))/10.0);		//weight it...
+				if(tMAX-tMIN>5 && tMAX>10 && tMIN>5 && tMAX<50){ 	// magic values...
+					averageMIN = (((9*averageMIN+tMIN))/10.0);		// weight it
 					averageMAX = (((9*averageMAX+tMAX))/10.0);
 				}
 				
-				MAX = (int) (averageMAX+3); //floor(avg+3), magic value
-				MIN = (int) (averageMIN);	//floor(avg)
+				MAX = (int) (averageMAX+3); // floor(avg+3), magic value
+				MIN = (int) (averageMIN);	// floor(avg)
 				
 				if(D) Log.d(TAG, "magnitude="+magnitude[0]+ ","+magnitude[1]+ ","+magnitude[2]+ ","+magnitude[3]+ ","+magnitude[4]+ ","+magnitude[5]+ ","+magnitude[6]+ ","+magnitude[7]);	
 				if(D) Log.d(TAG, "MIN/MAX: "+MIN+" / "+MAX + "    tMIN/tMAX: "+tMIN+" / "+tMAX);
