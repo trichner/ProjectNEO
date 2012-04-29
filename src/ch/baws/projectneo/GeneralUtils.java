@@ -8,6 +8,7 @@ public class GeneralUtils {
 	
 	private static final String TAG = "GENERALUTILS";
 	private static final boolean D = false;
+	private static final int[][] empty8x8 = {{0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0}};
 	
 	public static String randomCharString()
 	{
@@ -15,6 +16,13 @@ public class GeneralUtils {
 		char c = (char)(r.nextInt(26) + 'a');
 		return String.valueOf(c);
 		
+	}
+	public static int[][] getEmpty8x8(){
+		int[][] array = new int[8][8];
+		for(int i = 0;i<8;i++){
+			System.arraycopy(empty8x8[i], 0, array[i], 0, 8);
+		}
+		return array;
 	}
 	/**
 	 * static method randomArray
@@ -40,6 +48,8 @@ public class GeneralUtils {
 	 */
 	public static int[][] emptyArray(int m, int n)
 	{
+		if(m==8&&n==8) return getEmpty8x8();
+		
 		int[][] array = new int[m][n]; // default Array, makes sure it contains zeros
     	for (int i=0;i<m;i++){
     		for (int j=0;j<n;j++){

@@ -55,8 +55,9 @@ public class TrinityActivity extends Activity implements OnClickListener{
 			//Fetch item
 			Class effectClass = items.get(position);
 			Effect effect;
-			try {
+			try{
 				effect = (Effect) effectClass.newInstance();
+				if(D) Log.d(TAG, "Effect instantiated");
 				// fill View with info
 				//Log.d("QAct","adding TU to list: "+o.toString());
 				
@@ -69,13 +70,18 @@ public class TrinityActivity extends Activity implements OnClickListener{
 				// convert Time Data etc.
 				
 				title.setText(effect.TITLE);
-				description.setText(effect.AUTHOR);
+				description.setText("Author: " + effect.AUTHOR);
 				//icon.setImageDrawable(R.drawable);
 				
 				v.setTag(effectClass);
-			} catch (Exception e) {
-				Toast.makeText(getApplicationContext(), "Oh noes! Invalid Effect!", Toast.LENGTH_SHORT).show();
+			} catch (InstantiationException e) {
+				Log.e(TAG, "InstantiationException");
+			} catch (IllegalAccessException e) {
+				if(D) Log.e(TAG, "IllegalAccessException");
 			}
+//			} catch () {
+//				Toast.makeText(getApplicationContext(), "Oh noes! Invalid Effect!", Toast.LENGTH_SHORT).show();
+//			}
 			return v;
 		}
 
