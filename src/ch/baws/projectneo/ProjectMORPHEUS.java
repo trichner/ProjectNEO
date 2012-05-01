@@ -83,8 +83,9 @@ public class ProjectMORPHEUS extends Application{
 	}
 	
 	public void startEffect(){
-		effect.exit(); 				//stop any old threads, prevent zombies
-		effect = new DefaultEffect();
+		if(effect.isAlive()) return; 	//still running, why restart?
+		//effect.exit(); 				//stop any old threads, prevent zombies
+		effect = new DefaultEffect(); 	//since we don't really know the state of the Thread
 		effect.start();
 		if(D) Log.d(TAG, "started effect...");
 

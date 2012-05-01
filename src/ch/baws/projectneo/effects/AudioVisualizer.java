@@ -10,7 +10,7 @@ import ch.baws.projectneo.frameGenerator.Frame;
 public class AudioVisualizer extends Effect {
 	
 	private static final String TAG = "AudioVisualizer";
-	private static final boolean D = true;	
+	private static final boolean D = false;	
 	
 	private static final double maxFrequency = 10000*1000;	//in mHz
 	private static final double minFrequency = 50*1000;	
@@ -33,7 +33,6 @@ public class AudioVisualizer extends Effect {
 	private static final int[] empty8 = {0,0,0,0,0,0,0,0};
 	
 	private Visualizer visualizer;
-	private int[][] array;
 	private int kmax,kmin;
 	
 	double step = 1/(Math.pow(LOGARITHMIC_BASE, 0)+Math.pow(LOGARITHMIC_BASE, 1)+Math.pow(LOGARITHMIC_BASE, 2)+Math.pow(LOGARITHMIC_BASE, 3)+Math.pow(LOGARITHMIC_BASE, 4)+Math.pow(LOGARITHMIC_BASE, 5)+Math.pow(LOGARITHMIC_BASE, 6)+Math.pow(LOGARITHMIC_BASE, 7));
@@ -94,10 +93,9 @@ public class AudioVisualizer extends Effect {
 		while(!EXIT){
 			err = visualizer.getFft(buffer_fft);
 			tMAX=0; tMIN=Integer.MAX_VALUE;
-			
+			System.arraycopy(empty8, 0, magnitude, 0, 8);
 			if(err!=Visualizer.SUCCESS){
 				Log.e(TAG,"FFT wen't wrong, errorcode: " + err);
-				System.arraycopy(empty8, 0, magnitude, 0, 8);
 			}else{
 				if(D) Log.d(TAG,"FFT success");
 				int offset=0;
@@ -110,8 +108,8 @@ public class AudioVisualizer extends Effect {
 						offset++;
 					}
 
-					
-					magnitude[j] = (int) (10 * Math.log10(mag)); 	// use dB value
+					if(mag!=0)
+						magnitude[j] = (int) (10 * Math.log10(mag)); 	// use dB value
 					
 					tMAX = Math.max(magnitude[j],tMAX);				// get the maximum and minimum of the magnitudes
 					tMIN = Math.min(magnitude[j],tMIN);				
@@ -136,30 +134,30 @@ public class AudioVisualizer extends Effect {
 
 				array = GeneralUtils.getEmpty8x8();
 				for(int i=0;i<8;i++){
-					int tempMag = magnitude[7-i]; // switch the order, left is lowest freq
+					int tempMag = magnitude[i]; 
 					if(tempMag>0.125*(MAX-MIN)+MIN){
-						array[0][i] = Frame.NEO_GREEN;
+						array[7][i] = Frame.NEO_GREEN;
 					}
 					if(tempMag>0.25*(MAX-MIN)+MIN){
-						array[1][i] = Frame.NEO_GREEN;
+						array[6][i] = Frame.NEO_GREEN;
 					}
 					if(tempMag>0.375*(MAX-MIN)+MIN){
-						array[2][i] = Frame.NEO_GREEN;
+						array[5][i] = Frame.NEO_GREEN;
 					}
 					if(tempMag>0.5*(MAX-MIN)+MIN){
-						array[3][i] = Frame.NEO_YELLOW;
-					}
-					if(tempMag>0.625*(MAX-MIN)+MIN){
 						array[4][i] = Frame.NEO_YELLOW;
 					}
+					if(tempMag>0.625*(MAX-MIN)+MIN){
+						array[3][i] = Frame.NEO_YELLOW;
+					}
 					if(tempMag>0.75*(MAX-MIN)+MIN){
-						array[5][i] = Frame.NEO_RED;
+						array[2][i] = Frame.NEO_RED;
 					}
 					if(tempMag>0.875*(MAX-MIN)+MIN){
-						array[6][i] = Frame.NEO_RED;
+						array[1][i] = Frame.NEO_RED;
 					}
 					if(tempMag>=MAX){
-						array[7][i] = Frame.NEO_WHITE;
+						array[0][i] = Frame.NEO_WHITE;
 					}	
 				}
 				
