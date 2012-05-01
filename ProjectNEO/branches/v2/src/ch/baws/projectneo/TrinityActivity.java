@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.audiofx.AudioEffect;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -101,6 +102,42 @@ public class TrinityActivity extends Activity implements OnClickListener{
 	}
 	
 	
+	 private class StartService extends AsyncTask<Void, Void, Integer> {
+		 @Override
+	     protected Integer doInBackground(Void... args) {
+	         int error_code = 0;
+	         
+				if(!application.isServiceRunning()){ //service running?
+					if(D) Log.d(TAG, "Starting Service...");
+					// Bluetooth active?
+			    	if(!BluetoothUtils.active()) { // request popup if BT isnt activated
+			            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			            startActivityForResult(enableBtIntent, 17);
+			        }
+
+					startService(new Intent(getApplicationContext(), SendService.class));
+					//tbtn_service.setChecked(true);
+
+				}else{ //stop service
+					//if(D) Log.d(TAG, "Stopping Service...");
+					if(!application.isServiceRunning()) return 1;
+					stopService(new Intent(getApplicationContext(), SendService.class));
+					//Toast.makeText(this, "stopping Service...", Toast.LENGTH_SHORT).show();
+				}
+	         
+	         
+	         return error_code;
+	     }
+
+	     protected void onProgressUpdate() {
+	     }
+
+	     protected void onPostExecute(Long result) {
+	    	 //Toast.makeText(getApplicationContext(), "Service started.", Toast.LENGTH_SHORT).show();
+	     }
+	 }
+	
+	
 	
 	
 	
@@ -137,9 +174,9 @@ public class TrinityActivity extends Activity implements OnClickListener{
 		effects.add(Wave.class);
 		effects.add(Buttons.class);
 		effects.add(Colorfield.class);
-		effects.add(DefaultEffect.class);
+		//effects.add(DefaultEffect.class);
 		effects.add(AudioVisualizer.class);
-		//effects.add(BinaryClock.class);
+		effects.add(BinaryClock.class);
 		
 		//find all Views
 		btn_settings = (Button) findViewById(R.id.btn_settings);
@@ -192,23 +229,9 @@ public class TrinityActivity extends Activity implements OnClickListener{
 		if(D) Log.d(TAG, "some Button clicked");
 		switch(v.getId()){
 			case R.id.tbtn_service:
-				if(!application.isServiceRunning()){ //service running?
-					if(D) Log.d(TAG, "Starting Service...");
-					// Bluetooth active?
-			    	if(!BluetoothUtils.active()) { // request popup if BT isnt activated
-			            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-			            startActivityForResult(enableBtIntent, 17);
-			        }
-
-					startService(new Intent(this, SendService.class));
-					tbtn_service.setChecked(true);
-
-				}else{ //stop service
-					//if(D) Log.d(TAG, "Stopping Service...");
-					if(!application.isServiceRunning()) return;
-					stopService(new Intent(this, SendService.class));
-					//Toast.makeText(this, "stopping Service...", Toast.LENGTH_SHORT).show();
-				}
+				// Start service
+				new StartService().execute(); 
+				
 				break;
 			case R.id.btn_about:
 				if(D) Log.d(TAG, "About Button Clicked");

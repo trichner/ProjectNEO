@@ -6,7 +6,7 @@ import ch.baws.projectneo.R;
 public abstract class Effect extends Thread{
 	
 	protected volatile int[][] array;
-	protected boolean EXIT = false;
+	protected volatile boolean EXIT = false;
 	protected int delay = 0;
 	
 	protected static final String TAG = "EFFECT";

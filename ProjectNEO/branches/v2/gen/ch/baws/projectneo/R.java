@@ -17,17 +17,18 @@ public final class R {
     public static final class drawable {
         public static final int ic_app=0x7f020000;
         public static final int ic_eff_audiovisualizer=0x7f020001;
-        public static final int ic_eff_button=0x7f020002;
-        public static final int ic_eff_colorfield=0x7f020003;
-        public static final int ic_eff_gol=0x7f020004;
-        public static final int ic_eff_marquee=0x7f020005;
-        public static final int ic_eff_matrix=0x7f020006;
-        public static final int ic_eff_matrix2=0x7f020007;
-        public static final int ic_eff_nexus=0x7f020008;
-        public static final int ic_eff_snake=0x7f020009;
-        public static final int ic_eff_starsky=0x7f02000a;
-        public static final int ic_eff_wave=0x7f02000b;
-        public static final int icon=0x7f02000c;
+        public static final int ic_eff_binaryclock=0x7f020002;
+        public static final int ic_eff_button=0x7f020003;
+        public static final int ic_eff_colorfield=0x7f020004;
+        public static final int ic_eff_gol=0x7f020005;
+        public static final int ic_eff_marquee=0x7f020006;
+        public static final int ic_eff_matrix=0x7f020007;
+        public static final int ic_eff_matrix2=0x7f020008;
+        public static final int ic_eff_nexus=0x7f020009;
+        public static final int ic_eff_snake=0x7f02000a;
+        public static final int ic_eff_starsky=0x7f02000b;
+        public static final int ic_eff_wave=0x7f02000c;
+        public static final int icon=0x7f02000d;
     }
     public static final class id {
         public static final int LinearLayout2=0x7f070058;
