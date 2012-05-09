@@ -33,6 +33,7 @@
         	android:screenOrientation="portrait"></activity>
         <service android:name=".sendService.SendService" android:label="SendService" android:enabled="true"></service>
         <activity android:label="ColorfieldActivity" android:name=".ColorfieldActivity"></activity>
+        <activity android:name=".SnakeActivity" android:label="SnakeActivity"></activity>
         
 
     </application>
