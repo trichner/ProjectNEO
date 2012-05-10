@@ -13,6 +13,9 @@ import ch.baws.projectneo.frameGenerator.Frame;
 
 public class Tetris extends Effect{
 
+	protected static final String TAG = "TETRIS";
+	protected static final boolean D = true;
+	
 	private long stack;	
 	private long ubrick;
 	private long lbrick;
@@ -70,7 +73,7 @@ public class Tetris extends Effect{
 		ubrick >>>= 8; // shift down
 		lbrick >>>= 8;
 		lbrick |= (carry << 56);
-		brick_y++;
+		brick_y--;
 		
 		if((((lbrick >>> 8)&stack )!=0) || ((lbrick&0xFF)!=0)){ //brick on the stack or at the bottom
 			if(ubrick!=0){		//part of a brick still at the top? Game Over!
@@ -103,13 +106,49 @@ public class Tetris extends Effect{
 	}
 	
 	public void rotate(){
+		if(D) Log.d(TAG,"try to rotate");
+		if(ubrick!=0 || brick_y>10) return;  //noch im oberen Bereich?nicht drehbarer Brick?
 		
-		if(brick_y>10) return;
+		if(D) Log.d(TAG,"ok, legal brick");
 		
+		long tmp = lbrick;
+		int count = Bitfields.numberOfSet(tmp); //kontrollsumme
 		
+		//Brick in die Mitte schieben
+		int i;
+		for(i=brick_y;i>0;i--){
+			tmp = Bitfields.shiftS(tmp);
+		}
+		for(i=brick_y;i<0;i++){
+			tmp = Bitfields.shiftN(tmp);
+		}
+		for(i=brick_x;i>0;i--){
+			tmp = Bitfields.shiftO(tmp);
+		}
+		for(i=brick_x;i<0;i++){
+			tmp = Bitfields.shiftW(tmp);
+		}
 		
+		tmp = Bitfields.rotate90(tmp); //rotieren um Mitte
 		
-		//TODO
+		//Zurückschieben
+		for(i=0;i>brick_y;i--){
+			tmp = Bitfields.shiftN(tmp);
+		}
+		for(i=0;i<brick_y;i++){
+			tmp = Bitfields.shiftS(tmp);
+		}
+		for(i=0;i>brick_x;i--){
+			tmp = Bitfields.shiftW(tmp);
+		}
+		for(i=0;i<brick_x;i++){
+			tmp = Bitfields.shiftO(tmp);
+		}
+		
+		if(count!=Bitfields.numberOfSet(tmp)) return; //ausserhalb des Felds?
+		if(D) Log.d(TAG,"ok, finally rotate");
+		
+		lbrick = tmp;
 	}
 	
 	
@@ -130,6 +169,7 @@ public class Tetris extends Effect{
 	}
 	
 	private void newBrick(){
+		
 		stack |= lbrick;
 		ubrick = BRICKS.BRICK[rand.nextInt(BRICKS.BRICK.length)];
 		lbrick =0;
