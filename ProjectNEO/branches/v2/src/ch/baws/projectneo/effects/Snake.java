@@ -81,24 +81,24 @@ public class Snake extends Thread{
 		//running out of bounds?
 		switch(dir){
 		case    UP:
-			if(head.y==7)
+			if(head.y==0)
 				return false;
-			next = new BodyPart(head.x,head.y+1);
+			next = new BodyPart(head.x-1,head.y);
 			break;
 		case RIGHT:
 			if(head.x==7)
 				return false;
-			next = new BodyPart(head.x+1,head.y);
+			next = new BodyPart(head.x,head.y+1);
 			break;
 		case  DOWN:
-			if(head.y==0)
+			if(head.y==7)
 				return false;
-			next = new BodyPart(head.x,head.y-1);
+			next = new BodyPart(head.x+1,head.y);
 			break;
 		case  LEFT:
 			if(head.x==0)
 				return false;
-			next = new BodyPart(head.x-1,head.y);
+			next = new BodyPart(head.x,head.y-1);
 			break;
 		}
 
@@ -125,6 +125,7 @@ public class Snake extends Thread{
 			//catched the food?
 			if(head.x==food.x && head.y==food.y){
 				food.generate();
+				this.setSpeed(this.SPEED-30);
 			}else{
 				BodyPart temp=head;
 				while(temp.nextBody.nextBody!=null){
@@ -135,16 +136,16 @@ public class Snake extends Thread{
 			
 			switch(dir){
 			case    UP:
-				next = new BodyPart(head.x,head.y+1);
+				next = new BodyPart(head.x-1,head.y);
 				break;
 			case RIGHT:
-				next = new BodyPart(head.x+1,head.y);
+				next = new BodyPart(head.x,head.y+1);
 				break;
 			case  DOWN:
-				next = new BodyPart(head.x,head.y-1);
+				next = new BodyPart(head.x+1,head.y);
 					break;
 			case  LEFT:
-				next = new BodyPart(head.x-1,head.y);
+				next = new BodyPart(head.x,head.y-1);
 				break;
 			}
 			
@@ -155,41 +156,6 @@ public class Snake extends Thread{
 			try {
 				sleep(SPEED);
 			} catch (InterruptedException e) {	}
-		}
-	}
-
-	
-	public void turnLeft(){
-		switch(dir){
-		case    UP:
-			dir = Dir.LEFT;
-			break;
-		case RIGHT:
-			dir = Dir.UP;
-			break;
-		case  DOWN:
-			dir = Dir.RIGHT;
-				break;
-		case  LEFT:
-			dir = Dir.DOWN;
-			break;
-		}
-	}
-	
-	public void turnRight(){
-		switch(dir){
-		case    UP:
-			dir = Dir.RIGHT;
-			break;
-		case RIGHT:
-			dir = Dir.DOWN;
-			break;
-		case  DOWN:
-			dir = Dir.LEFT;
-				break;
-		case  LEFT:
-			dir = Dir.UP;
-			break;
 		}
 	}
 
@@ -220,14 +186,35 @@ public class Snake extends Thread{
 	public Dir getDir() {
 		return dir;
 	}
+	
+
 
 	public void setDir(Dir dir) {
-		this.dir = dir;
+		switch(dir){
+		case    UP:
+			if (!this.dir.equals(Dir.DOWN)) {
+				this.dir = dir;
+			}
+			break;
+		case RIGHT:
+			if (!this.dir.equals(Dir.LEFT)) {
+				this.dir = dir;
+			}
+			break;
+		case  DOWN:
+			if (!this.dir.equals(Dir.UP)) {
+				this.dir = dir;
+			}
+			break;
+		case  LEFT:
+			if (!this.dir.equals(Dir.RIGHT)) {
+				this.dir = dir;
+			}
+			break;
+		}
 	}
 	
 	public void setSpeed(int speed){
 		this.SPEED = speed;
 	}
-	
-
 }
