@@ -180,6 +180,7 @@ public class TrinityActivity extends Activity implements OnClickListener{
 		effects.add(Tetris.class);
 		effects.add(SnakePlayer.class);
 		
+		
 		//find all Views
 		btn_settings = (Button) findViewById(R.id.btn_settings);
 		btn_about = (Button) findViewById(R.id.btn_about);
