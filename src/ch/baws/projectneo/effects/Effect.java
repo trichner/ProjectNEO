@@ -36,8 +36,8 @@ public abstract class Effect extends Thread{
 	
 	
 	public void exit(){
-		this.interrupt();
 		EXIT = true;
+		this.interrupt();
 	}
 	
 	public boolean hasAnActivity(){
