@@ -178,6 +178,7 @@ public class TrinityActivity extends Activity implements OnClickListener{
 		effects.add(AudioVisualizer.class);
 		effects.add(BinaryClock.class);
 		effects.add(Tetris.class);
+		effects.add(SnakePlayer.class);
 		
 		//find all Views
 		btn_settings = (Button) findViewById(R.id.btn_settings);
