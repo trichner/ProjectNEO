@@ -4,12 +4,16 @@ import ch.baws.projectneo.effects.Snake.Dir;
 import ch.baws.projectneo.effects.SnakePlayer;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class SnakeActivity extends Activity implements OnClickListener{
 
+	protected static final String TAG = "SNAKEACTIVITY";
+	protected static final boolean D = true;
+	
 	private ProjectMORPHEUS application;
 	
 	SnakePlayer effect;
@@ -32,7 +36,6 @@ public class SnakeActivity extends Activity implements OnClickListener{
 		left.setOnClickListener(this);
 		right.setOnClickListener(this);
 		
-		setContentView(R.layout.eff_snake);
 		application = (ProjectMORPHEUS) getApplication();
 	}
 
@@ -69,23 +72,27 @@ public class SnakeActivity extends Activity implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-
+		if(D) Log.d(TAG,"Button clicked!");
 		switch(v.getId()){
 		case R.id.snake_up:
 			//TODO What happens if user clicks UP?
-			effect.setDir(Dir.UP);
+			effect.setDir(Dir.LEFT);
+			if(D) Log.d(TAG,"go up");
 			break;
 		case R.id.snake_down:
 			//TODO What happens if user clicks DOWN?
-			effect.setDir(Dir.DOWN);
+			effect.setDir(Dir.RIGHT);
+			if(D) Log.d(TAG,"go down");
 			break;
 		case R.id.snake_left:
 			//TODO What happens if user clicks LEFT?
-			effect.setDir(Dir.LEFT);
+			effect.setDir(Dir.DOWN);
+			if(D) Log.d(TAG,"go left");
 			break;
 		case R.id.snake_right:
 			//TODO What happens if user clicks RIGHT?
-			effect.setDir(Dir.RIGHT);
+			effect.setDir(Dir.UP);
+			if(D) Log.d(TAG,"go rigth");
 			break;
 		}
 		
