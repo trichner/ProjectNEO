@@ -32,5 +32,7 @@ public class SnakePlayer extends Effect {
 		}
 		
 	}
+	
+	
 
 }
