@@ -5,6 +5,9 @@ import ch.baws.projectneo.frameGenerator.*;
 import ch.baws.projectneo.GeneralUtils;
 
 public class Snake extends Thread{
+	
+	private int SPEED = 400;
+	
 	private class BodyPart{
 		int x;
 		int y;
@@ -150,7 +153,7 @@ public class Snake extends Thread{
 		
 			//Speed of Snake :)
 			try {
-				sleep(400);
+				sleep(SPEED);
 			} catch (InterruptedException e) {	}
 		}
 	}
@@ -220,6 +223,10 @@ public class Snake extends Thread{
 
 	public void setDir(Dir dir) {
 		this.dir = dir;
+	}
+	
+	public void setSpeed(int speed){
+		this.SPEED = speed;
 	}
 	
 
