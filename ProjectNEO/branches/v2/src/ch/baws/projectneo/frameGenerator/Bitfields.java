@@ -274,7 +274,253 @@ public class Bitfields {
 		return bitf;
 	}
 	
+	/**
+	 * reads in an Array and makes a Bitfieldrepresentation
+	 * of it
+	 * 
+	 */
+	final public static int[][] toArr(long BITFIELD){
+		int[][] arr = new int[8][8];
+		
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				if(Bitfields.isSet(i, j,BITFIELD)){
+					arr[i][j] = 1;
+				}else{
+					arr[i][j] = 0;
+				}
+			}
+		}
+		
+		return arr;
+	}
+	
+	/**
+	 * reads in an Array and makes a Bitfieldrepresentation
+	 * of it
+	 * 
+	 */
+	final public static int[][] toNEOArr(long BITFIELD1,long BITFIELD2,int color1,int color2){
+		int[][] arr = new int[8][8];
+		BITFIELD1 = adjustNEO(BITFIELD1);
+		BITFIELD2 = adjustNEO(BITFIELD2);
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				if(Bitfields.isSet(i, j,BITFIELD1)){
+					arr[i][j] = color1;
+				}else if(Bitfields.isSet(i, j,BITFIELD2)){
+					arr[i][j] = color2;
+				}else{
+					arr[i][j] = 0;
+				}
+			}
+		}
+		
+		return arr;
+	}
+	
+	/*
+	 * Masks for all borders
+	 *   L      R      U      D
+	 * X O O  O O X  X X X  O O O
+	 * X O O  O O X  O O O  O O O
+	 * X O O  O O X  O O O  X X X
+	 */
+	public final static long BORDER_L  = A1 | A2 | A3 | A4 | A5 | A6 | A7 | A8 ;
+	public final static long BORDER_R  = H1 | H2 | H3 | H4 | H5 | H6 | H7 | H8 ;
+	public final static long BORDER_U  = A1 | B1 | C1 | D1 | E1 | F1 | G1 | H1 ;
+	public final static long BORDER_D  = A8 | B8 | C8 | D8 | E8 | F8 | G8 | H8 ;
+	
 
+	/*
+	 *    A  B  C  D  E  F  G  H
+	 * 1| 56 57 58 59 60 61 62 63
+	 * 2| 48 49 50 51 52 53 54 55
+	 * 3| 40 41 42 43 44 45 46 47
+	 * 4| 32 33 34 35 36 37 38 39
+	 * 5| 24 25 26 27 28 29 30 31
+	 * 6| 16 17 18 19 20 21 22 23
+	 * 7| 08 09 10 11 12 13 14 15
+	 * 8| 00 01 02 03 04 05 06 07
+	 * 
+	 * important masks:
+	 * 
+	 * X O O O X  O O O O O  O X O X O
+	 * O O O O O  O X O X O  X O O O X
+	 * O O O O O  O O O O O  O O O O O
+	 * O O O O O  O X O X O  X O O O X
+	 * X O O O X  O O O O O  O X O X O
+	 */
+	final public static long CHESS = A1 | A3 | A5 | A7 | B2 | B4 | B6 | B8 | C1 | C3 | C5 | C7 | D2 | D4 | D6 | D8 |
+									 E1 | E3 | E5 | E7 | F2 | F4 | F6 | F8 | G1 | G3 | G5 | G7 | H2 | H4 | H6 | H8;
+	final public static long CHAR_R = B1 | B2 | B3 | B4 | B5 | B6 | B7 | B8 | C1 | C5 | D1 | D5 | E1 | E4 | F2 | F3 |
+									  D6 | E7 | F8;
+	final public static long CORNERS  = A1 | H1 | H8 | A8 ;
+	final public static long X_FIELDS = B2 | G2 | G7 | B7 ;
+	final public static long C_FIELDS = B1 | A2 | G1 | H2 | A7 | B8 | H7 | G8 ;
+	
+	//---------------Shifters-----------------------
+	/*   NW     N      NO     SW     S      SO
+	 *   << 7  << 8   << 9   >>> 9  >>> 8  >>> 7
+	 * X O O  O X O  O O X  O O O  O O O  O O O
+	 * O X O  O X O  O X O  O X O  O X O  O X O
+	 * O O O  O O O  O O O  X O O  O X O  O O X
+	*/
+	/**
+	 * Shifts a (long) as 8x8 Bitfield one to the left
+	 * @param BITFIELD a (long) to shift
+	 */
+	final public static long shiftW(long BITFIELD){
+		BITFIELD >>>= 1;
+		BITFIELD &= ~BORDER_R;
+		return BITFIELD;
+	}
+	/**
+	 * Shifts a (long) as 8x8 Bitfield one to the right
+	 * @param BITFIELD a (long) to shift
+	 */
+	final public static long shiftO(long BITFIELD){
+		BITFIELD <<= 1;
+		BITFIELD &= ~BORDER_L;
+		return BITFIELD;
+	}
+	/**
+	 * Shifts a (long) as 8x8 Bitfield one up
+	 * @param BITFIELD a (long) to shift
+	 */
+	final public static long shiftN(long BITFIELD){
+		BITFIELD <<= 8;
+		return BITFIELD;
+	}
+	/**
+	 * Shifts a (long) as 8x8 Bitfield one down
+	 * @param BITFIELD a (long) to shift
+	 */
+	final public static long shiftS(long BITFIELD){
+		BITFIELD >>>= 8;
+		return BITFIELD;
+	}
+	/**
+	 * Shifts a (long) as 8x8 Bitfield one diagnol left-up
+	 * @param BITFIELD a (long) to shift
+	 */
+	final public static long shiftNW(long BITFIELD){
+		BITFIELD <<= 7;
+		BITFIELD &= ~BORDER_R;
+		return BITFIELD;
+	}
+	/**
+	 * Shifts a (long) as 8x8 Bitfield one diagnol right-up
+	 * @param BITFIELD a (long) to shift
+	 */
+	final public static long shiftNO(long BITFIELD){
+		BITFIELD <<= 9;
+		BITFIELD &= ~BORDER_L;
+		return BITFIELD;
+	}
+	/**
+	 * Shifts a (long) as 8x8 Bitfield one diagnol right-down
+	 * @param BITFIELD a (long) to shift
+	 */
+	final public static long shiftSO(long BITFIELD){
+		BITFIELD >>>= 7;
+		BITFIELD &= ~BORDER_L;
+		return BITFIELD;
+	}
+	/**
+	 * Shifts a (long) as 8x8 Bitfield one diagnol left-down
+	 * @param BITFIELD a (long) to shift
+	 */
+	final public static long shiftSW(long BITFIELD){
+		BITFIELD >>>= 9;
+		BITFIELD &= ~BORDER_R;
+		return BITFIELD;
+	}
+	
+	//---------------/Shifters-----------------------
+
+	//------------mirroring ------------------------------------
+	
+	/**
+	 * mirrors a Bitboard around the x-Axis
+	 * -> by Chess Programming Wiki
+	 * @param BF the bitboard
+	 * @return the mirrored bitboard
+	 */
+	
+	public static final long mirrorX(long BF){
+		long MIRROR=0;
+		MIRROR = ( (BF << 56)                           ) |
+        ( (BF << 40) &  (0x00ff000000000000L) ) |
+        ( (BF << 24) &  (0x0000ff0000000000L) ) |
+        ( (BF <<  8) &  (0x000000ff00000000L) ) |
+        ( (BF >>>  8) & (0x00000000ff000000L) ) |
+        ( (BF >>> 24) & (0x0000000000ff0000L) ) |
+        ( (BF >>> 40) & (0x000000000000ff00L) ) |
+        ( (BF >>> 56) );
+		return MIRROR;
+	}
+	
+	/**
+	 * mirrors a Bitboard around the y-Axis
+	 * -> by Chess Programming Wiki
+	 * @param BF the bitboard
+	 * @return the mirrored bitboard
+	 */
+	public static final long mirrorY(long BF){
+	   final long k1 = (0x5555555555555555L);
+	   final long k2 = (0x3333333333333333L);
+	   final long k4 = (0x0f0f0f0f0f0f0f0fL);
+	   BF = ((BF >>> 1) & k1) | ((BF & k1) << 1);
+	   BF = ((BF >>> 2) & k2) | ((BF & k2) << 2);
+	   BF = ((BF >>> 4) & k4) | ((BF & k4) << 4);
+	   return BF;
+	}
+	
+	//-----rotating
+	/**
+	 * rotates a bitfield 90 degrees clockwise
+	 * @param BF a bitfield
+	 * @return bitfield rotatet by 90 degrees
+	 */
+	public static final long rotate90(long BF){
+		   long t;
+		   final long k1 = (0x5500550055005500L);
+		   final long k2 = (0x3333000033330000L);
+		   final long k4 = (0x0f0f0f0f00000000L);
+		   t   = k4 & (BF ^ (BF << 28));
+		   BF ^=       t ^  (t >>> 28) ;
+		   t   = k2 & (BF ^ (BF << 14));
+		   BF ^=       t ^  (t >>> 14) ;
+		   t   = k1 & (BF ^ (BF <<  7));
+		   BF ^=       t ^  (t >>>  7) ;
+		   BF = Bitfields.mirrorX(BF);
+		   return BF;
+	}
+	
+	//-----rotating
+	/**
+	 * rotates a bitfield 90 degrees clockwise and mirros it
+	 * @param BF a bitfield
+	 * @return bitfield rotatet by 90 degrees and mirrored
+	 */
+	public static final long adjustNEO(long BF){
+		   long t;
+		   final long k1 = (0x5500550055005500L);
+		   final long k2 = (0x3333000033330000L);
+		   final long k4 = (0x0f0f0f0f00000000L);
+		   BF = Bitfields.mirrorX(BF);
+		   t   = k4 & (BF ^ (BF << 28));
+		   BF ^=       t ^  (t >>> 28) ;
+		   t   = k2 & (BF ^ (BF << 14));
+		   BF ^=       t ^  (t >>> 14) ;
+		   t   = k1 & (BF ^ (BF <<  7));
+		   BF ^=       t ^  (t >>>  7) ;
+		   
+		   BF = Bitfields.mirrorX(BF);
+		   return BF;
+	}
+	
 	//---Print functions--------------------------------------
 	/*
 	 *    A  B  C  D  E  F  G  H

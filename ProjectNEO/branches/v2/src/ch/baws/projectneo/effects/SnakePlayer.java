@@ -6,10 +6,9 @@ import ch.baws.projectneo.SnakeActivity;
 
 public class SnakePlayer extends Effect {
 
-	
 	public SnakePlayer() {
 		super("Philipp Boesch","Snake!");
-		this.icon = R.drawable.ic_app; //TODO cool icon!
+		this.icon = R.drawable.ic_eff_snake; //TODO cool icon!
 		this.activity = SnakeActivity.class;
 	}
 	
