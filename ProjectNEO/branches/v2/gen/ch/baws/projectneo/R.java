@@ -127,9 +127,9 @@ public final class R {
         public static final int progressBar=0x7f070060;
         public static final int reset=0x7f070076;
         public static final int rsnake=0x7f07006b;
-        public static final int snake_down=0x7f070050;
+        public static final int snake_down=0x7f070051;
         public static final int snake_left=0x7f07004f;
-        public static final int snake_right=0x7f070051;
+        public static final int snake_right=0x7f070050;
         public static final int snake_up=0x7f07004e;
         public static final int speed=0x7f07005c;
         public static final int spnr_color=0x7f070001;

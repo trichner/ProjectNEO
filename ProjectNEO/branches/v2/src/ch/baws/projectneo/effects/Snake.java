@@ -1,6 +1,8 @@
 package ch.baws.projectneo.effects;
 
 import java.util.Random;
+
+import android.util.Log;
 import ch.baws.projectneo.frameGenerator.*;
 import ch.baws.projectneo.GeneralUtils;
 
@@ -160,19 +162,24 @@ public class Snake extends Thread{
 	}
 
 	public int[][] getArray() {
-		int[][] array = GeneralUtils.emptyArray(8,8);
+		int[][] array = GeneralUtils.getEmpty8x8();
 		BodyPart temp = head;
+		if(D) Log.d(TAG,"GET ARRAY: starting");
 		while(temp!=null){
+			if(D) Log.d(TAG,"GET ARRAY: fill 1  temp.x:" + temp.x + " temp.y:" + temp.y);
 			array[temp.x][temp.y] = COLOR_SNAKE; //RED
+			if(D) Log.d(TAG,"GET ARRAY: fill 2");
 			temp = temp.nextBody;
+			if(D) Log.d(TAG,"GET ARRAY: fill 3");
 		}
 		array[food.x][food.y] = COLOR_FOOD;
-		
+		if(D) Log.d(TAG,"GET ARRAY: finsh, set food");
 		return array;
 	}
 	
 	public void exit(){
 		EXIT = true;
+		this.interrupt();
 	}
 
 	public boolean obstacleAhead(){

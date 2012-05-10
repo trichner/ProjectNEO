@@ -1,5 +1,6 @@
 package ch.baws.projectneo.effects;
 
+import android.util.Log;
 import ch.baws.projectneo.GeneralUtils;
 import ch.baws.projectneo.R;
 import ch.baws.projectneo.SnakeActivity;
@@ -7,6 +8,9 @@ import ch.baws.projectneo.effects.Snake.Dir;
 
 public class SnakePlayer extends Effect {
 
+	protected static final String TAG = "SNAKEPLAYER";
+	protected static final boolean D = true;
+	
 	private Snake snake = new Snake();
 	
 	public SnakePlayer() {
@@ -17,8 +21,10 @@ public class SnakePlayer extends Effect {
 	
 	@Override
 	public int[][] getArray() {
-		//TODO
-		return snake.getArray();
+		if(D) Log.d(TAG,"getting Array...");
+		int[][] arr = snake.getArray();
+		if(D) Log.d(TAG,"got Array!");
+		return arr;
 	}
 	public void setDir(Dir dir) {
 		snake.setDir(dir);
@@ -31,7 +37,8 @@ public class SnakePlayer extends Effect {
 		while(!EXIT){
 			
 			try {
-				sleep(1000000000);
+				//sleep(1000000000);
+				sleep(100);
 			} catch (InterruptedException e) {
 
 			}

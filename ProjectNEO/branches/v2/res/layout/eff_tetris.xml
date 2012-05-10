@@ -32,22 +32,24 @@
         android:text="awesome game by Thomas Richner"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="15dp" />
-
+
     <Button
         android:id="@+id/tetris_left"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignBaseline="@+id/tetris_drop"
         android:layout_alignBottom="@+id/tetris_drop"
+        android:layout_alignLeft="@+id/textView2"
         android:layout_toLeftOf="@+id/tetris_drop"
         android:text="&lt;&lt;&lt;" />
-
+
     <Button
         android:id="@+id/tetris_right"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignBaseline="@+id/tetris_drop"
         android:layout_alignBottom="@+id/tetris_drop"
+        android:layout_alignRight="@+id/textView2"
         android:layout_toRightOf="@+id/tetris_drop"
         android:text=">>>" />
 
