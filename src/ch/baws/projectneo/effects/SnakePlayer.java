@@ -26,7 +26,7 @@ public class SnakePlayer extends Effect {
 
 	@Override
 	public void run() {
-		snake.setSpeed(600);
+		snake.setSpeed(800);
 		snake.start();
 		while(!EXIT){
 			
