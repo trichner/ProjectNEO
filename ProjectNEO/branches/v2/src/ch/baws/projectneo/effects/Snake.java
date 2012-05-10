@@ -14,7 +14,7 @@ public class Snake extends Thread{
 			this.y = y;
 		}
 		public boolean equals(BodyPart body){
-			return ((this.x==body.x) && (this.y ==body.y));
+			return ((this.x==body.x) && (this.y==body.y));
 		}
 	}
 	private class Food{

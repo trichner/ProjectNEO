@@ -1,5 +1,6 @@
 package ch.baws.projectneo;
 
+import ch.baws.projectneo.effects.Snake.Dir;
 import ch.baws.projectneo.effects.SnakePlayer;
 import android.app.Activity;
 import android.os.Bundle;
@@ -72,15 +73,19 @@ public class SnakeActivity extends Activity implements OnClickListener{
 		switch(v.getId()){
 		case R.id.snake_up:
 			//TODO What happens if user clicks UP?
+			effect.setDir(Dir.UP);
 			break;
 		case R.id.snake_down:
 			//TODO What happens if user clicks DOWN?
+			effect.setDir(Dir.DOWN);
 			break;
 		case R.id.snake_left:
 			//TODO What happens if user clicks LEFT?
+			effect.setDir(Dir.LEFT);
 			break;
 		case R.id.snake_right:
 			//TODO What happens if user clicks RIGHT?
+			effect.setDir(Dir.RIGHT);
 			break;
 		}
 		
