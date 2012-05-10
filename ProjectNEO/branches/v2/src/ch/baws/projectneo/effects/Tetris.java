@@ -16,7 +16,10 @@ public class Tetris extends Effect{
 	private long stack;	
 	private long ubrick;
 	private long lbrick;
+	
+	private long curbrick;
 	int brick_x,brick_y;
+	
 		
 	Random rand = new Random();
 	private int score;
@@ -100,6 +103,12 @@ public class Tetris extends Effect{
 	}
 	
 	public void rotate(){
+		
+		if(brick_y>10) return;
+		
+		
+		
+		
 		//TODO
 	}
 	
@@ -124,9 +133,20 @@ public class Tetris extends Effect{
 		stack |= lbrick;
 		ubrick = BRICKS.BRICK[rand.nextInt(BRICKS.BRICK.length)];
 		lbrick =0;
+		
 		//TODO
-		brick_x = 4;
-		brick_y = 8;
+		curbrick = ubrick;
+		if(ubrick==BRICKS.SLAB2 || ubrick==BRICKS.SLAB3 || ubrick==BRICKS.SLAB4){		
+			brick_y = 5;
+		}else if(ubrick==BRICKS.JBRICK){		
+			brick_y = 6;
+		}else if(ubrick==BRICKS.LBRICK){		
+			brick_y = 6;
+		}else{
+			brick_y = 20;
+		}
+		
+		brick_x = 0;
 	}
 	
 	private void gameOver(){
@@ -140,7 +160,7 @@ public class Tetris extends Effect{
 	
 	
 	/**
-	 * Utils to handle 8x8 Bitfields
+	 * Utils to handle 8x8 BitTetris
 	 * <font face="Courier New"><pre>
 	 *    A  B  C  D  E  F  G  H  
 	 * 1| 56 57 58 59 60 61 62 63 
