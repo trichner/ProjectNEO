@@ -5,12 +5,16 @@ import java.util.Random;
 import android.util.Log;
 
 import ch.baws.projectneo.GeneralUtils;
+import ch.baws.projectneo.HumanSnakeActivity;
+import ch.baws.projectneo.R;
+import ch.baws.projectneo.SnakeActivity;
 import ch.baws.projectneo.frameGenerator.Frame;
+import ch.baws.projectneo.minions.FancyScore;
 
 
 
 public class HumanSnakePlayer extends Effect{
-	public static class Snake extends Thread{
+	private static class Snake extends Thread{
 		private int SPEED = 400;
 		private class BodyPart{ // Represents one Pixel of a Snake
 			int x;
@@ -51,7 +55,7 @@ public class HumanSnakePlayer extends Effect{
 		private static final int COLOR_SNAKE = Frame.NEO_RED;  //Color representing the Snake
 		private static final int COLOR_FOOD  = Frame.NEO_BLUE; //Color for the Food piece
 		
-		public static enum Dir{RIGHT,LEFT,UP,DOWN};
+		
 		
 		private boolean GAMEOVER = false;
 		private BodyPart head;
@@ -65,6 +69,7 @@ public class HumanSnakePlayer extends Effect{
 		
 		public Snake(){
 			rand = new Random();
+			array = GeneralUtils.getEmpty8x8();
 			create();
 		}
 		
@@ -144,7 +149,7 @@ public class HumanSnakePlayer extends Effect{
 				
 				// Since the snake doesn't change till the next tick, we might as
 				// well compute the array once and for all, so the call getArray() doesn't need to do anything
-				array = GeneralUtils.getEmpty8x8();
+				int[][] tmparray = GeneralUtils.getEmpty8x8();
 				BodyPart temp = head;
 				if(D) Log.d(TAG,"GET ARRAY: starting");
 				while(temp!=null){
@@ -155,15 +160,19 @@ public class HumanSnakePlayer extends Effect{
 					if(D) Log.d(TAG,"GET ARRAY: fill 3");
 				}
 				array[food.x][food.y] = COLOR_FOOD;
-				if(D) Log.d(TAG,"GET ARRAY: finsh, set food");
+				array = tmparray;
+				if(D) Log.d(TAG,"GET ARRAY: finish, set food");
 				
 				//Speed of Snake :)
 				try {
 					sleep(SPEED);
 				} catch (InterruptedException e) {	}
 			}
-			
+			// Display Score
+			array = FancyScore.getArray(score);
 		}
+		
+		
 
 		public int[][] getArray(){
 			return array;
@@ -185,32 +194,9 @@ public class HumanSnakePlayer extends Effect{
 		public Dir getDir() {
 			return dir;
 		}
-		
-
 
 		public void setDir(Dir dir) {
-			switch(dir){
-			case    UP:
-				if (!this.dir.equals(Dir.DOWN)) {
-					this.dir = dir;
-				}
-				break;
-			case RIGHT:
-				if (!this.dir.equals(Dir.LEFT)) {
-					this.dir = dir;
-				}
-				break;
-			case  DOWN:
-				if (!this.dir.equals(Dir.UP)) {
-					this.dir = dir;
-				}
-				break;
-			case  LEFT:
-				if (!this.dir.equals(Dir.RIGHT)) {
-					this.dir = dir;
-				}
-				break;
-			}
+			this.dir = dir;
 		}
 		
 		public int getScore(){
@@ -220,66 +206,41 @@ public class HumanSnakePlayer extends Effect{
 		public void setSpeed(int speed){
 			this.SPEED = speed;
 		}
-		
 	}
 	
-	private Snake snake = new Snake();
+	public static enum Dir{RIGHT,LEFT,UP,DOWN};
+	
+	private Snake snake;
 	
 	public HumanSnakePlayer(){
-		super("ThomasR", "SnakeV1");
+		super("ThomasR", "SnakeV2");
+		this.icon = R.drawable.ic_eff_snake; //TODO cool icon!
+		this.activity = HumanSnakeActivity.class;
+		snake = new Snake();
 	}
+	
 	@Override
 	public int[][] getArray() {
 		return snake.getArray();
 	}
+	
+	public void setDir(Dir dir) {
+		if(snake.GAMEOVER){
+			snake = new Snake();
+			snake.start();
+		}
+		snake.setDir(dir);
+	}
 
 	@Override
 	public void run() {
-		Random rand = new Random();
-		int whereToGo = 0;
-		
 		snake.start();
 		while(!EXIT){
-			boolean quit = false;
-			while(!quit){
-				whereToGo = rand.nextInt(4);	
-				if(snake.isValidMove(snake.getDir())){
-					if(whereToGo>1)
-						break;
-				}
-				whereToGo = rand.nextInt(4);
-				switch(whereToGo){
-				case 0:
-					if(snake.isValidMove(Dir.DOWN)&&snake.getDir()!=Dir.UP){
-						snake.setDir(Dir.DOWN);
-						quit = true;
-					}
-					break;
-				case 1:
-					if(snake.isValidMove(Dir.UP)&&snake.getDir()!=Dir.DOWN){
-						snake.setDir(Dir.UP);
-						quit = true;
-					}
-					break;
-				case 2:
-					if(snake.isValidMove(Dir.LEFT)&&snake.getDir()!=Dir.RIGHT){
-						snake.setDir(Dir.LEFT);
-						quit = true;
-					}
-					break;
-				case 3:
-					if(snake.isValidMove(Dir.RIGHT)&&snake.getDir()!=Dir.LEFT){
-						snake.setDir(Dir.RIGHT);
-						quit = true;
-					}
-					break;
-				}
-			}
 			
 			try {
-				sleep(400);
+				sleep(40000000);
 			} catch (InterruptedException e) {}
 		}
-		snake.exit();
+
 	}
 }

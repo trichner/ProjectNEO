@@ -35,6 +35,7 @@
         <activity android:label="ColorfieldActivity" android:name=".ColorfieldActivity"></activity>
         <activity android:name=".SnakeActivity" android:label="SnakeActivity"></activity>
         <activity android:label="TetrisActivity" android:name=".TetrisActivity"></activity>
+        <activity android:name=".HumanSnakeActivity" android:label="HumanSnakeActivity"></activity>
         
 
     </application>
