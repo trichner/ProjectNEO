@@ -2,12 +2,16 @@ package ch.baws.projectneo.effects;
 
 import java.util.Random;
 
+import ch.baws.projectneo.R;
 import ch.baws.projectneo.effects.Snake.Dir;
 
 public class RandomSnakePlayer extends Effect{
-
 	private Snake snake = new Snake();
-		
+	
+	public RandomSnakePlayer(){
+		super("ThomasR", "SnakeV1");
+		this.icon = R.drawable.ic_eff_snake;
+	}
 	@Override
 	public int[][] getArray() {
 		return snake.getArray();
@@ -57,7 +61,7 @@ public class RandomSnakePlayer extends Effect{
 			}
 			
 			try {
-				sleep(100);
+				sleep(400);
 			} catch (InterruptedException e) {}
 		}
 		snake.exit();

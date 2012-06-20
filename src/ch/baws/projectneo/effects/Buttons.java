@@ -1,7 +1,16 @@
 package ch.baws.projectneo.effects;
 
-public class Buttons extends Effect{
+import ch.baws.projectneo.ProjectNEOActivity;
+import ch.baws.projectneo.R;
 
+public class Buttons extends Effect{
+	
+	public Buttons(){
+		super("MarcelM","Fun with Buttons!");
+		activity = ProjectNEOActivity.class;
+		icon = R.drawable.ic_eff_button;
+	}
+	
 	@Override
 	public int[][] getArray() {
 		return array;

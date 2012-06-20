@@ -1,9 +1,15 @@
 package ch.baws.projectneo.effects;
 
+import ch.baws.projectneo.R;
+
 
 
 
 public class Wave extends Effect{
+	public Wave(){
+		super("MarcelM","Wave");
+		icon = R.drawable.ic_eff_wave;
+	}
 	
 	@Override
 	public int[][] getArray() {

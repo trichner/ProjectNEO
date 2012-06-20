@@ -2,10 +2,14 @@ package ch.baws.projectneo.effects;
 
 import java.util.Random;
 
-import ch.baws.projectneo.Frame;
+import android.util.Log;
+import ch.baws.projectneo.frameGenerator.*;
 import ch.baws.projectneo.GeneralUtils;
 
 public class Snake extends Thread{
+	
+	private int SPEED = 400;
+	
 	private class BodyPart{
 		int x;
 		int y;
@@ -15,7 +19,7 @@ public class Snake extends Thread{
 			this.y = y;
 		}
 		public boolean equals(BodyPart body){
-			return ((this.x==body.x) && (this.y ==body.y));
+			return ((this.x==body.x) && (this.y==body.y));
 		}
 	}
 	private class Food{
@@ -79,24 +83,24 @@ public class Snake extends Thread{
 		//running out of bounds?
 		switch(dir){
 		case    UP:
-			if(head.y==7)
+			if(head.y==0)
 				return false;
-			next = new BodyPart(head.x,head.y+1);
+			next = new BodyPart(head.x-1,head.y);
 			break;
 		case RIGHT:
 			if(head.x==7)
 				return false;
-			next = new BodyPart(head.x+1,head.y);
+			next = new BodyPart(head.x,head.y+1);
 			break;
 		case  DOWN:
-			if(head.y==0)
+			if(head.y==7)
 				return false;
-			next = new BodyPart(head.x,head.y-1);
+			next = new BodyPart(head.x+1,head.y);
 			break;
 		case  LEFT:
 			if(head.x==0)
 				return false;
-			next = new BodyPart(head.x-1,head.y);
+			next = new BodyPart(head.x,head.y-1);
 			break;
 		}
 
@@ -123,6 +127,7 @@ public class Snake extends Thread{
 			//catched the food?
 			if(head.x==food.x && head.y==food.y){
 				food.generate();
+				this.setSpeed(this.SPEED-30);
 			}else{
 				BodyPart temp=head;
 				while(temp.nextBody.nextBody!=null){
@@ -133,16 +138,16 @@ public class Snake extends Thread{
 			
 			switch(dir){
 			case    UP:
-				next = new BodyPart(head.x,head.y+1);
+				next = new BodyPart(head.x-1,head.y);
 				break;
 			case RIGHT:
-				next = new BodyPart(head.x+1,head.y);
+				next = new BodyPart(head.x,head.y+1);
 				break;
 			case  DOWN:
-				next = new BodyPart(head.x,head.y-1);
+				next = new BodyPart(head.x+1,head.y);
 					break;
 			case  LEFT:
-				next = new BodyPart(head.x-1,head.y);
+				next = new BodyPart(head.x,head.y-1);
 				break;
 			}
 			
@@ -151,60 +156,30 @@ public class Snake extends Thread{
 		
 			//Speed of Snake :)
 			try {
-				sleep(500);
+				sleep(SPEED);
 			} catch (InterruptedException e) {	}
 		}
 	}
 
-	
-	public void turnLeft(){
-		switch(dir){
-		case    UP:
-			dir = Dir.LEFT;
-			break;
-		case RIGHT:
-			dir = Dir.UP;
-			break;
-		case  DOWN:
-			dir = Dir.RIGHT;
-				break;
-		case  LEFT:
-			dir = Dir.DOWN;
-			break;
-		}
-	}
-	
-	public void turnRight(){
-		switch(dir){
-		case    UP:
-			dir = Dir.RIGHT;
-			break;
-		case RIGHT:
-			dir = Dir.DOWN;
-			break;
-		case  DOWN:
-			dir = Dir.LEFT;
-				break;
-		case  LEFT:
-			dir = Dir.UP;
-			break;
-		}
-	}
-
 	public int[][] getArray() {
-		int[][] array = GeneralUtils.emptyArray(8,8);
+		int[][] array = GeneralUtils.getEmpty8x8();
 		BodyPart temp = head;
+		if(D) Log.d(TAG,"GET ARRAY: starting");
 		while(temp!=null){
+			if(D) Log.d(TAG,"GET ARRAY: fill 1  temp.x:" + temp.x + " temp.y:" + temp.y);
 			array[temp.x][temp.y] = COLOR_SNAKE; //RED
+			if(D) Log.d(TAG,"GET ARRAY: fill 2");
 			temp = temp.nextBody;
+			if(D) Log.d(TAG,"GET ARRAY: fill 3");
 		}
 		array[food.x][food.y] = COLOR_FOOD;
-		
+		if(D) Log.d(TAG,"GET ARRAY: finsh, set food");
 		return array;
 	}
 	
 	public void exit(){
 		EXIT = true;
+		this.interrupt();
 	}
 
 	public boolean obstacleAhead(){
@@ -218,10 +193,35 @@ public class Snake extends Thread{
 	public Dir getDir() {
 		return dir;
 	}
-
-	public void setDir(Dir dir) {
-		this.dir = dir;
-	}
 	
 
+
+	public void setDir(Dir dir) {
+		switch(dir){
+		case    UP:
+			if (!this.dir.equals(Dir.DOWN)) {
+				this.dir = dir;
+			}
+			break;
+		case RIGHT:
+			if (!this.dir.equals(Dir.LEFT)) {
+				this.dir = dir;
+			}
+			break;
+		case  DOWN:
+			if (!this.dir.equals(Dir.UP)) {
+				this.dir = dir;
+			}
+			break;
+		case  LEFT:
+			if (!this.dir.equals(Dir.RIGHT)) {
+				this.dir = dir;
+			}
+			break;
+		}
+	}
+	
+	public void setSpeed(int speed){
+		this.SPEED = speed;
+	}
 }

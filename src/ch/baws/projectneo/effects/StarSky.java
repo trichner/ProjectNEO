@@ -2,8 +2,14 @@ package ch.baws.projectneo.effects;
 
 import java.util.Random;
 
-public class StarSky extends Effect{
+import ch.baws.projectneo.R;
 
+public class StarSky extends Effect{
+	
+	public StarSky(){
+		super("ThomasR", "Star-Sky");
+		this.icon = R.drawable.ic_eff_starsky;
+	}
 	synchronized public int[][] getArray() {
 		return array;
 	}

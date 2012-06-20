@@ -14,15 +14,9 @@
      limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    
-    <item android:id="@+id/connect"
-          android:icon="@android:drawable/ic_menu_share"
-          android:title="@string/connect" />
     <item android:id="@+id/reset" 
           android:title="@string/reset" 
           android:icon="@android:drawable/ic_menu_revert" />
-    <item android:id="@+id/effects" 
-          android:title="@string/effects" 
-          android:icon="@android:drawable/ic_menu_slideshow" />
+    <item android:id="@+id/to_trinity" android:title="Trinity"></item>
     
 </menu>

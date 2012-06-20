@@ -12,12 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import java.util.Timer;
+
 import ch.baws.projectneo.R;
 import ch.baws.projectneo.effects.Buttons;
 import ch.baws.projectneo.effects.Colorfield;
 import ch.baws.projectneo.effects.Text;
-import android.content.Context;
 
 import android.util.Log;
 
@@ -28,16 +27,7 @@ public class TextActivity extends Activity {
 
 	private static final boolean D = false;
 
-	private int[][] colorArray; // array to store the current LED colors
-
-	private SendTimer snd; // Timertask
-	private Timer timer;
-	private boolean timerisAlive = false; 
-	
-	public boolean connected = false;
-
-	private BluetoothUtils Bluetooth = null;
-	
+	private ProjectMORPHEUS morpheus;
 	Buttons buttoneffect = new Buttons();
 	
 	Button button;
@@ -55,16 +45,9 @@ public class TextActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.text);
-        
-        
-//        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-//        wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-//        wl.acquire();
-        
-        colorArray = GeneralUtils.emptyArray(8,8); // fills array with zeros
-        
-        
+        setContentView(R.layout.eff_text);
+                
+        morpheus = (ProjectMORPHEUS) getApplication();
         button = (Button) findViewById(R.id.button1);
         et = (EditText) findViewById(R.id.text_input);
         
@@ -88,23 +71,9 @@ public class TextActivity extends Activity {
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         speedspin.setAdapter(adapter3); 
         speedspin.setOnItemSelectedListener(new SpeedSelectedListener());
-        
- 		Bluetooth = new BluetoothUtils();
-
-    	Bluetooth.init();
-    	if (!connected) Bluetooth.connect();
-    	connected=true;
-    	if(timerisAlive)
-    	{
-    		timer.cancel();
-    	}       
+           
     	Colorfield eff = new Colorfield();
     	eff.setColor(7);
-    	Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-    	timer = new Timer(); 
-    	snd = new SendTimer(eff, Bluetooth);  
-    	timer.schedule  ( snd, 100, 66 ); // frequency 15 fps
-    	timerisAlive = true;
     }
     
 
@@ -117,7 +86,7 @@ public class TextActivity extends Activity {
    	@Override
    	public void onResume() {
    		super.onResume();
-
+   		if(!morpheus.isServiceRunning()) Toast.makeText(this, "start Service first", Toast.LENGTH_SHORT).show();
    		if (D) {
    			Log.e(TAG, "+ ON RESUME +");
 //   			Log.e(TAG, "+ ABOUT TO ATTEMPT CLIENT CONNECT +");
@@ -131,26 +100,11 @@ public class TextActivity extends Activity {
 
    		if (D)
    			Log.e(TAG, "- ON PAUSE -");
-
-//   		if (outStream != null) {
-//   			try {
-//   				outStream.flush();
-//   			} catch (IOException e) {
-//   				Log.e(TAG, "ON PAUSE: Couldn't flush output stream.", e);
-//   			}
-//   		}
-   		//Bluetooth.Close();
-
-
    	}
 
    	@Override
    	public void onStop() {
    		super.onStop();
-    	if(timerisAlive==true)
-    	timer.cancel();
-    	if(connected)
-    		Bluetooth.close();
    		if (D)
    			Log.e(TAG, "-- ON STOP --");
    	}
@@ -159,21 +113,17 @@ public class TextActivity extends Activity {
    	public void onDestroy() {
    		super.onDestroy();
   // 		wl.release();
-    	if(timerisAlive==true)
-    	timer.cancel();
-    	if(connected)
-    		Bluetooth.close();
    		if (D)
    			Log.e(TAG, "--- ON DESTROY ---");
    	}
 
    	public class ColorSelectedListener implements OnItemSelectedListener {
-		@Override
+		//@Override
 		public void onItemSelected(AdapterView<?> arg0, View view, int pos, long id) {
 						icolor = pos;	   	   	        	  
 	   	}
 
-		@Override
+		//@Override
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
 			
@@ -181,12 +131,12 @@ public class TextActivity extends Activity {
    	}
    	
    	public class BackSelectedListener implements OnItemSelectedListener {
-		@Override
+		//@Override
 		public void onItemSelected(AdapterView<?> arg0, View view, int pos, long id) {
 						iback = pos;	   	   	        	  
 	   	}
 
-		@Override
+		//@Override
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
 			
@@ -194,12 +144,12 @@ public class TextActivity extends Activity {
    	}
  
    	public class SpeedSelectedListener implements OnItemSelectedListener {
-		@Override
+		//@Override
 		public void onItemSelected(AdapterView<?> arg0, View view, int pos, long id) {
 						ispeed = pos;	   	   	        	  
 	   	}
 
-		@Override
+		//@Override
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
 			
@@ -214,7 +164,7 @@ public class TextActivity extends Activity {
     	if(str=="") str="Project Neo"; //TODO
     	//if (!timerisAlive) {
    			text = new Text(str, icolor, iback, ispeed);
-   			snd.setEffect(text);
+   			morpheus.setEffect(text);
    		//}
     	
 

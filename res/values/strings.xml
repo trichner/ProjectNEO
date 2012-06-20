@@ -20,5 +20,12 @@
     <string name="speed_prompt">Choose a speed</string>
     <string name="back_prompt">Choose a background</string>
     <string name="color_prompt">Choose a color</string>
+    <string name="serviceBtn">Service</string>
+    <string name="about">\nGUI:\n Thomas Richner\n  Marcel Mohler\nHardware:\n  Stefan Mach\n  Thomas Richner\nEffects:\n  Thomas Richner\n  Stefan Mach\n  Marcel Mohler\nSupport:\n  IFH ETHZ\n  Karl Seeliger</string>
+    <string name="bugreport">You can now report any feedback to feedback@e271.ch!</string>
+    <string name="humansnake">Eat my dust!</string>
+    <string name="humanSnake">Human Snake</string>
+    <string name="snake_score">0</string>
+    <string name="score">Score:</string>
     
 </resources>
