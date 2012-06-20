@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,9 +29,38 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import ch.baws.projectneo.effects.*;
+import ch.baws.projectneo.effects.Effect.DialogOptions;
+import ch.baws.projectneo.frameGenerator.Frame;
 import ch.baws.projectneo.sendService.SendService;
 
 public class TrinityActivity extends Activity implements OnClickListener{
+	final static boolean D = false;
+	final static String TAG = "TrinityActivity";
+	public void setEffectsInList(){
+		effects = new ArrayList<Class>();	
+	//+++++++++++++++++++ List all available Effects ++++++++++++++++++
+		effects.add(AudioVisualizer.class);
+		effects.add(Text.class);
+		effects.add(Buttons.class);
+		effects.add(Matrix.class);
+		effects.add(Nexus.class);
+		effects.add(GameOfLife.class);
+		effects.add(StarSky.class);
+		effects.add(BinaryClock.class); 	
+		effects.add(Tetris.class);
+		effects.add(HumanSnakePlayer.class);
+		effects.add(RainbowEffect.class);
+		effects.add(Wave.class);
+		effects.add(Colorfield.class);
+		
+		if(D){ // Effects that aren't currently very stable/working
+			effects.add(RandomSnakePlayer.class); 	//TODO is to stupid, please fix
+			effects.add(SnakePlayer.class);			//TODO has a Deadlock...
+		}
+		
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+	}
+	
 	//==== List Adapter
 	private class LAdapter extends ArrayAdapter<Class> implements OnClickListener{
 
@@ -142,9 +172,6 @@ public class TrinityActivity extends Activity implements OnClickListener{
 	
 	
 	//====================================== actual class...
-	final static boolean D = true;
-	final static String TAG = "TrinityActivity";
-	
 	private static boolean BT_ON = false;
 	
 	private ListView effects_list;
@@ -162,24 +189,7 @@ public class TrinityActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);   
 		setContentView(R.layout.main);
 		
-		//==== init static stuff
-		effects = new ArrayList<Class>();
-		
-		effects.add(Matrix.class);
-		effects.add(Nexus.class);
-		effects.add(GameOfLife.class);
-		effects.add(RandomSnakePlayer.class);
-		effects.add(StarSky.class);
-		effects.add(Text.class);
-		effects.add(Wave.class);
-		effects.add(Buttons.class);
-		effects.add(Colorfield.class);
-		//effects.add(DefaultEffect.class);
-		effects.add(AudioVisualizer.class);
-		effects.add(BinaryClock.class);
-		effects.add(Tetris.class);
-		effects.add(SnakePlayer.class);
-		
+		setEffectsInList();
 		
 		//find all Views
 		btn_settings = (Button) findViewById(R.id.btn_settings);
@@ -203,16 +213,60 @@ public class TrinityActivity extends Activity implements OnClickListener{
 				try {
 					e = (Effect) c.newInstance();
 					application.setEffect(e);
-					Toast.makeText(getApplicationContext(), e.TITLE + " running", Toast.LENGTH_SHORT).show();
+					if(D) Toast.makeText(TrinityActivity.this, e.TITLE + " running", Toast.LENGTH_SHORT).show();
 					if(e.hasAnActivity()){
 						final Intent intent = new Intent(TrinityActivity.this,e.getActivity());
 						startActivity(intent);
+					}else if(e.hasOnClickOptions()){
+						AlertDialog.Builder builder = new AlertDialog.Builder(TrinityActivity.this);
+						DialogOptions opt = e.getOnClickDialogOptions();
+						builder.setTitle(opt.title);
+						builder.setItems(opt.options, new DialogInterface.OnClickListener() {
+						    public void onClick(DialogInterface dialog, int item) {
+						    	application.getEffect().setOnClickOption(item);
+						    }
+						});
+						AlertDialog alert = builder.create();
+						alert.show();						
 					}
 				} catch (InstantiationException e1) {
+					Log.e(TAG, "Caught strange InstantiationException");
 				} catch (IllegalAccessException e1) {
+					Log.e(TAG, "Caught strange IllegalAccessException");
 				}
 			}
 		
+		});
+		
+		effects_list.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View v,int pos, long id) {
+				Class c = (Class) v.getTag();
+				Effect e = null;
+				try {
+					e = (Effect) c.newInstance();
+					if(D) Toast.makeText(TrinityActivity.this, e.TITLE + " running", Toast.LENGTH_SHORT).show();
+					if(e.hasOnLongClickOptions()){
+						application.setEffect(e);
+						AlertDialog.Builder builder = new AlertDialog.Builder(TrinityActivity.this);
+						DialogOptions opt = e.getOnLongClickDialogOptions();
+						builder.setTitle(opt.title);
+						builder.setItems(opt.options, new DialogInterface.OnClickListener() {
+						    public void onClick(DialogInterface dialog, int item) {
+						    	application.getEffect().setOnLongClickOption(item);
+						    }
+						});
+						AlertDialog alert = builder.create();
+						alert.show();	
+						return true;
+					}
+				} catch (InstantiationException e1) {
+					Log.e(TAG, "Caught strange InstantiationException");
+				} catch (IllegalAccessException e1) {
+					Log.e(TAG, "Caught strange IllegalAccessException");
+				}
+				return false;
+			}
 		});
 		
 		// Set listeners...
@@ -328,6 +382,7 @@ public class TrinityActivity extends Activity implements OnClickListener{
 			});
 			return BugRep;
 		}
+		
 		if(D) Log.e(TAG, "Unknown Dialog ID!");
 		return null;
 		

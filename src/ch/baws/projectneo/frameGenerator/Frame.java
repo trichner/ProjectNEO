@@ -5,16 +5,15 @@ import java.util.Random;
 
 
 public class Frame {
-	public static final int NEO_RED = 1;
-	public static final int NEO_GREEN = 2;
-	public static final int NEO_BLUE = 3;
-	public static final int NEO_OFF = 0;
-	
-	public static final int NEO_YELLOW = 4;
-	public static final int NEO_TURK = 5;
-	public static final int NEO_PINK = 6;
-	
-	public static final int NEO_WHITE = 7;
+	public static final String[] colorOptions = {"Red", "Green", "Blue","Yellow","Turquoise","Pink","White"};
+	public static final int NEO_OFF 		= 0;
+	public static final int NEO_RED 		= 1;
+	public static final int NEO_GREEN 	= 2;
+	public static final int NEO_BLUE 		= 3;
+	public static final int NEO_YELLOW 	= 4;
+	public static final int NEO_TURK 		= 5;
+	public static final int NEO_PINK 		= 6;
+	public static final int NEO_WHITE 	= 7;
 
 	public enum CMDB {
 		/* Possible command bytes: 

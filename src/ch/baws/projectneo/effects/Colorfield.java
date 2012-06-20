@@ -3,18 +3,19 @@ package ch.baws.projectneo.effects;
 import ch.baws.projectneo.ColorfieldActivity;
 import ch.baws.projectneo.GeneralUtils;
 import ch.baws.projectneo.R;
+import ch.baws.projectneo.effects.Effect.DialogOptions;
+import ch.baws.projectneo.frameGenerator.Frame;
 
 
 
 
 public class Colorfield extends Effect{
-	
 	public Colorfield(){
 		super("MarcelM", "Colorfield");
-		array = GeneralUtils.fillArray(8,8, 2);
-		delay = 100;
-		this.activity = ColorfieldActivity.class;
+		array = GeneralUtils.fillArray(8,8, Frame.NEO_WHITE);
+		//this.activity = ColorfieldActivity.class;
 		icon = R.drawable.ic_eff_colorfield;
+		this.hasOnClickOptions = true;
 	}
 
 	@Override
@@ -29,8 +30,17 @@ public class Colorfield extends Effect{
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		// do nothing
+	}
+	
+	@Override
+	public void setOnClickOption(int pos){
+		array = GeneralUtils.fillArray(8,8, pos+1);
+	}
+	
+	@Override
+	public DialogOptions getOnClickDialogOptions(){
+		return new DialogOptions("Choose color", Frame.colorOptions);
 	}
 
 
