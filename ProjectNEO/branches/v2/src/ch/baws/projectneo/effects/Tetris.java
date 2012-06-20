@@ -14,7 +14,7 @@ import ch.baws.projectneo.frameGenerator.Frame;
 public class Tetris extends Effect{
 
 	protected static final String TAG = "TETRIS";
-	protected static final boolean D = true;
+	protected static final boolean D = false;
 	
 	private long stack;	
 	private long ubrick;
@@ -106,7 +106,12 @@ public class Tetris extends Effect{
 	}
 	
 	public void rotate(){
+		
+		//TODO not working correct, don't use if not in debug mode
+		if(!D) return;
+		
 		if(D) Log.d(TAG,"try to rotate");
+		
 		if(ubrick!=0 || brick_y>10) return;  //noch im oberen Bereich?nicht drehbarer Brick?
 		
 		if(D) Log.d(TAG,"ok, legal brick");
@@ -131,7 +136,7 @@ public class Tetris extends Effect{
 		
 		tmp = Bitfields.rotate90(tmp); //rotieren um Mitte
 		
-		//Zurückschieben
+		//Zurï¿½ckschieben
 		for(i=0;i>brick_y;i--){
 			tmp = Bitfields.shiftN(tmp);
 		}
