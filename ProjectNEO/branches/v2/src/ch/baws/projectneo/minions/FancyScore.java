@@ -25,18 +25,18 @@ public class FancyScore {
 	 * @param number
 	 * @return
 	 */
-	public static int[][] getArray(int number){
+	public static int[][] getArray(int number){ //TODO alignment isn't correct
 		if(number <0 || number > 99) return Bitfields.toNEOArr(ERR, 0, Frame.NEO_RED, 0); // Score OutOfBounds? TODO better solution for score over 99
 		
 		long bf=0;
 		
 		if(number<10){
 			bf = ciphers[number];
-			bf <<= 2; // align in the center
+			bf >>>= 16; // align in the center
 		}else{
 			long tmp;
 			tmp = ciphers[number%10];
-			tmp <<= 4; // aling right
+			tmp >>>= 32; // aling right
 			bf = ciphers[number/10];
 			bf |= tmp;
 		}
