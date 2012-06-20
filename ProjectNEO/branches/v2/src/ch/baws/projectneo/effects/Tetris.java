@@ -30,7 +30,7 @@ public class Tetris extends Effect{
 	
 	public Tetris(){
 		super("Thomas Richner","Tetris");
-		this.icon = R.drawable.ic_app;
+		this.icon = R.drawable.ic_eff_tetris;
 		this.activity = TetrisActivity.class;
 		
 		

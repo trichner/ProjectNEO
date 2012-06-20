@@ -1,8 +1,7 @@
 package ch.baws.projectneo.effects;
 
 import java.util.Random;
-
-import ch.baws.projectneo.GeneralUtils;
+import ch.baws.projectneo.R;
 import ch.baws.projectneo.frameGenerator.Frame;
 
 public class RainbowEffect extends Effect {
@@ -27,6 +26,7 @@ public class RainbowEffect extends Effect {
 	public RainbowEffect(){
 		super("Thomas Richner","Rainbow!");
 		this.hasOnClickOptions = true;
+		this.icon = R.drawable.ic_eff_rainbow;
 	}
 	
 	@Override
