@@ -3,14 +3,7 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerInside"
-        android:src="@drawable/snake" />
-
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -18,17 +11,17 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="47dp"
-        android:text="Snake"
+        android:text="@string/humanSnake"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="30dp" />
-
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="awesome game by Philipp Bösch"
+        android:text="@string/humansnake"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="15dp" />
 
@@ -64,5 +57,25 @@
         android:layout_below="@+id/snake_left"
         android:layout_toRightOf="@+id/snake_left"
         android:text="Down" />
+
+    <TextView
+        android:id="@+id/snake_score_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:text="@string/snake_score"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30pt" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/snake_score_view"
+        android:layout_marginTop="24dp"
+        android:layout_toLeftOf="@+id/textView2"
+        android:text="@string/score"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
