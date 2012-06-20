@@ -4,15 +4,28 @@ import ch.baws.projectneo.effects.HumanSnakePlayer;
 import ch.baws.projectneo.effects.HumanSnakePlayer.Dir;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class HumanSnakeActivity extends Activity implements OnClickListener{
 
-	protected static final String TAG = "SNAKEACTIVITY";
+	protected static final String TAG = "HSNAKEACTIVITY";
 	protected static final boolean D = true;
+	
+	private Handler mHandler = new Handler();
+	private class ScoreUpdater implements Runnable{
+		TextView score = (TextView) findViewById(R.id.snake_score_view);;
+		@Override
+		public void run() {
+			score.setText(Integer.toString(effect.getScore()));
+			mHandler.postDelayed(this, 100);
+		}
+	}
+	private ScoreUpdater mScoreUpdater;
 	
 	private ProjectMORPHEUS application;
 	
@@ -20,10 +33,12 @@ public class HumanSnakeActivity extends Activity implements OnClickListener{
 	
 	Button up,down,right,left;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		if(D) Log.d(TAG,"On create");
 		setContentView(R.layout.eff_humansnake);
 		
 		up = (Button) findViewById(R.id.snake_up);
@@ -36,6 +51,7 @@ public class HumanSnakeActivity extends Activity implements OnClickListener{
 		left.setOnClickListener(this);
 		right.setOnClickListener(this);
 		
+		mScoreUpdater = new ScoreUpdater();
 		application = (ProjectMORPHEUS) getApplication();
 	}
 
@@ -49,6 +65,7 @@ public class HumanSnakeActivity extends Activity implements OnClickListener{
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
+		mHandler.removeCallbacks(mScoreUpdater);
 	}
 
 	@Override
@@ -62,6 +79,8 @@ public class HumanSnakeActivity extends Activity implements OnClickListener{
 		super.onResume();
 		effect = new HumanSnakePlayer();
 		application.setEffect(effect);
+		mHandler.removeCallbacks(mScoreUpdater);
+		mHandler.postDelayed(mScoreUpdater, 100);
 	}
 
 	@Override

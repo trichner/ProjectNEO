@@ -12,10 +12,10 @@ public class AudioVisualizer extends Effect {
 	private static final String TAG = "AudioVisualizer";
 	private static final boolean D = false;	
 	
-	private static final double maxFrequency = 10000*1000;	//in mHz
+	private static final double maxFrequency = 6000*1000;	//in mHz
 	private static final double minFrequency = 50*1000;	
 	
-	private static final double LOGARITHMIC_BASE = 2;
+	private static final double LOGARITHMIC_BASE = 1.5;
 	
 	//----magic values
 	private static final double AVERAGE_MIN = 10;
