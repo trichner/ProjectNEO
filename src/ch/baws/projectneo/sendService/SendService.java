@@ -8,10 +8,12 @@ import ch.baws.projectneo.ProjectMORPHEUS;
 import ch.baws.projectneo.R;
 import ch.baws.projectneo.TrinityActivity;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
@@ -59,6 +61,8 @@ public class SendService extends Service {
 		
 		if (D)		Log.d(TAG, "onStartCommand Service");
 		
+
+		
 		//---- Notification
 		int icon = R.drawable.ic_app;
 		CharSequence tickerText = "connecting...";
@@ -82,10 +86,10 @@ public class SendService extends Service {
 		notification.flags |= Notification.FLAG_NO_CLEAR + Notification.FLAG_ONGOING_EVENT;
 		
 		mNotificationManager.notify(NOTIFICATION_ID, notification);
-		
+
 		if(!runFlag){
 			runFlag = true;
-			((ProjectMORPHEUS) super.getApplication()).setServiceRunning(true);
+			
 			if (D)		Log.d(TAG, "Set new bluetooth");
 			application.setBluetooth(new BluetoothUtils());
 			//if(!application.getBluetooth().active()){
@@ -97,6 +101,7 @@ public class SendService extends Service {
 				executor.scheduleAtFixedRate(sendTimer, 50, 1000/FPS, TimeUnit.MILLISECONDS);
 				executor.scheduleAtFixedRate(receiveTimer, 50+500/FPS, 1000/FPS, TimeUnit.MILLISECONDS);
 			//}
+			application.setServiceRunning(true);
 		}
 		
 		return Service.START_STICKY;
@@ -113,5 +118,17 @@ public class SendService extends Service {
 		application.bluetoothClose();
 		mNotificationManager.cancel(NOTIFICATION_ID);
 	}
+	
+//	public boolean isRunning(){
+//	    ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+//	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+//	        if ("com.example.MyService".equals(service.service.getClassName())) {
+//	            return true;
+//	        }
+//	    }
+//	    return false;
+//	}
+
+
 	
 }

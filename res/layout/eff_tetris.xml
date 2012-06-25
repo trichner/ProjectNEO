@@ -52,13 +52,5 @@
         android:layout_alignRight="@+id/textView2"
         android:layout_toRightOf="@+id/tetris_drop"
         android:text=">>>" />
-
-    <Button
-        android:id="@+id/tetris_rotate"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_above="@+id/tetris_left"
-        android:layout_alignLeft="@+id/tetris_drop"
-        android:text="Rotate" />
 
 </RelativeLayout>

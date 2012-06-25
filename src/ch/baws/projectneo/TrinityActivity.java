@@ -3,6 +3,7 @@ package ch.baws.projectneo;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,14 +11,20 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.media.audiofx.AudioEffect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -25,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -33,7 +41,7 @@ import ch.baws.projectneo.effects.Effect.DialogOptions;
 import ch.baws.projectneo.frameGenerator.Frame;
 import ch.baws.projectneo.sendService.SendService;
 
-public class TrinityActivity extends Activity implements OnClickListener{
+public class TrinityActivity extends Activity{
 	final static boolean D = false;
 	final static String TAG = "TrinityActivity";
 	public void setEffectsInList(){
@@ -132,39 +140,66 @@ public class TrinityActivity extends Activity implements OnClickListener{
 	}
 	
 	
-	 private class StartService extends AsyncTask<Void, Void, Integer> {
+	 private class StartService extends AsyncTask<Void, Integer, Integer> {
+		 private static final String TAG = "StartServiceTask";
 		 @Override
 	     protected Integer doInBackground(Void... args) {
-	         int error_code = 0;
-	         
-				if(!application.isServiceRunning()){ //service running?
-					if(D) Log.d(TAG, "Starting Service...");
-					// Bluetooth active?
-			    	if(!BluetoothUtils.active()) { // request popup if BT isnt activated
-			            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-			            startActivityForResult(enableBtIntent, 17);
-			        }
-
-					startService(new Intent(getApplicationContext(), SendService.class));
-					//tbtn_service.setChecked(true);
-
-				}else{ //stop service
-					//if(D) Log.d(TAG, "Stopping Service...");
-					if(!application.isServiceRunning()) return 1;
-					stopService(new Intent(getApplicationContext(), SendService.class));
-					//Toast.makeText(this, "stopping Service...", Toast.LENGTH_SHORT).show();
+			int error_code = 0;
+			int progress;
+			if(!application.isServiceRunning()){ //service running? > start it
+				if(D) Log.d(TAG, "Starting Service...");
+				progress = 8;
+				publishProgress(progress);
+				// Bluetooth active?
+				if(!BluetoothUtils.active()) { // request popup if BT isnt activated
+			        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			        startActivityForResult(enableBtIntent, 17);
+			    }
+				startService(new Intent(getApplicationContext(), SendService.class));
+				for(int i=0;i<90 && !application.isServiceRunning();i++){
+					progress++;
+					publishProgress(progress);
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						if(D) Log.d(TAG,"Got Interrupted...");
+					}
+					
 				}
-	         
+				publishProgress(100);
+			}else{ //stop service
+				progress = 100;
+				publishProgress(progress);
+				if(D) Log.d(TAG, "Stopping Service...");
+				if(!application.isServiceRunning()) return 1;
+				stopService(new Intent(getApplicationContext(), SendService.class));
+				//Toast.makeText(this, "stopping Service...", Toast.LENGTH_SHORT).show();
+				for(int i=0;i<95 && application.isServiceRunning();i++){
+					progress--;
+					publishProgress(progress);
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						if(D) Log.d(TAG,"Got Interrupted...");
+					}
+				}
+				publishProgress(0);
+			}
 	         
 	         return error_code;
-	     }
+	    }
+		 
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			progress_bar.setProgress(values[0]);
+		}
 
-	     protected void onProgressUpdate() {
-	     }
-
-	     protected void onPostExecute(Long result) {
-	    	 //Toast.makeText(getApplicationContext(), "Service started.", Toast.LENGTH_SHORT).show();
-	     }
+		@Override
+		protected void onPostExecute(Integer result) {
+	    	 if(D) Log.d(TAG,"+onPostExecute+");
+	    	 TrinityActivity.this.invalidateOptionsMenu();
+	    	 //Toast.makeText(TrinityActivity.this, "Service started.", Toast.LENGTH_SHORT).show();
+		} 
 	 }
 	
 	
@@ -175,10 +210,8 @@ public class TrinityActivity extends Activity implements OnClickListener{
 	private static boolean BT_ON = false;
 	
 	private ListView effects_list;
-	private Button btn_settings;
-	private Button btn_about;
-	private ToggleButton tbtn_service;
 	private ProjectMORPHEUS application;
+	private ProgressBar progress_bar;
 	
 	private LAdapter effects_adapter;
 	
@@ -189,14 +222,19 @@ public class TrinityActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);   
 		setContentView(R.layout.main);
 		
+		//ActionBar ab = getActionBar();
+//		getActionBar().setDisplayShowTitleEnabled(false);
+		
 		setEffectsInList();
 		
 		//find all Views
-		btn_settings = (Button) findViewById(R.id.btn_settings);
-		btn_about = (Button) findViewById(R.id.btn_about);
-		tbtn_service = (ToggleButton) findViewById(R.id.tbtn_service);
 		application = (ProjectMORPHEUS) getApplication();
+		progress_bar = (ProgressBar) findViewById(R.id.progbar_connect);
+		progress_bar.setMax(100); // but is actually already set in layout, just be sure^^
 		
+		progress_bar.setInterpolator(this, android.R.anim.accelerate_decelerate_interpolator);
+		//Interpolator ipol = new AnticipateInterpolator(2f);
+		//progress_bar.setInterpolator(ipol);
 		//---- load List and its adapter
 		effects_list = (ListView) findViewById(R.id.effect_list);
 		effects_list.setEmptyView((TextView)findViewById(R.id.no_effects));
@@ -268,12 +306,7 @@ public class TrinityActivity extends Activity implements OnClickListener{
 				return false;
 			}
 		});
-		
-		// Set listeners...
-		tbtn_service.setOnClickListener(this);
-		btn_about.setOnClickListener(this);
-		btn_settings.setOnClickListener(this);
-    	
+   	
 		// Bluetooth active?
     	if (!BluetoothUtils.active()) { // request popup if BT isnt activated
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -281,26 +314,7 @@ public class TrinityActivity extends Activity implements OnClickListener{
         }
 	}
 	
-	@Override
-	public void onClick(View v) {
-		if(D) Log.d(TAG, "some Button clicked");
-		switch(v.getId()){
-			case R.id.tbtn_service:
-				// Start service
-				new StartService().execute(); 
-				
-				break;
-			case R.id.btn_about:
-				if(D) Log.d(TAG, "About Button Clicked");
-				showDialog(0);
-				break;
-			case R.id.btn_settings:
-				if(D) Log.d(TAG, "Settings Button Clicked");
-				showDialog(1);
-				break;
-		}
 
-	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -316,41 +330,6 @@ public class TrinityActivity extends Activity implements OnClickListener{
 		}
 	}
 
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-	}
-
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-	}
-
-	@Override
-	protected void onRestart() {
-		// TODO Auto-generated method stub
-		super.onRestart();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		tbtn_service.setChecked(application.isServiceRunning());
-	}
-
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-	}
-
-	@Override
-	protected void onStop() {
-		// TODO Auto-generated method stub
-		super.onStop();
-	}
 	
 	//==== Popup
 	@Override
@@ -360,7 +339,13 @@ public class TrinityActivity extends Activity implements OnClickListener{
 		case 0:
 			if(D) Log.d(TAG, "About Dialog");
 			AlertDialog Credits = new AlertDialog.Builder(this).create();
-			Credits.setTitle("ProjectNEO::TRINITY");
+			String version;
+			try {
+				version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+			} catch (NameNotFoundException e) {
+				version = "n/a";
+			}
+			Credits.setTitle("ProjectNEO::TRINITY " + version);
 			Credits.setMessage(getResources().getText(R.string.about));
 			Credits.setIcon(R.drawable.ic_app);
 			Credits.setButton("Done", new DialogInterface.OnClickListener() {
@@ -386,5 +371,48 @@ public class TrinityActivity extends Activity implements OnClickListener{
 		if(D) Log.e(TAG, "Unknown Dialog ID!");
 		return null;
 		
+	}
+	
+	// Action bar stuff
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		if(D) Log.d(TAG,"onCreateOptionsMenu");
+	    MenuInflater inflater = getMenuInflater(); 
+	    inflater.inflate(R.menu.actionbar, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu){
+		if(D) Log.d(TAG, "onPrepareOptionsMenu > updateServiceButton");
+		if(application.isServiceRunning()){
+			menu.getItem(0).setIcon(android.R.drawable.ic_media_pause);
+			progress_bar.setProgress(100);
+		}else{
+			menu.getItem(0).setIcon(android.R.drawable.ic_media_play);
+			progress_bar.setProgress(0);
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+		if(D) Log.d(TAG, "+onOptionsItemSelected+");
+	    switch (item.getItemId()) {
+	        case R.id.itm_service:
+	            new StartService().execute();
+	            return true;
+	        case R.id.itm_preferences:
+				if(D) Log.d(TAG, "Preferences Button Clicked");
+				showDialog(1);
+	            return true;
+	        case R.id.itm_about:
+	        	if(D) Log.d(TAG, "About Button Clicked");
+				showDialog(0);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 }

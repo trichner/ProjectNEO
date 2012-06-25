@@ -34,12 +34,10 @@ public final class R {
         public static final int snake=0x7f020010;
     }
     public static final class id {
-        public static final int LinearLayout2=0x7f070064;
+        public static final int LinearLayout2=0x7f070063;
         public static final int RelativeLayout1=0x7f070002;
-        public static final int backgroundcolor=0x7f07005c;
-        public static final int btn_about=0x7f07006a;
+        public static final int backgroundcolor=0x7f07005b;
         public static final int btn_reset=0x7f070052;
-        public static final int btn_settings=0x7f070069;
         public static final int button00=0x7f07000b;
         public static final int button01=0x7f07000c;
         public static final int button02=0x7f07000d;
@@ -48,7 +46,7 @@ public final class R {
         public static final int button05=0x7f070010;
         public static final int button06=0x7f070011;
         public static final int button07=0x7f070012;
-        public static final int button1=0x7f07005f;
+        public static final int button1=0x7f07005e;
         public static final int button10=0x7f070014;
         public static final int button11=0x7f070015;
         public static final int button12=0x7f070016;
@@ -105,17 +103,21 @@ public final class R {
         public static final int button75=0x7f07004f;
         public static final int button76=0x7f070050;
         public static final int button77=0x7f070051;
-        public static final int cfield=0x7f070073;
-        public static final int cfsub0=0x7f070074;
-        public static final int cfsub1=0x7f070075;
-        public static final int cfsub2=0x7f070076;
-        public static final int cfsub3=0x7f070077;
-        public static final int effect_list=0x7f07006b;
-        public static final int gameoflife=0x7f070070;
+        public static final int cfield=0x7f070074;
+        public static final int cfsub0=0x7f070075;
+        public static final int cfsub1=0x7f070076;
+        public static final int cfsub2=0x7f070077;
+        public static final int cfsub3=0x7f070078;
+        public static final int effect_list=0x7f070068;
+        public static final int gameoflife=0x7f070071;
         public static final int imageView1=0x7f070053;
-        public static final int item_description=0x7f070067;
-        public static final int item_icon=0x7f070065;
-        public static final int item_title=0x7f070066;
+        public static final int item_description=0x7f070066;
+        public static final int item_icon=0x7f070064;
+        public static final int item_title=0x7f070065;
+        public static final int itm_about=0x7f07006d;
+        public static final int itm_preferences=0x7f07006c;
+        public static final int itm_service=0x7f07006a;
+        public static final int itm_settings=0x7f07006b;
         public static final int linearLayout0=0x7f07000a;
         public static final int linearLayout1=0x7f070013;
         public static final int linearLayout2=0x7f07001c;
@@ -124,38 +126,35 @@ public final class R {
         public static final int linearLayout5=0x7f070037;
         public static final int linearLayout6=0x7f070040;
         public static final int linearLayout7=0x7f070049;
-        public static final int matrix=0x7f07006f;
-        public static final int no_effects=0x7f07006c;
-        public static final int progressBar=0x7f070062;
-        public static final int reset=0x7f070078;
-        public static final int rsnake=0x7f07006d;
-        public static final int snake_down=0x7f070007;
-        public static final int snake_left=0x7f070005;
-        public static final int snake_right=0x7f070006;
-        public static final int snake_score_view=0x7f070008;
-        public static final int snake_up=0x7f070004;
-        public static final int speed=0x7f07005e;
+        public static final int matrix=0x7f070070;
+        public static final int no_effects=0x7f070069;
+        public static final int progbar_connect=0x7f070067;
+        public static final int progressBar=0x7f070061;
+        public static final int rsnake=0x7f07006e;
+        public static final int snake_down=0x7f070006;
+        public static final int snake_left=0x7f070004;
+        public static final int snake_right=0x7f070005;
+        public static final int snake_score_view=0x7f070007;
+        public static final int snake_up=0x7f070003;
+        public static final int speed=0x7f07005d;
         public static final int spnr_color=0x7f070001;
-        public static final int starsky=0x7f070071;
-        public static final int tbtn_service=0x7f070068;
+        public static final int starsky=0x7f070072;
         public static final int tetris_drop=0x7f070054;
         public static final int tetris_left=0x7f070055;
         public static final int tetris_right=0x7f070056;
-        public static final int tetris_rotate=0x7f070057;
-        public static final int text=0x7f07006e;
-        public static final int textView1=0x7f070003;
+        public static final int text=0x7f07006f;
+        public static final int textView1=0x7f070009;
         public static final int textView2=0x7f070000;
-        public static final int textView3=0x7f070009;
-        public static final int text_input=0x7f070058;
-        public static final int textcolor=0x7f07005a;
-        public static final int textview=0x7f070061;
-        public static final int title=0x7f070060;
-        public static final int to_trinity=0x7f070079;
-        public static final int toggleButtonService=0x7f070063;
-        public static final int tv_backgroundcolor=0x7f07005b;
-        public static final int tv_speed=0x7f07005d;
-        public static final int tv_textcolor=0x7f070059;
-        public static final int wave=0x7f070072;
+        public static final int textView3=0x7f070008;
+        public static final int text_input=0x7f070057;
+        public static final int textcolor=0x7f070059;
+        public static final int textview=0x7f070060;
+        public static final int title=0x7f07005f;
+        public static final int toggleButtonService=0x7f070062;
+        public static final int tv_backgroundcolor=0x7f07005a;
+        public static final int tv_speed=0x7f07005c;
+        public static final int tv_textcolor=0x7f070058;
+        public static final int wave=0x7f070073;
     }
     public static final class layout {
         public static final int eff_colorfield=0x7f030000;
@@ -169,8 +168,8 @@ public final class R {
         public static final int main=0x7f030008;
     }
     public static final class menu {
-        public static final int effects_menu=0x7f060000;
-        public static final int option_menu=0x7f060001;
+        public static final int actionbar=0x7f060000;
+        public static final int effects_menu=0x7f060001;
     }
     public static final class string {
         public static final int about=0x7f050015;
