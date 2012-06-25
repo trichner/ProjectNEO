@@ -2,6 +2,8 @@ package ch.baws.projectneo;
 
 import ch.baws.projectneo.effects.*;
 import ch.baws.projectneo.sendService.SendService;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Application;
 import android.content.Intent;
 import android.util.Log;

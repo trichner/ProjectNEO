@@ -33,7 +33,6 @@ public class Tetris extends Effect{
 		this.icon = R.drawable.ic_eff_tetris;
 		this.activity = TetrisActivity.class;
 		
-		
 		//start a new game
 		stack = 0;
 		newBrick();

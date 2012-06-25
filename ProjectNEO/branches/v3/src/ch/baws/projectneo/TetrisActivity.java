@@ -23,9 +23,9 @@ public class TetrisActivity extends Activity implements OnClickListener{
 		left = (Button) findViewById(R.id.tetris_left);
 		right = (Button) findViewById(R.id.tetris_right);
 		drop = (Button) findViewById(R.id.tetris_drop);
-		rotate = (Button) findViewById(R.id.tetris_rotate);
+		//rotate = (Button) findViewById(R.id.tetris_rotate);
 		
-		rotate.setOnClickListener(this);
+		//rotate.setOnClickListener(this);
 		left.setOnClickListener(this);
 		right.setOnClickListener(this);
 		drop.setOnClickListener(this);
@@ -68,9 +68,9 @@ public class TetrisActivity extends Activity implements OnClickListener{
 		case R.id.tetris_drop:
 			tetris.dropDown();
 			break;
-		case R.id.tetris_rotate:
-			tetris.rotate();
-			break;
+//		case R.id.tetris_rotate:
+//			tetris.rotate();
+//			break;
 		}
 		
 	}
